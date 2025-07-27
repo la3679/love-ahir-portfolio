@@ -8,91 +8,76 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    /* Rich, vibrant color palette */
-    --background: 261 85% 7%;
-    --foreground: 210 40% 98%;
-
-    --card: 258 84% 10%;
-    --card-foreground: 210 40% 98%;
-
-    --popover: 258 84% 10%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 280 100% 70%;
-    --primary-foreground: 261 85% 7%;
-
-    --secondary: 217 32% 17%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 217 32% 17%;
-    --muted-foreground: 215 20% 65%;
-
-    --accent: 38 92% 50%;
-    --accent-foreground: 261 85% 7%;
-
+    /* Light mode colors */
+    --background: 0 0% 100%;
+    --foreground: 222 84% 4%;
+    --card: 0 0% 100%;
+    --card-foreground: 222 84% 4%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 84% 4%;
+    --primary: 217 91% 50%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 210 40% 96%;
+    --secondary-foreground: 222 84% 4%;
+    --muted: 210 40% 96%;
+    --muted-foreground: 215 16% 47%;
+    --accent: 142 76% 36%;
+    --accent-foreground: 0 0% 100%;
     --destructive: 0 84% 60%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 217 32% 20%;
-    --input: 217 32% 20%;
-    --ring: 280 100% 70%;
-
+    --destructive-foreground: 0 0% 100%;
+    --border: 214 32% 91%;
+    --input: 214 32% 91%;
+    --ring: 217 91% 50%;
     --radius: 0.75rem;
 
-    /* Custom color palette */
-    --tech-cyan: 189 85% 68%;
-    --tech-pink: 330 85% 68%;
-    --accent-bright: 38 92% 50%;
-    --neon-green: 120 100% 50%;
-    --electric-blue: 220 100% 50%;
+    /* Tech color palette for light mode */
+    --tech-cyan: 189 85% 58%;
+    --tech-pink: 330 81% 57%;
+    --accent-bright: 142 76% 36%;
+    --neon-green: 120 100% 40%;
+    --electric-blue: 217 91% 50%;
     
     /* Gradients */
     --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)));
-    --gradient-tech: linear-gradient(135deg, hsl(var(--tech-cyan)), hsl(var(--tech-pink)));
-    
-    /* Shadows */
-    --shadow-neon: 0 0 30px hsl(var(--primary) / 0.5);
-    --shadow-glow: 0 0 20px hsl(var(--accent) / 0.3);
-
-    --sidebar-background: 261 85% 7%;
-    --sidebar-foreground: 210 40% 98%;
-    --sidebar-primary: 280 100% 70%;
-    --sidebar-primary-foreground: 261 85% 7%;
-    --sidebar-accent: 217 32% 17%;
-    --sidebar-accent-foreground: 210 40% 98%;
-    --sidebar-border: 217 32% 20%;
-    --sidebar-ring: 280 100% 70%;
   }
 
   .dark {
-    /* Keep same dark theme for consistency */
-    --background: 261 85% 7%;
+    /* Dark mode colors */
+    --background: 222 84% 4%;
     --foreground: 210 40% 98%;
-    --card: 258 84% 10%;
+    --card: 222 84% 8%;
     --card-foreground: 210 40% 98%;
-    --popover: 258 84% 10%;
+    --popover: 222 84% 8%;
     --popover-foreground: 210 40% 98%;
-    --primary: 280 100% 70%;
-    --primary-foreground: 261 85% 7%;
+    --primary: 217 91% 60%;
+    --primary-foreground: 222 84% 4%;
     --secondary: 217 32% 17%;
     --secondary-foreground: 210 40% 98%;
     --muted: 217 32% 17%;
     --muted-foreground: 215 20% 65%;
-    --accent: 38 92% 50%;
-    --accent-foreground: 261 85% 7%;
+    --accent: 142 76% 36%;
+    --accent-foreground: 210 40% 98%;
     --destructive: 0 84% 60%;
     --destructive-foreground: 210 40% 98%;
     --border: 217 32% 20%;
     --input: 217 32% 20%;
-    --ring: 280 100% 70%;
-    --sidebar-background: 261 85% 7%;
-    --sidebar-foreground: 210 40% 98%;
-    --sidebar-primary: 280 100% 70%;
-    --sidebar-primary-foreground: 261 85% 7%;
-    --sidebar-accent: 217 32% 17%;
-    --sidebar-accent-foreground: 210 40% 98%;
-    --sidebar-border: 217 32% 20%;
-    --sidebar-ring: 280 100% 70%;
+    --ring: 217 91% 60%;
+
+    /* Tech color palette for dark mode */
+    --tech-cyan: 189 85% 68%;
+    --tech-pink: 330 81% 67%;
+    --accent-bright: 142 76% 36%;
+    --neon-green: 120 100% 50%;
+    --electric-blue: 217 91% 60%;
+  }
+
+  /* Shadows and gradients */
+  .shadow-neon {
+    box-shadow: 0 0 30px hsl(var(--primary) / 0.5);
+  }
+  
+  .shadow-glow {
+    box-shadow: 0 0 20px hsl(var(--accent) / 0.3);
   }
 }
 
@@ -104,15 +89,17 @@ All colors MUST be HSL.
   body {
     @apply bg-background text-foreground;
   }
-  }
+}
   
-  /* Enhanced Professional Animations */
+  /* Optimized Professional Animations */
   .animate-float {
-    animation: float 8s ease-in-out infinite;
+    animation: float 10s ease-in-out infinite;
+    will-change: transform;
   }
   
   .animate-glow {
-    animation: glow 3s ease-in-out infinite alternate;
+    animation: glow 4s ease-in-out infinite alternate;
+    will-change: filter, box-shadow;
   }
   
   .animate-matrix {

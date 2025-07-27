@@ -1,27 +1,40 @@
 import { Button } from "@/components/ui/button";
 import { useState, useEffect } from "react";
 import { ArrowDown, Github, Linkedin, Mail, Download, Code, Sparkles, Zap } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import TypingAnimation from "./TypingAnimation";
+import profilePhoto from "@/assets/profile-photo.jpg";
 
 const Hero = () => {
+  const { t } = useTranslation();
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [floatingElements, setFloatingElements] = useState([]);
 
+  const scrollToProjects = () => {
+    const projectsElement = document.getElementById('projects');
+    if (projectsElement) {
+      projectsElement.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   useEffect(() => {
-    // Create floating tech icons
-    const elements = Array.from({ length: 12 }, (_, i) => ({
+    // Create fewer floating tech icons for better performance
+    const elements = Array.from({ length: 6 }, (_, i) => ({
       id: i,
       icon: [Code, Github, Sparkles, Zap][i % 4],
       x: Math.random() * 100,
       y: Math.random() * 100,
-      delay: i * 0.5,
-      duration: 4 + Math.random() * 3,
-      scale: 0.8 + Math.random() * 0.4
+      delay: i * 0.8,
+      duration: 6 + Math.random() * 2,
+      scale: 0.9 + Math.random() * 0.2
     }));
     setFloatingElements(elements);
 
     const handleMouseMove = (e) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
+      // Throttle mouse movement for better performance
+      requestAnimationFrame(() => {
+        setMousePosition({ x: e.clientX, y: e.clientY });
+      });
     };
 
     window.addEventListener('mousemove', handleMouseMove);
@@ -38,35 +51,38 @@ const Hero = () => {
           return (
             <div
               key={element.id}
-              className="absolute opacity-20 animate-float hover:opacity-40 transition-opacity duration-300"
+              className="absolute opacity-30 animate-float hover:opacity-60 transition-opacity duration-300"
               style={{
                 left: `${element.x}%`,
                 top: `${element.y}%`,
                 animationDelay: `${element.delay}s`,
                 animationDuration: `${element.duration}s`,
-                transform: `scale(${element.scale})`
+                transform: `scale(${element.scale})`,
+                willChange: 'transform, opacity'
               }}
             >
-              <IconComponent className="h-10 w-10 text-primary animate-glow" />
+              <IconComponent className="h-8 w-8 text-primary" />
             </div>
           );
         })}
         
-        {/* Interactive gradient orbs */}
+        {/* Optimized gradient orbs */}
         <div 
-          className="absolute w-96 h-96 rounded-full bg-gradient-to-r from-primary/30 to-tech-cyan/30 blur-3xl transition-all duration-1000 ease-out animate-scale-pulse"
+          className="absolute w-80 h-80 rounded-full bg-gradient-to-r from-primary/20 to-tech-cyan/20 blur-2xl transition-transform duration-700 ease-out"
           style={{
-            left: mousePosition.x * 0.03 + '%',
-            top: mousePosition.y * 0.03 + '%',
-            transform: `translate(-50%, -50%)`
+            left: mousePosition.x * 0.02 + '%',
+            top: mousePosition.y * 0.02 + '%',
+            transform: `translate(-50%, -50%)`,
+            willChange: 'transform'
           }}
         />
         <div 
-          className="absolute w-72 h-72 rounded-full bg-gradient-to-r from-tech-pink/25 to-accent-bright/25 blur-3xl transition-all duration-1500 ease-out animate-float"
+          className="absolute w-64 h-64 rounded-full bg-gradient-to-r from-tech-pink/15 to-accent-bright/15 blur-2xl transition-transform duration-1000 ease-out"
           style={{
-            right: mousePosition.x * 0.02 + '%',
-            bottom: mousePosition.y * 0.02 + '%',
-            transform: `translate(50%, 50%)`
+            right: mousePosition.x * 0.015 + '%',
+            bottom: mousePosition.y * 0.015 + '%',
+            transform: `translate(50%, 50%)`,
+            willChange: 'transform'
           }}
         />
         
@@ -94,9 +110,13 @@ const Hero = () => {
         <div className="max-w-4xl mx-auto">
           {/* Enhanced Profile Image */}
           <div className="w-36 h-36 mx-auto mb-8 rounded-full bg-gradient-to-r from-accent-bright to-tech-cyan p-1 animate-zoom-in animate-glow relative">
-            <div className="w-full h-full rounded-full bg-gradient-to-r from-primary to-accent-bright flex items-center justify-center text-4xl font-bold text-primary-foreground relative overflow-hidden">
+            <div className="w-full h-full rounded-full relative overflow-hidden">
+              <img 
+                src={profilePhoto} 
+                alt="Love Jayesh Ahir" 
+                className="w-full h-full object-cover rounded-full"
+              />
               <div className="absolute inset-0 bg-gradient-to-br from-transparent via-white/20 to-transparent animate-spin-slow" />
-              LA
             </div>
             {/* Orbiting dots */}
             <div className="absolute inset-0 animate-spin-slow">
@@ -106,22 +126,15 @@ const Hero = () => {
           </div>
 
           <h1 className="text-5xl md:text-7xl font-bold mb-6 animate-slide-up">
-            <span className="bg-gradient-to-r from-foreground via-primary to-accent-bright bg-clip-text text-transparent animate-glow">
-              Love Jayesh Ahir
+            <span className="text-foreground">
+              {t('hero.title')}
             </span>
           </h1>
           
           <div className="text-xl md:text-2xl text-muted-foreground mb-8 animate-slide-up animation-delay-200">
             <span>I'm a </span>
             <TypingAnimation 
-              words={[
-                "Software Engineer",
-                "Data Analyst", 
-                "Full Stack Developer",
-                "Machine Learning Engineer",
-                "Privacy Researcher",
-                "Problem Solver"
-              ]}
+              words={t('hero.roles', { returnObjects: true }) as string[]}
               typeSpeed={150}
               deleteSpeed={100}
               delayBetweenWords={2000}
@@ -129,7 +142,7 @@ const Hero = () => {
           </div>
 
           <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto animate-slide-up animation-delay-300">
-            Graduate Assistant in Software Engineering at RIT, specializing in privacy leak detection, mobile app security, and full-stack development with machine learning integration.
+            {t('hero.description')}
           </p>
 
           {/* Enhanced Contact Info */}
@@ -142,23 +155,39 @@ const Hero = () => {
 
           {/* Enhanced Action Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8 animate-slide-up animation-delay-500">
-            <Button size="lg" className="bg-gradient-to-r from-accent-bright to-tech-cyan hover:from-accent-bright/80 hover:to-tech-cyan/80 text-white shadow-neon hover:shadow-glow transition-all duration-300 hover:scale-105 animate-glow relative overflow-hidden group">
+            <Button 
+              size="lg" 
+              className="bg-gradient-to-r from-accent-bright to-tech-cyan hover:from-accent-bright/80 hover:to-tech-cyan/80 text-white shadow-neon hover:shadow-glow transition-all duration-300 hover:scale-105 animate-glow relative overflow-hidden group"
+              onClick={() => {
+                const link = document.createElement('a');
+                link.href = 'https://drive.google.com/uc?export=download&id=1parlrLtVSyYPkcCMVykO-SaqH-JHRLsM';
+                link.download = 'Love_Jayesh_Ahir_Resume.pdf';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+              }}
+            >
               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000" />
               <Download className="mr-2 h-5 w-5" />
-              Download Resume
+              {t('hero.downloadResume')}
             </Button>
-            <Button variant="outline" size="lg" className="border-accent-bright text-accent-bright hover:bg-accent-bright hover:text-white transition-all duration-300 hover:scale-105 animate-glow">
-              View Projects
+            <Button 
+              variant="outline" 
+              size="lg" 
+              onClick={scrollToProjects}
+              className="border-accent-bright text-accent-bright hover:bg-accent-bright hover:text-white transition-all duration-300 hover:scale-105 animate-glow"
+            >
+              {t('hero.viewProjects')}
             </Button>
           </div>
 
           {/* Enhanced Social Links */}
           <div className="flex justify-center gap-6 animate-slide-up animation-delay-600">
-            <a href="https://github.com" className="p-4 rounded-full bg-card/50 backdrop-blur-sm border border-border/50 hover:border-accent-bright/50 hover:shadow-glow transition-all duration-300 group hover:scale-110 animate-glow relative overflow-hidden">
+            <a href="https://github.com/la3679" target="_blank" rel="noopener noreferrer" className="p-4 rounded-full bg-card/50 backdrop-blur-sm border border-border/50 hover:border-accent-bright/50 hover:shadow-glow transition-all duration-300 group hover:scale-110 animate-glow relative overflow-hidden">
               <div className="absolute inset-0 bg-gradient-to-br from-accent-bright/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               <Github className="h-6 w-6 text-muted-foreground group-hover:text-accent-bright transition-colors relative z-10" />
             </a>
-            <a href="https://linkedin.com" className="p-4 rounded-full bg-card/50 backdrop-blur-sm border border-border/50 hover:border-tech-cyan/50 hover:shadow-[0_0_30px_rgba(6,182,212,0.5)] transition-all duration-300 group hover:scale-110 animate-glow relative overflow-hidden">
+            <a href="https://www.linkedin.com/in/love-jayesh-ahir-188356290/" target="_blank" rel="noopener noreferrer" className="p-4 rounded-full bg-card/50 backdrop-blur-sm border border-border/50 hover:border-tech-cyan/50 hover:shadow-[0_0_30px_rgba(6,182,212,0.5)] transition-all duration-300 group hover:scale-110 animate-glow relative overflow-hidden">
               <div className="absolute inset-0 bg-gradient-to-br from-tech-cyan/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               <Linkedin className="h-6 w-6 text-muted-foreground group-hover:text-tech-cyan transition-colors relative z-10" />
             </a>

@@ -108,15 +108,30 @@ const Contact = () => {
             <div className="p-8 rounded-2xl bg-card/50 backdrop-blur-sm border border-border/50 hover:border-accent-bright/30 transition-all duration-300">
               <h3 className="text-2xl font-semibold mb-6 text-tech-cyan">Send a Message</h3>
               
-              <form className="space-y-6">
+              <form 
+                className="space-y-6"
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  const formData = new FormData(e.target as HTMLFormElement);
+                  const subject = encodeURIComponent(formData.get('subject') as string || 'Contact from Portfolio');
+                  const body = encodeURIComponent(
+                    `Name: ${formData.get('firstName')} ${formData.get('lastName')}\n` +
+                    `Email: ${formData.get('email')}\n\n` +
+                    `Message: ${formData.get('message')}`
+                  );
+                  window.open(`mailto:lahir1269@gmail.com?subject=${subject}&body=${body}`);
+                }}
+              >
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-sm font-medium text-foreground mb-2">
                       First Name
                     </label>
                     <Input 
+                      name="firstName"
                       placeholder="Your first name"
                       className="bg-background/50 border-border/50 focus:border-accent-bright"
+                      required
                     />
                   </div>
                   <div>
@@ -124,8 +139,10 @@ const Contact = () => {
                       Last Name
                     </label>
                     <Input 
+                      name="lastName"
                       placeholder="Your last name"
                       className="bg-background/50 border-border/50 focus:border-accent-bright"
+                      required
                     />
                   </div>
                 </div>
@@ -135,9 +152,11 @@ const Contact = () => {
                     Email
                   </label>
                   <Input 
+                    name="email"
                     type="email"
                     placeholder="your.email@example.com"
                     className="bg-background/50 border-border/50 focus:border-accent-bright"
+                    required
                   />
                 </div>
 
@@ -146,8 +165,10 @@ const Contact = () => {
                     Subject
                   </label>
                   <Input 
+                    name="subject"
                     placeholder="What's this about?"
                     className="bg-background/50 border-border/50 focus:border-accent-bright"
+                    required
                   />
                 </div>
 
@@ -156,13 +177,16 @@ const Contact = () => {
                     Message
                   </label>
                   <Textarea 
+                    name="message"
                     placeholder="Tell me about your project or opportunity..."
                     rows={5}
                     className="bg-background/50 border-border/50 focus:border-accent-bright resize-none"
+                    required
                   />
                 </div>
 
                 <Button 
+                  type="submit"
                   size="lg" 
                   className="w-full bg-gradient-to-r from-accent-bright to-tech-cyan hover:from-accent-bright/80 hover:to-tech-cyan/80 text-white shadow-neon"
                 >

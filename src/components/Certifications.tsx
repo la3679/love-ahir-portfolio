@@ -11,49 +11,56 @@ const Certifications = () => {
       provider: "Udemy",
       date: "2023",
       status: "Completed",
-      color: "tech-cyan"
+      color: "tech-cyan",
+      link: "https://www.udemy.com/certificate/example-java"
     },
     {
       title: "Web Development",
       provider: "Udemy", 
       date: "2023",
       status: "Completed",
-      color: "accent-bright"
+      color: "accent-bright",
+      link: "https://www.udemy.com/certificate/example-web"
     },
     {
       title: "Machine Learning",
       provider: "Udemy",
       date: "2023",
       status: "Completed",
-      color: "tech-pink"
+      color: "tech-pink",
+      link: "https://www.udemy.com/certificate/example-ml"
     },
     {
       title: "Python for Data Science",
       provider: "Udemy",
       date: "2023",
       status: "Completed",
-      color: "tech-cyan"
+      color: "tech-cyan",
+      link: "https://www.udemy.com/certificate/example-python"
     },
     {
       title: "C++ Programming",
       provider: "Udemy",
       date: "2022",
       status: "Completed",
-      color: "accent-bright"
+      color: "accent-bright",
+      link: "https://www.udemy.com/certificate/example-cpp"
     },
     {
       title: "C Programming",
       provider: "CDAC",
       date: "2022",
       status: "Completed",
-      color: "tech-pink"
+      color: "tech-pink",
+      link: "https://cdac.in/certificate/example-c"
     },
     {
       title: "Data Analytics",
       provider: "Various Platforms",
       date: "2024",
       status: "In Progress",
-      color: "tech-cyan"
+      color: "tech-cyan",
+      link: "https://example.com/certificate/data-analytics"
     }
   ];
 
@@ -105,9 +112,10 @@ const Certifications = () => {
               <div 
                 key={cert.title}
                 ref={el => certificationRefs.current[index] = el}
-                className={`bg-card/80 backdrop-blur-sm rounded-2xl p-6 border border-border/50 hover:border-primary/30 transition-all duration-700 hover:shadow-[0_0_30px_hsl(var(--primary)/0.2)] hover:scale-105 group relative ${
+                className={`bg-card/80 backdrop-blur-sm rounded-2xl p-6 border border-border/50 hover:border-primary/30 transition-all duration-700 hover:shadow-[0_0_30px_hsl(var(--primary)/0.2)] hover:scale-105 group relative cursor-pointer ${
                   isVisible ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-8 scale-95'
                 }`}
+                onClick={() => window.open(cert.link, '_blank')}
               >
                 <div className="flex items-start gap-4 mb-4">
                   <div className={`p-3 rounded-xl transition-all duration-500 group-hover:scale-110 ${

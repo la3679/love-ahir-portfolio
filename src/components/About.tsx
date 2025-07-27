@@ -1,4 +1,4 @@
-import { User, GraduationCap, MapPin, Calendar } from "lucide-react";
+import { User, GraduationCap, MapPin, Calendar, ExternalLink } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 
 const About = () => {
@@ -12,7 +12,8 @@ const About = () => {
       gpa: "3.91/4.0",
       period: "Aug 2023 - Dec 2025",
       location: "Rochester, NY",
-      coursework: ["Software Architecture", "Database Design", "Software Quality Assurance", "Cloud Computing", "Non-Relational Data Storage"]
+      coursework: ["Software Architecture", "Database Design", "Software Quality Assurance", "Cloud Computing", "Non-Relational Data Storage"],
+      documentLink: "https://example.com/rit-transcript"
     },
     {
       institution: "LJ Institute of Engineering and Technology", 
@@ -20,7 +21,8 @@ const About = () => {
       gpa: "3.81/4.0",
       period: "Aug 2019 - May 2023",
       location: "Ahmedabad, India",
-      coursework: ["VLSI Design", "Python Programming", "Microprocessor Systems", "Embedded Systems", "Data Structures"]
+      coursework: ["VLSI Design", "Python Programming", "Microprocessor Systems", "Embedded Systems", "Data Structures"],
+      documentLink: "https://example.com/ljiet-degree-certificate"
     }
   ];
 
@@ -150,9 +152,14 @@ const About = () => {
                     </div>
 
                     {/* Content Card */}
-                    <div className="flex-1 bg-card/80 backdrop-blur-sm rounded-2xl p-6 border border-border/50 hover:border-primary/30 transition-all duration-500 hover:shadow-[0_0_30px_hsl(var(--primary)/0.2)] hover:scale-105 group relative">
+                    <div className="flex-1 bg-card/80 backdrop-blur-sm rounded-2xl p-6 border border-border/50 hover:border-primary/30 transition-all duration-500 hover:shadow-[0_0_30px_hsl(var(--primary)/0.2)] hover:scale-105 group relative cursor-pointer"
+                      onClick={() => window.open(edu.documentLink, '_blank')}
+                    >
                       <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-4">
-                        <h4 className="text-xl font-bold text-foreground group-hover:text-primary transition-colors duration-300">{edu.degree}</h4>
+                        <div className="flex items-center gap-2">
+                          <h4 className="text-xl font-bold text-foreground group-hover:text-primary transition-colors duration-300">{edu.degree}</h4>
+                          <ExternalLink className="h-5 w-5 text-muted-foreground group-hover:text-primary transition-colors duration-300" />
+                        </div>
                         <div className="flex items-center gap-1 text-muted-foreground text-sm mt-2 lg:mt-0">
                           <Calendar className="h-4 w-4" />
                           <span>{edu.period}</span>

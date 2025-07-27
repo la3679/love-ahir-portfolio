@@ -1,8 +1,11 @@
 import { useState, useEffect } from "react";
-import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { ThemeToggle } from "@/components/ThemeToggle";
+import { useTranslation } from "react-i18next";
 
 const Navigation = () => {
+  const { t } = useTranslation();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -16,14 +19,14 @@ const Navigation = () => {
   }, []);
 
   const navItems = [
-    { name: "Home", href: "#" },
-    { name: "About", href: "#about" },
-    { name: "Experience", href: "#experience" },
-    { name: "Projects", href: "#projects" },
-    { name: "Skills", href: "#skills" },
-    { name: "Certifications", href: "#certifications" },
-    { name: "Hobbies", href: "#hobbies" },
-    { name: "Contact", href: "#contact" }
+    { name: "Home", href: "#", key: "home" },
+    { name: t("about"), href: "#about", key: "about" },
+    { name: t("experience"), href: "#experience", key: "experience" },
+    { name: t("projects"), href: "#projects", key: "projects" },
+    { name: t("skills"), href: "#skills", key: "skills" },
+    { name: t("certifications"), href: "#certifications", key: "certifications" },
+    { name: t("hobbies"), href: "#hobbies", key: "hobbies" },
+    { name: t("contact"), href: "#contact", key: "contact" }
   ];
 
   const scrollToSection = (href: string) => {
@@ -52,10 +55,10 @@ const Navigation = () => {
           </div>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
+          <div className="hidden md:flex items-center space-x-6">
             {navItems.map((item) => (
               <button
-                key={item.name}
+                key={item.key}
                 onClick={() => scrollToSection(item.href)}
                 className="text-muted-foreground hover:text-accent-bright transition-colors duration-300 relative group"
               >
@@ -63,10 +66,12 @@ const Navigation = () => {
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent-bright transition-all duration-300 group-hover:w-full"></span>
               </button>
             ))}
+            <ThemeToggle />
           </div>
 
           {/* Mobile Menu Button */}
-          <div className="md:hidden">
+          <div className="md:hidden flex items-center gap-2">
+            <ThemeToggle />
             <Button
               variant="ghost"
               size="sm"
@@ -83,7 +88,7 @@ const Navigation = () => {
             <div className="px-2 pt-2 pb-3 space-y-1">
               {navItems.map((item) => (
                 <button
-                  key={item.name}
+                  key={item.key}
                   onClick={() => scrollToSection(item.href)}
                   className="block px-3 py-2 text-muted-foreground hover:text-accent-bright transition-colors duration-300 w-full text-left"
                 >

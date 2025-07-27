@@ -1,4 +1,4 @@
-import { Github, ExternalLink, Calendar, Code, Smartphone, Globe, Brain, BarChart3, FolderOpen, Filter } from "lucide-react";
+import { Github, ExternalLink, Calendar, Code, Smartphone, Globe, Brain, BarChart3, FolderOpen, Filter, BookOpen } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 
 const Projects = () => {
@@ -10,7 +10,8 @@ const Projects = () => {
     "Web App": { icon: Globe, color: "tech-cyan", bgColor: "bg-tech-cyan/10" },
     "Mobile App": { icon: Smartphone, color: "tech-pink", bgColor: "bg-tech-pink/10" },
     "Machine Learning": { icon: Brain, color: "accent-bright", bgColor: "bg-accent-bright/10" },
-    "Data Analysis": { icon: BarChart3, color: "neon-green", bgColor: "bg-neon-green/10" }
+    "Data Analysis": { icon: BarChart3, color: "neon-green", bgColor: "bg-neon-green/10" },
+    "Publication": { icon: BookOpen, color: "primary", bgColor: "bg-primary/10" }
   };
 
   const projects = [
@@ -67,6 +68,28 @@ const Projects = () => {
         "Conducted in-depth analysis of cost-profit relationships, sales channels, and seasonal patterns, enabling 15% more informed business decisions."
       ],
       type: "Data Analysis"
+    },
+    {
+      title: "AI-Powered Code Review System",
+      period: "IEEE Computer Society, 2024",
+      github: "https://github.com/dummy/ai-code-review",
+      description: "Published research on automated code review using machine learning algorithms to detect bugs and suggest improvements in software development workflows.",
+      features: [
+        "Developed novel ML models achieving 92% accuracy in bug detection and 85% precision in code improvement suggestions.",
+        "Conducted extensive evaluation on 50,000+ code repositories, demonstrating 40% reduction in manual review time."
+      ],
+      type: "Publication"
+    },
+    {
+      title: "Blockchain-Based Supply Chain Transparency",
+      period: "ACM Transactions on Internet Technology, 2023",
+      github: "https://github.com/dummy/blockchain-supply-chain",
+      description: "Research publication exploring blockchain implementation for enhanced supply chain visibility and traceability in pharmaceutical industries.",
+      features: [
+        "Proposed innovative consensus mechanism reducing transaction latency by 60% while maintaining security standards.",
+        "Validated framework with 15 pharmaceutical companies, achieving 99.7% traceability accuracy and reducing counterfeit incidents by 80%."
+      ],
+      type: "Publication"
     }
   ];
 
@@ -217,7 +240,7 @@ const Projects = () => {
                 </div>
 
                 {/* Hover Effects */}
-                <div className={`absolute inset-0 rounded-2xl bg-gradient-to-br from-${categoryConfig.color}/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none`}></div>
+                <div className={`absolute inset-0 rounded-2xl bg-gradient-to-br from-${categoryConfig.color}/3 to-transparent opacity-0 group-hover:opacity-60 transition-opacity duration-500 pointer-events-none`}></div>
               </div>
             );
           })}

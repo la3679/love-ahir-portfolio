@@ -16,7 +16,8 @@ const Experience = () => {
         "Collaborate with Professor Yiming Tang on advanced research in privacy leak detection, designing datasets using Monkey testing and logcat analysis to ensure robust application evaluation.",
         "Learned advanced research methods and collaborative problem-solving, strengthening skills in DEI-focused technology development."
       ],
-      color: "tech-cyan"
+      color: "tech-cyan",
+      offerLetterLink: "https://example.com/offer-letter-rit-graduate-assistant"
     },
     {
       title: "Software Engineer Intern",
@@ -31,7 +32,8 @@ const Experience = () => {
         "Upgraded legacy JSP applications with SpringBoot for advanced data visualization, improving team collaboration.",
         "Orchestrated cross-departmental efforts, stabilizing delivery schedules and enhancing project timelines by 20%."
       ],
-      color: "accent-bright"
+      color: "accent-bright",
+      offerLetterLink: "https://example.com/offer-letter-axisray"
     },
     {
       title: "Data Science and AI/ML Engineering Intern",
@@ -45,7 +47,8 @@ const Experience = () => {
         "Led the development of data pipelines and AI-driven solutions, ensuring scalable and adaptive operations.",
         "Worked on multiple AI/ML models to optimize resource allocation, reducing costs by 15%."
       ],
-      color: "tech-pink"
+      color: "tech-pink",
+      offerLetterLink: "https://example.com/offer-letter-moon-technolabs"
     }
   ];
 
@@ -113,10 +116,15 @@ const Experience = () => {
                   </div>
 
                   {/* Content Card */}
-                  <div className="flex-1 bg-card/80 backdrop-blur-sm rounded-2xl p-6 border border-border/50 hover:border-primary/30 transition-all duration-500 hover:shadow-[0_0_30px_hsl(var(--primary)/0.2)] hover:scale-105 group relative">
+                  <div className="flex-1 bg-card/80 backdrop-blur-sm rounded-2xl p-6 border border-border/50 hover:border-primary/30 transition-all duration-500 hover:shadow-[0_0_30px_hsl(var(--primary)/0.2)] hover:scale-105 group relative cursor-pointer"
+                    onClick={() => window.open(exp.offerLetterLink, '_blank')}
+                  >
                     <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between mb-4">
                       <div className="flex-1">
-                        <h3 className="text-2xl font-bold text-foreground mb-2 group-hover:text-primary transition-colors duration-300">{exp.title}</h3>
+                        <div className="flex items-center gap-2 mb-2">
+                          <h3 className="text-2xl font-bold text-foreground group-hover:text-primary transition-colors duration-300">{exp.title}</h3>
+                          <ExternalLink className="h-5 w-5 text-muted-foreground group-hover:text-primary transition-colors duration-300" />
+                        </div>
                         <div className="space-y-2">
                           <p className="text-tech-cyan font-medium text-lg">{exp.company}</p>
                           <div className="flex flex-wrap items-center gap-4 text-muted-foreground text-sm">
