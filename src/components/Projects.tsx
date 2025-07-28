@@ -15,6 +15,21 @@ const Projects = () => {
   };
 
   const projects = [
+     {
+      title: "AR Application Testing Automation Tool",
+      period: "Appium (Python/JavaScript), iOS, Android",
+      github: "", // GitHub URL not specified in the chat
+      description: "Developing a tool to automate testing for Augmented Reality (AR) applications. It focuses on checking how AR objects behave during user interactions across different apps, automating dragging, dropping, and pinching AR objects to test their movement, placement, and resizing. It supports real devices, emulators, custom test scenarios, and integration with tools like BrowserStack for enhanced testing. Initial progress includes successfully automating basic interactions within an AR application, connecting to the app, navigating initial menus, and dismissing on-screen advice. This project is currently in progress.",
+      features: [
+        "Automates dragging, dropping, and pinching AR objects.",
+        "Tests movement, placement, and resizing of AR objects.",
+        "Supports AR apps on both iOS and Android platforms.",
+        "Compatible with real devices and emulators.",
+        "Enables custom test scenarios and integration with tools like BrowserStack.",
+        "Successfully connected to an AR app, navigated initial menus, and dismissed on-screen advice using Appium."
+      ],
+      type: "Machine Learning"
+    },
     {
       title: "Pokémon MongoDB Web Application",
       period: "Flask, ReactJS, MongoDB, Google Maps API",
@@ -50,13 +65,28 @@ const Projects = () => {
     },
     {
       title: "Sentiment Analysis App",
-      period: "AWS Comprehend, Flask, ReactJS",
+      period: "AWS Comprehend, Flask, HTML, CSS, JavaScript",
       github: "https://github.com/la3679/AmazonProduct-Review-Sentiment-Analysis",
-      description: "Developed a sophisticated platform for real-time sentiment evaluation, empowering users with actionable insights from product reviews.",
+      description: "Developed a sophisticated platform for real-time sentiment evaluation of Amazon product reviews, empowering users with actionable insights.",
       features: [
-        "Integrated AWS Comprehend for advanced text analysis and ReactJS for interactive dashboards, achieving 95% accuracy and reducing decision-making time by 60%."
+        "Integrated AWS Comprehend for advanced text analysis.",
+        "Frontend built with HTML, CSS, JavaScript, and Bootstrap for interactive dashboards.",
+        "Backend powered by Python Flask.",
+        "Analyzes sentiment (positive, negative, neutral) from product reviews."
       ],
       type: "Machine Learning"
+    },
+    {
+      title: "Car Sales Network Visualization",
+      period: "Neo4j, D3.js, Python",
+      github: "https://github.com/la3679/Car-Sales-Network-Visualization", // Assuming a GitHub repo based on the name format
+      description: "A project focused on visualizing a large car sales network using Neo4j and D3.js, representing relationships between Buyers, Cars, and Countries. The data includes over 1 million records.",
+      features: [
+        "Cleaned and loaded over 1M records into Neo4j, ensuring uniqueness constraints for Buyers, Cars, and Countries.",
+        "Created a D3.js based frontend for dynamic graph visualization and custom Cypher queries.",
+        "Demonstrates complex relationships such as buyers linked through cars sold in the same country."
+      ],
+      type: "Web App"
     },
     {
       title: "Analyzing Amazon Sales Data",
@@ -70,26 +100,202 @@ const Projects = () => {
       type: "Data Analysis"
     },
     {
-      title: "AI-Powered Code Review System",
-      period: "IEEE Computer Society, 2024",
-      github: "https://github.com/dummy/ai-code-review",
-      description: "Published research on automated code review using machine learning algorithms to detect bugs and suggest improvements in software development workflows.",
+      title: "RIT Apiary Project",
+      period: "MongoDB, Python",
+      github: "https://github.com/la3679/RIT-Apiary-Project", // Assuming a GitHub repo based on the name format
+      description: "A project focused on loading and managing apiary data into a MongoDB time series collection for analysis. It handles data cleaning, missing values, and efficient storage.",
       features: [
-        "Developed novel ML models achieving 92% accuracy in bug detection and 85% precision in code improvement suggestions.",
-        "Conducted extensive evaluation on 50,000+ code repositories, demonstrating 40% reduction in manual review time."
+        "Script to clean column names, handle missing values, and store data as a time series collection in MongoDB.",
+        "Connects to MongoDB and creates a time series collection with `timestamp` and `metadata.hive_id`.",
+        "Processes multiple CSV files, cleaning and importing data efficiently."
+      ],
+      type: "Data Analysis"
+    },
+    {
+      title: "RIT Library Service Tracker",
+      period: "Java, Design Patterns (Visitor)",
+      github: "https://github.com/la3679/LibraryServiceTrackerRIT",
+      description: "This application demonstrates the usage of the Visitor pattern to model various library services offered at the Rochester Institute of Technology (RIT), allowing users to interact and view detailed information.",
+      features: [
+        "Showcases the Visitor design pattern for flexible and extensible service management.",
+        "Separates service actions from service objects, simplifying modifications and additions.",
+        "Provides detailed information about each library service."
+      ],
+      type: "Web App" // Categorized as Web App since it's an application showcasing functionality.
+    },
+    {
+      title: "Weather Forecast Project",
+      period: "OpenWeatherMap API, Python",
+      github: "https://github.com/la3679/Weather-Forecast-Project", // Assuming a GitHub repo based on the name format
+      description: "A project that generates daily weather forecasts for selected cities in the UK, India, and the US by retrieving real-time data from the OpenWeatherMap API and visualizing it.",
+      features: [
+        "Retrieves real-time temperature and humidity data for predefined cities.",
+        "Visualizes weather forecasts in a well-designed image format.",
+        "Outputs are saved as both PNG and PDF files for sharing and archiving."
+      ],
+      type: "Data Analysis" // Categorized as Data Analysis due to focus on data retrieval and visualization/reporting.
+    },
+    {
+      title: "Meme Analyzer",
+      period: "Flask, HTML, CSS, JavaScript, EasyOCR, Google GenAI",
+      github: "https://github.com/la3679/Meme-Analyzer", // Assuming a GitHub repo based on the name format
+      description: "A fun and interactive web application that allows users to upload a meme image and a chat file to analyze the meme using OCR and Google GenAI for detailed explanations.",
+      features: [
+        "Extracts text from meme images using EasyOCR.",
+        "Analyzes memes using Google GenAI to determine meme type, sentiment, and generate humorous explanations.",
+        "User-friendly interface for uploading images and chat files."
+      ],
+      type: "Machine Learning"
+    },
+
+    {
+      title: "CodeGuard: Automated Review Solution",
+      period: "Research Project",
+      github: "https://drive.google.com/file/d/1UgmPaxPO00T3QkmT6q7O4NUmrp3UcC2m/view?usp=sharing", // Retaining original GitHub if no new one is provided in the PDF
+      description: "Introduces a transformative approach to the traditional code review process within software development by integrating advanced machine learning algorithms and automated tools. It aims to autonomously analyze source code, rigorously ensuring code quality and security compliance while proactively identifying and addressing vulnerabilities and errors.",
+      features: [
+        "Significantly enhances the speed, accuracy, and consistency of code reviews.",
+        "Optimizes developer productivity and reduces error rates.",
+        "Aims to mitigate the subjectivity associated with human reviews and to standardize the assessment criteria across different development teams and projects."
+      ],
+      type: "Publication"
+    },
+     {
+      title: "Automated Test Oracle Generation using Neural Methods",
+      period: "Research Paper",
+      github: "https://github.com/pateljheel/swen777-rp-toga", // No GitHub provided in the PDF
+      description: "Addresses the significant challenge of automated test oracle generation in software testing. It uses advanced machine learning techniques (TOGA) to create test oracles that help detect bugs by predicting the expected behavior of the software under test. The paper replicates the original TOGA approach and introduces an enhancement by including the method implementations during the training process of assertion oracle inference.",
+      features: [
+        "Replicates the original TOGA approach to make a strong baseline for future improvements.",
+        "Investigates whether having access to more detailed information about the methods can lead to better test oracle predictions and improved bug detection.",
+        "Uses a transformer-based model to generate two types of test oracles: exceptional oracles and assertion oracles."
       ],
       type: "Publication"
     },
     {
-      title: "Blockchain-Based Supply Chain Transparency",
-      period: "ACM Transactions on Internet Technology, 2023",
-      github: "https://github.com/dummy/blockchain-supply-chain",
-      description: "Research publication exploring blockchain implementation for enhanced supply chain visibility and traceability in pharmaceutical industries.",
+      title: "An In-Depth Analysis of the Failure of the London Ambulance Service's Computer-Aided Dispatch System",
+      period: "Research Case Study, 1992 (Failure Year)",
+      github: "https://drive.google.com/file/d/1ubVAt6MUKOvj-QRprD8_JI5fafnaTs1J/view?usp=sharing", // No GitHub provided in the PDF
+      description: "This case study provides an in-depth analysis of the failure that occurred in the London Ambulance Service Computer-Aided Despatch (LASCAD) system in 1992. The LASCAD project was delayed by 9 months and failed within 2 weeks. The analysis identifies absent practices, poor design decisions, and architectural approaches that could have been implemented differently to prevent the failure.",
       features: [
-        "Proposed innovative consensus mechanism reducing transaction latency by 60% while maintaining security standards.",
-        "Validated framework with 15 pharmaceutical companies, achieving 99.7% traceability accuracy and reducing counterfeit incidents by 80%."
+        "Provides an overview of LASCAD from an architectural perspective and explains which architectural decisions contributed to the system's failure.",
+        "Identifies absent practices, poor design decisions, and architectural approaches that could have been implemented differently to prevent the failure.",
+        "Discusses improvements in software development workflows that aim to enhance outcomes for businesses and customers.",
+        "Highlights the importance of studying software system failures to gain critical insights and improve the reliability of software systems."
       ],
       type: "Publication"
+    },
+    {
+      title: "Comprehensive Analysis of Pro-Government Vote Prediction in ECtHR Using Machine Learning",
+      period: "Research Paper",
+      github: "https://drive.google.com/file/d/1iid_soqeaXz8JJlYstiQIq-jKYuM33BQ/view?usp=sharing", // No GitHub provided in the PDF
+      description: "This study presents a comprehensive machine learning pipeline to predict pro-government votes in the European Court of Human Rights (ECtHR). It combines structured metadata and semantic legal text embeddings.",
+      features: [
+        "Applies four classification algorithms: Logistic Regression, Support Vector Machines (SVM), Random Forest, and XGBoost.",
+        "Ensemble XGBoost models significantly outperform others, achieving a validation accuracy of 95.93% and test accuracy of over 90.53%.",
+        "Provides detailed data analysis, explains modeling techniques, and evaluates model performance."
+      ],
+      type: "Publication"
+    },
+    {
+      title: "Supermarket Sales Data Analysis",
+      period: "Power BI, Data Analysis",
+      github: "https://github.com/la3679/PowerBI", // Assuming this is part of the broader data analytics repo
+      description: "A comprehensive Power BI dashboard providing insights into supermarket sales data, offering analysis of sales trends and product performance.",
+      features: [
+        "Analyzes sales trends and product performance.",
+        "Part of a diverse collection of Power BI dashboards and projects."
+      ],
+      type: "Data Analysis"
+    },
+    {
+      title: "Profit Dashboard",
+      period: "Power BI, Financial Analysis",
+      github: "https://github.com/la3679/PowerBI", // Assuming this is part of the broader data analytics repo
+      description: "An executive-level financial snapshot dashboard focusing on gross profit analysis and sales trends within Power BI.",
+      features: [
+        "Focuses on gross profit analysis and sales trends.",
+        "Provides an executive-level financial overview."
+      ],
+      type: "Data Analysis"
+    },
+    {
+      title: "KPI Drill-Down Dashboard",
+      period: "Power BI, Performance Metrics",
+      github: "https://github.com/la3679/PowerBI", // Assuming this is part of the broader data analytics repo
+      description: "A Power BI KPI drill-down dashboard presenting detailed metrics and performance indicators for in-depth analysis.",
+      features: [
+        "Presents detailed metrics and performance indicators.",
+        "Designed for in-depth analysis."
+      ],
+      type: "Data Analysis"
+    },
+    {
+      title: "Revenue Trend Analyzer",
+      period: "Power BI, Revenue Analysis",
+      github: "https://github.com/la3679/PowerBI", // Assuming this is part of the broader data analytics repo
+      description: "A Power BI dashboard that visualizes revenue growth and patterns over time, serving as a revenue trend analyzer.",
+      features: [
+        "Visualizes revenue growth and patterns over time.",
+        "Analyzes revenue trends."
+      ],
+      type: "Data Analysis"
+    },
+    {
+      title: "GeoSales Sales Heatmap",
+      period: "Power BI, Geographic Data",
+      github: "https://github.com/la3679/PowerBI", // Assuming this is part of the broader data analytics repo
+      description: "This Power BI sales heatmap visualizer uses geographic data to display sales density and distribution.",
+      features: [
+        "Uses geographic data to display sales density and distribution.",
+        "Provides a visual representation of sales hotspots."
+      ],
+      type: "Data Analysis"
+    },
+    {
+      title: "HumanDev Global Progress Insight",
+      period: "Power BI, Development Indicators",
+      github: "https://github.com/la3679/PowerBI", // Assuming this is part of the broader data analytics repo
+      description: "A Power BI global progress insight tool showcasing development indicators across different regions.",
+      features: [
+        "Showcases development indicators across different regions.",
+        "Provides global progress insights."
+      ],
+      type: "Data Analysis"
+    },
+    {
+      title: "BlinkIt Sales Operations Intelligence",
+      period: "Power BI, Grocery Operations",
+      github: "https://github.com/la3679/PowerBI", // Assuming this is part of the broader data analytics repo
+      description: "A Power BI grocery operations intelligence dashboard tracking sales and performance metrics for BlinkIt.",
+      features: [
+        "Tracks sales and performance metrics for BlinkIt.",
+        "Provides intelligence on grocery operations."
+      ],
+      type: "Data Analysis"
+    },
+    {
+      title: "Prime Video Streaming Content Analyzer",
+      period: "Power BI, Streaming Analytics",
+      github: "https://github.com/la3679/PowerBI", // Assuming this is part of the broader data analytics repo
+      description: "A Power BI streaming content analyzer dashboard providing insights into titles, genres, and user engagement on Prime Video.",
+      features: [
+        "Provides insights into titles, genres, and user engagement.",
+        "Analyzes streaming content on Prime Video."
+      ],
+      type: "Data Analysis"
+    },
+    {
+      title: "Indian College Recommendation System",
+      period: "Internship Project (Java), Jan-May 2023",
+      github: "",
+      description: "An internship project that involved understanding programming languages, tools, and technologies, along with working on and implementing various modules of a larger project. This work was submitted as part of the requirements for a Bachelor of Engineering degree in Electronics & Communication Engineering.",
+      features: [
+        "Involved understanding a programming language (Java) and relevant tools & technology.",
+        "Worked on different modules of a project.",
+        "Implemented project components based on acquired knowledge."
+      ],
+      type: "Machine Learning"
     }
   ];
 

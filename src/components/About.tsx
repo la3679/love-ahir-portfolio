@@ -13,7 +13,7 @@ const About = () => {
       period: "Aug 2023 - Dec 2025",
       location: "Rochester, NY",
       coursework: ["Software Architecture", "Database Design", "Software Quality Assurance", "Cloud Computing", "Non-Relational Data Storage"],
-      documentLink: "https://example.com/rit-transcript"
+      documentLink: "https://drive.google.com/file/d/1CLQWs_LEnGDcOs5_CRYSTpJ3bPdpjjl4/view?usp=sharing"
     },
     {
       institution: "LJ Institute of Engineering and Technology", 
@@ -22,7 +22,7 @@ const About = () => {
       period: "Aug 2019 - May 2023",
       location: "Ahmedabad, India",
       coursework: ["VLSI Design", "Python Programming", "Microprocessor Systems", "Embedded Systems", "Data Structures"],
-      documentLink: "https://example.com/ljiet-degree-certificate"
+      documentLink: "https://drive.google.com/file/d/1xjhIE7WPiRIKxO9jHZe8ZK7wySq7NRr1/view?usp=sharing"
     }
   ];
 

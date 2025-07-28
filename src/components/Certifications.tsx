@@ -7,44 +7,52 @@ const Certifications = () => {
 
   const certifications = [
     {
-      title: "Java Programming",
-      provider: "Udemy",
-      date: "2023",
+      title: "Microsoft Azure Fundamentals (AZ-900) Cert Prep",
+      provider: "Microsoft & LinkedIn Learning",
+      date: "Jun 2025",
       status: "Completed",
       color: "tech-cyan",
-      link: "https://www.udemy.com/certificate/example-java"
+      link: "https://www.linkedin.com/learning/certificates/53b8f4559dd722ff7fb5e3a6438894f33da0e7cb07636ca3936ff99f150ab5bc"
     },
     {
-      title: "Web Development",
-      provider: "Udemy", 
-      date: "2023",
+      title: "Learning Data Analytics: 1 Foundations",
+      provider: "LinkedIn Learning",
+      date: "Jun 2025",
       status: "Completed",
       color: "accent-bright",
-      link: "https://www.udemy.com/certificate/example-web"
+      link: "https://www.linkedin.com/learning/certificates/b3e66a7d7344afa613aea09e7dba21533b25eb62d2d6506917ca3e6f1f6ca3f3"
     },
     {
-      title: "Machine Learning",
-      provider: "Udemy",
-      date: "2023",
+      title: "Career Essentials in Data Analysis",
+      provider: "Microsoft and LinkedIn",
+      date: "Jun 2025",
       status: "Completed",
       color: "tech-pink",
-      link: "https://www.udemy.com/certificate/example-ml"
+      link: "https://www.linkedin.com/learning/certificates/b7e85032290a4f063ef4905f75d28d23df2ef7d98a738df62e79268b6ce3eb14"
     },
     {
-      title: "Python for Data Science",
-      provider: "Udemy",
-      date: "2023",
+      title: "Python Essential Training",
+      provider: "LinkedIn Learning",
+      date: "May 2025",
       status: "Completed",
       color: "tech-cyan",
-      link: "https://www.udemy.com/certificate/example-python"
+      link: "https://www.linkedin.com/learning/certificates/4c32a950aef5b51ab3e526d3daa47af2bdb69bc99c58400c61d4fb4243674cce"
     },
     {
-      title: "C++ Programming",
-      provider: "Udemy",
-      date: "2022",
+      title: "Introduction to Career Skills in Data Analytics",
+      provider: "LinkedIn Learning",
+      date: "Jun 2025",
       status: "Completed",
       color: "accent-bright",
-      link: "https://www.udemy.com/certificate/example-cpp"
+      link: "https://www.linkedin.com/learning/certificates/a6b15365103a23ac6ac545c9d987b73904128f9d31e1f3cffc0e0a327a37f24a?trk=share_certificate"
+    },
+    {
+      title: "Learning Data Analytics Part 2: Extending and Applying Core Knowledge",
+      provider: "LinkedIn Learning",
+      date: "June 1, 2025",
+      status: "Completed",
+      color: "tech-pink", // Choosing a color, assuming it fits with the existing theme
+      link: "https://www.linkedin.com/learning/certificates/83056fccabeba7e7f5127c74177147622ced93f8e9d1cdc5f202a62bb7b046f1?trk=share_certificate" // Link was not provided, leaving it empty for now
     },
     {
       title: "C Programming",
@@ -52,15 +60,7 @@ const Certifications = () => {
       date: "2022",
       status: "Completed",
       color: "tech-pink",
-      link: "https://cdac.in/certificate/example-c"
-    },
-    {
-      title: "Data Analytics",
-      provider: "Various Platforms",
-      date: "2024",
-      status: "In Progress",
-      color: "tech-cyan",
-      link: "https://example.com/certificate/data-analytics"
+      link: "https://drive.google.com/file/d/1WQ3hoFj-Nefw_vXWt_k6-8nWN8Q42ZxN/view?usp=sharing"
     }
   ];
 

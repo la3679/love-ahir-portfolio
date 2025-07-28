@@ -17,7 +17,7 @@ const Experience = () => {
         "Learned advanced research methods and collaborative problem-solving, strengthening skills in DEI-focused technology development."
       ],
       color: "tech-cyan",
-      offerLetterLink: "https://example.com/offer-letter-rit-graduate-assistant"
+      offerLetterLink: "https://www.rit.edu/"
     },
     {
       title: "Software Engineer Intern",
@@ -33,7 +33,7 @@ const Experience = () => {
         "Orchestrated cross-departmental efforts, stabilizing delivery schedules and enhancing project timelines by 20%."
       ],
       color: "accent-bright",
-      offerLetterLink: "https://example.com/offer-letter-axisray"
+      offerLetterLink: "https://drive.google.com/file/d/1y6q0oPhLX4bjA9EYl9T6jEtiki8fRQOw/view?usp=sharing"
     },
     {
       title: "Data Science and AI/ML Engineering Intern",
@@ -48,7 +48,7 @@ const Experience = () => {
         "Worked on multiple AI/ML models to optimize resource allocation, reducing costs by 15%."
       ],
       color: "tech-pink",
-      offerLetterLink: "https://example.com/offer-letter-moon-technolabs"
+      offerLetterLink: "https://drive.google.com/file/d/1M_VIli5rw8OYskoQgfm7xkrik3fm2nOT/view?usp=sharing"
     }
   ];
 

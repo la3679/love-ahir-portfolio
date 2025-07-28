@@ -15,7 +15,7 @@ const resources = {
       
       // Hero section
       "hero.title": "Love Jayesh Ahir",
-      "hero.roles": ["Software Engineer", "Data Analyst", "Full Stack Developer", "Machine Learning Engineer", "Privacy Researcher", "Problem Solver"],
+      "hero.roles": ["Software Engineer", "Data Analyst", "Full Stack Developer", "UI/UX Designer", "Programmer"],
       "hero.description": "Graduate Assistant in Software Engineering at RIT, specializing in privacy leak detection, mobile app security, and full-stack development with machine learning integration.",
       "hero.downloadResume": "Download Resume",
       "hero.viewProjects": "View Projects",
