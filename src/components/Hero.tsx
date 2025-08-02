@@ -18,8 +18,12 @@ const Hero = () => {
   };
 
   useEffect(() => {
-    // Create fewer floating tech icons for better performance
-    const elements = Array.from({ length: 6 }, (_, i) => ({
+    const isMobile = window.innerWidth < 768;
+    const isLowPowerDevice = navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4;
+    
+    // Reduce floating elements on mobile
+    const elementCount = isMobile || isLowPowerDevice ? 3 : 6;
+    const elements = Array.from({ length: elementCount }, (_, i) => ({
       id: i,
       icon: [Code, Github, Sparkles, Zap][i % 4],
       x: Math.random() * 100,
@@ -30,15 +34,25 @@ const Hero = () => {
     }));
     setFloatingElements(elements);
 
+    // Disable mouse tracking on mobile for performance
     const handleMouseMove = (e) => {
-      // Throttle mouse movement for better performance
-      requestAnimationFrame(() => {
-        setMousePosition({ x: e.clientX, y: e.clientY });
-      });
+      if (!isMobile && !isLowPowerDevice) {
+        // Throttle mouse movement for better performance
+        requestAnimationFrame(() => {
+          setMousePosition({ x: e.clientX, y: e.clientY });
+        });
+      }
     };
 
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
+    if (!isMobile) {
+      window.addEventListener('mousemove', handleMouseMove, { passive: true });
+    }
+    
+    return () => {
+      if (!isMobile) {
+        window.removeEventListener('mousemove', handleMouseMove);
+      }
+    };
   }, []);
 
   return (
@@ -66,42 +80,42 @@ const Hero = () => {
           );
         })}
         
-        {/* Optimized gradient orbs */}
+        {/* Optimized gradient orbs - reduced on mobile */}
         <div 
-          className="absolute w-80 h-80 rounded-full bg-gradient-to-r from-primary/20 to-tech-cyan/20 blur-2xl transition-transform duration-700 ease-out"
+          className="absolute w-60 md:w-80 h-60 md:h-80 rounded-full bg-gradient-to-r from-primary/20 to-tech-cyan/20 blur-2xl transition-transform duration-700 ease-out"
           style={{
-            left: mousePosition.x * 0.02 + '%',
-            top: mousePosition.y * 0.02 + '%',
+            left: (window.innerWidth >= 768 ? mousePosition.x * 0.02 : 10) + '%',
+            top: (window.innerWidth >= 768 ? mousePosition.y * 0.02 : 20) + '%',
             transform: `translate(-50%, -50%)`,
-            willChange: 'transform'
+            willChange: window.innerWidth >= 768 ? 'transform' : 'none'
           }}
         />
         <div 
-          className="absolute w-64 h-64 rounded-full bg-gradient-to-r from-tech-pink/15 to-accent-bright/15 blur-2xl transition-transform duration-1000 ease-out"
+          className="absolute w-48 md:w-64 h-48 md:h-64 rounded-full bg-gradient-to-r from-tech-pink/15 to-accent-bright/15 blur-2xl transition-transform duration-1000 ease-out"
           style={{
-            right: mousePosition.x * 0.015 + '%',
-            bottom: mousePosition.y * 0.015 + '%',
+            right: (window.innerWidth >= 768 ? mousePosition.x * 0.015 : 15) + '%',
+            bottom: (window.innerWidth >= 768 ? mousePosition.y * 0.015 : 30) + '%',
             transform: `translate(50%, 50%)`,
-            willChange: 'transform'
+            willChange: window.innerWidth >= 768 ? 'transform' : 'none'
           }}
         />
         
-        {/* Animated geometric shapes */}
-        <div className="absolute top-20 left-10 w-32 h-32 border-2 border-primary/30 rotate-45 animate-spin-slow opacity-20" />
-        <div className="absolute bottom-20 right-20 w-24 h-24 border-2 border-tech-cyan/40 animate-bounce-slow opacity-30" />
-        <div className="absolute top-1/2 right-10 w-16 h-16 bg-gradient-to-r from-accent-bright/20 to-tech-pink/20 rounded-full animate-orbit" />
+        {/* Animated geometric shapes - hidden on mobile for performance */}
+        <div className="hidden md:block absolute top-20 left-10 w-32 h-32 border-2 border-primary/30 rotate-45 animate-spin-slow opacity-20" />
+        <div className="hidden md:block absolute bottom-20 right-20 w-24 h-24 border-2 border-tech-cyan/40 animate-bounce-slow opacity-30" />
+        <div className="hidden md:block absolute top-1/2 right-10 w-16 h-16 bg-gradient-to-r from-accent-bright/20 to-tech-pink/20 rounded-full animate-orbit" />
         
-        {/* Floating code snippets with glow */}
-        <div className="absolute top-20 left-10 opacity-15 animate-float font-mono text-sm text-primary animate-glow">
+        {/* Floating code snippets with glow - reduced on mobile */}
+        <div className="hidden lg:block absolute top-20 left-10 opacity-15 animate-float font-mono text-sm text-primary animate-glow">
           const passion = "unlimited";
         </div>
-        <div className="absolute bottom-20 right-10 opacity-15 animate-float font-mono text-sm text-tech-cyan animate-glow" style={{ animationDelay: '1s' }}>
+        <div className="hidden lg:block absolute bottom-20 right-10 opacity-15 animate-float font-mono text-sm text-tech-cyan animate-glow" style={{ animationDelay: '1s' }}>
           while(coding) inspire();
         </div>
-        <div className="absolute top-1/2 left-5 opacity-15 animate-float font-mono text-sm text-accent-bright animate-glow" style={{ animationDelay: '2s' }}>
+        <div className="hidden lg:block absolute top-1/2 left-5 opacity-15 animate-float font-mono text-sm text-accent-bright animate-glow" style={{ animationDelay: '2s' }}>
           {"{ innovation: 'always' }"}
         </div>
-        <div className="absolute top-1/3 right-1/4 opacity-15 animate-float font-mono text-sm text-tech-pink animate-glow" style={{ animationDelay: '3s' }}>
+        <div className="hidden lg:block absolute top-1/3 right-1/4 opacity-15 animate-float font-mono text-sm text-tech-pink animate-glow" style={{ animationDelay: '3s' }}>
           async function dream() {`{ await reality; }`}
         </div>
       </div>

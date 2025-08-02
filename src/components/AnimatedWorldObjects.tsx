@@ -10,14 +10,19 @@ const AnimatedWorldObjects = () => {
     const svg = d3.select(svgRef.current);
     const width = window.innerWidth;
     const height = window.innerHeight;
+    const isMobile = width < 768;
+    const isLowPowerDevice = navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4;
 
     svg.attr('width', width).attr('height', height);
 
     // Clear previous content
     svg.selectAll('*').remove();
 
+    // Reduce particle count on mobile and low-power devices
+    const particleCount = isMobile || isLowPowerDevice ? 15 : 30;
+    
     // Create floating particles with tech symbols
-    const particles = Array.from({ length: 50 }, (_, i) => ({
+    const particles = Array.from({ length: particleCount }, (_, i) => ({
       id: i,
       x: Math.random() * width,
       y: Math.random() * height,
@@ -29,8 +34,9 @@ const AnimatedWorldObjects = () => {
       pulseSpeed: Math.random() * 0.02 + 0.01
     }));
 
-    // Create constellation network
-    const nodes = Array.from({ length: 20 }, (_, i) => ({
+    // Create constellation network - reduce nodes on mobile
+    const nodeCount = isMobile || isLowPowerDevice ? 8 : 15;
+    const nodes = Array.from({ length: nodeCount }, (_, i) => ({
       id: i,
       x: Math.random() * width,
       y: Math.random() * height,
@@ -51,11 +57,12 @@ const AnimatedWorldObjects = () => {
       });
     });
 
-    // Matrix rain effect
+    // Matrix rain effect - reduce on mobile
     const matrixChars = '01010101ABCDEFGHIJKLMNOPQRSTUVWXYZ</>{}()[]';
-    const matrixColumns = Array.from({ length: Math.floor(width / 20) }, (_, i) => ({
-      x: i * 20,
-      drops: Array.from({ length: Math.floor(Math.random() * 5 + 1) }, () => ({
+    const columnSpacing = isMobile || isLowPowerDevice ? 40 : 20;
+    const matrixColumns = Array.from({ length: Math.floor(width / columnSpacing) }, (_, i) => ({
+      x: i * columnSpacing,
+      drops: Array.from({ length: Math.floor(Math.random() * (isMobile ? 2 : 4) + 1) }, () => ({
         y: Math.random() * height,
         char: matrixChars[Math.floor(Math.random() * matrixChars.length)],
         speed: Math.random() * 2 + 0.5,
@@ -92,11 +99,12 @@ const AnimatedWorldObjects = () => {
         .attr('stop-opacity', 0.3);
     });
 
-    // Create animated background grid
-    const gridGroup = svg.append('g').attr('class', 'grid');
-    const gridSpacing = 100;
-    
-    for (let x = 0; x <= width; x += gridSpacing) {
+    // Create animated background grid - disable on mobile for performance
+    if (!isMobile && !isLowPowerDevice) {
+      const gridGroup = svg.append('g').attr('class', 'grid');
+      const gridSpacing = 100;
+      
+      for (let x = 0; x <= width; x += gridSpacing) {
       gridGroup.append('line')
         .attr('x1', x)
         .attr('y1', 0)
@@ -128,6 +136,7 @@ const AnimatedWorldObjects = () => {
         .attr('values', '0;10')
         .attr('dur', '4s')
         .attr('repeatCount', 'indefinite');
+      }
     }
 
     // Draw constellation connections with energy flow
@@ -298,10 +307,11 @@ const AnimatedWorldObjects = () => {
         });
     }
 
-    // Create animated waves
+    // Create animated waves - reduce on mobile
     const waveGroup = svg.append('g').attr('class', 'waves');
+    const waveCount = isMobile || isLowPowerDevice ? 2 : 4;
     
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < waveCount; i++) {
       const wave = waveGroup.append('path')
         .attr('fill', 'none')
         .attr('stroke', `url(#gradient-${i % gradientColors.length})`)
@@ -324,7 +334,9 @@ const AnimatedWorldObjects = () => {
         wave.attr('d', pathData);
       };
 
-      setInterval(animate, 50);
+      // Reduce animation frequency on mobile
+      const interval = isMobile || isLowPowerDevice ? 100 : 50;
+      setInterval(animate, interval);
     }
 
     // Animation loop

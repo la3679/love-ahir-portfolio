@@ -1,7 +1,9 @@
 import { Briefcase, Calendar, MapPin, ExternalLink } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
+import { useTranslation } from "react-i18next";
 
 const Experience = () => {
+  const { t } = useTranslation();
   const [visibleExperiences, setVisibleExperiences] = useState(new Set());
   const experienceRefs = useRef([]);
 
@@ -84,10 +86,10 @@ const Experience = () => {
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="text-4xl font-bold mb-4 bg-gradient-to-r from-accent-bright to-tech-cyan bg-clip-text text-transparent">
-            Experience
+            {t('experience.title')}
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Professional journey in software engineering, research, and machine learning
+            {t('experience.subtitle')}
           </p>
         </div>
 
@@ -148,7 +150,7 @@ const Experience = () => {
                     <div className="space-y-4">
                       <h4 className="font-semibold text-foreground flex items-center gap-2">
                         <div className="w-2 h-2 rounded-full bg-primary"></div>
-                        Key Achievements:
+                        {t('experience.achievements')}
                       </h4>
                       <ul className="space-y-3">
                         {exp.achievements.map((achievement, achIndex) => (

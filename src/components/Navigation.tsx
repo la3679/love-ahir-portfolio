@@ -31,10 +31,23 @@ const Navigation = () => {
 
   const scrollToSection = (href: string) => {
     if (href === "#") {
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      window.scrollTo({ 
+        top: 0, 
+        behavior: "smooth",
+        // Enhanced smooth scrolling
+      });
     } else {
       const element = document.querySelector(href);
-      element?.scrollIntoView({ behavior: "smooth" });
+      if (element) {
+        // Calculate offset for fixed navbar
+        const navHeight = 64; // 4rem = 64px
+        const elementPosition = (element as HTMLElement).offsetTop - navHeight;
+        
+        window.scrollTo({
+          top: elementPosition,
+          behavior: "smooth"
+        });
+      }
     }
     setIsMobileMenuOpen(false);
   };

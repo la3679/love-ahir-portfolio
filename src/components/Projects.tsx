@@ -1,7 +1,9 @@
 import { Github, ExternalLink, Calendar, Code, Smartphone, Globe, Brain, BarChart3, FolderOpen, Filter, BookOpen } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
+import { useTranslation } from "react-i18next";
 
 const Projects = () => {
+  const { t } = useTranslation();
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [visibleProjects, setVisibleProjects] = useState(new Set());
   const projectRefs = useRef([]);
@@ -299,6 +301,18 @@ const Projects = () => {
     }
   ];
 
+  const getFilterOptionText = (option: string) => {
+    switch(option) {
+      case "All": return t('projects.allCategory');
+      case "Web App": return t('projects.webApp');
+      case "Mobile App": return t('projects.mobileApp');
+      case "Machine Learning": return t('projects.machineLearning');
+      case "Data Analysis": return t('projects.dataAnalysis');
+      case "Publication": return t('projects.publication');
+      default: return option;
+    }
+  };
+
   const filterOptions = ["All", ...Object.keys(projectCategories)];
   const filteredProjects = selectedCategory === "All" 
     ? projects 
@@ -336,11 +350,11 @@ const Projects = () => {
           <div className="flex items-center justify-center gap-3 mb-4">
             <FolderOpen className="h-8 w-8 text-primary" />
             <h2 className="text-4xl font-bold bg-gradient-to-r from-primary to-tech-cyan bg-clip-text text-transparent">
-              Featured Projects
+              {t('projects.title')}
             </h2>
           </div>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            A showcase of innovative solutions spanning web development, mobile apps, and machine learning
+            {t('projects.subtitle')}
           </p>
         </div>
 
@@ -365,7 +379,7 @@ const Projects = () => {
                         : `${config.bgColor} text-${config.color} hover:bg-${config.color}/20`
                     }`}
                   >
-                    {option}
+                    {getFilterOptionText(option)}
                   </button>
                 );
               })}
@@ -426,7 +440,7 @@ const Projects = () => {
 
                 {/* Features */}
                 <div className="space-y-3">
-                  <h4 className="font-semibold text-foreground text-sm">Key Achievements:</h4>
+                  <h4 className="font-semibold text-foreground text-sm">{t('projects.features')}</h4>
                   <ul className="space-y-2">
                     {project.features.map((feature, featureIndex) => (
                       <li 

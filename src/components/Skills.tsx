@@ -1,43 +1,45 @@
 import { Code, Database, Cloud, Wrench, Brain, Palette } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
+import { useTranslation } from "react-i18next";
 
 const Skills = () => {
+  const { t } = useTranslation();
   const [visibleCategories, setVisibleCategories] = useState(new Set());
   const categoryRefs = useRef([]);
 
   const skillCategories = [
     {
-      title: "Programming Languages & Concepts",
+      title: t('skills.programming'),
       skills: ["Python", "Java", "C", "C++", "JavaScript", "TypeScript", "SQL", "HTML5", "CSS3", "R", "MATLAB", "Data Structures", "Algorithms", "OOP", "Full Stack Development", "JSON", "XML", "API Design", "Web Scraping", "Agile Methodologies", "Scrum Framework", "UI/UX Principles"],
       color: "tech-cyan",
       icon: Code
     },
     {
-      title: "Data Science & Analytics",
+      title: t('skills.dataScience'),
       skills: ["Pandas", "NumPy", "Scikit-learn", "Matplotlib", "Seaborn", "Power BI", "Tableau", "Jupyter Notebooks", "AWS Comprehend", "Elasticsearch", "Data Visualization", "Data Cleaning", "EDA", "A/B Testing", "Regression Modeling", "Time Series Forecasting", "Data Mining"],
       color: "accent-bright",
       icon: Brain
     },
     {
-      title: "Databases & Data Engineering",
+      title: t('skills.databases'),
       skills: ["MySQL", "PostgreSQL", "MongoDB", "Firebase", "DynamoDB", "Neo4j", "Redis", "GraphQL", "GridFS", "Database Replication", "2dsphere Indexing", "Data Pipeline Automation"],
       color: "tech-pink",
       icon: Database
     },
     {
-      title: "Frameworks & Technologies",
+      title: t('skills.frameworks'),
       skills: ["React.js", "React Native", "Flask", "Node.js", "Spring Boot", "Bootstrap", "D3.js", "TailwindCSS", "jQuery", "REST APIs", "GraphQL APIs", "WebSockets", "AWS Lambda", "S3", "Docker", "GitHub", "GitLab", "CI/CD Pipelines", "Android SDK"],
       color: "tech-cyan",
       icon: Wrench
     },
     {
-      title: "Cloud & DevOps",
+      title: t('skills.cloud'),
       skills: ["AWS Lambda", "AWS S3", "AWS DynamoDB", "AWS Comprehend", "Google Cloud Platform", "GCP Maps API", "Docker", "Kubernetes", "Terraform", "GitHub Actions", "Infrastructure as Code", "Monitoring and Logging", "Cloud Security"],
       color: "accent-bright",
       icon: Cloud
     },
     {
-      title: "Tools & Platforms",
+      title: t('skills.tools'),
       skills: ["Figma", "Adobe After Effects", "Microsoft Excel", "Trello", "Notion", "VS Code", "IntelliJ IDEA", "Android Studio", "Visual Studio", "AutoCAD", "Microsoft PowerPoint", "OneDrive"],
       color: "tech-pink",
       icon: Palette
@@ -76,7 +78,7 @@ const Skills = () => {
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="text-4xl font-bold mb-4 bg-gradient-to-r from-accent-bright to-tech-cyan bg-clip-text text-transparent">
-            Technical Skills
+            {t('skills.title')}
           </h2>
         </div>
 

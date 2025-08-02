@@ -2,6 +2,38 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Enhanced smooth scrolling for better performance */
+* {
+  scroll-behavior: smooth;
+}
+
+/* Optimize animations for mobile performance */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Mobile-specific optimizations */
+@media (max-width: 768px) {
+  * {
+    will-change: auto !important;
+  }
+  
+  /* Disable complex animations on mobile */
+  .animate-spin-slow,
+  .animate-bounce-slow,
+  .animate-orbit,
+  .animate-glow {
+    animation: none !important;
+  }
+}
+
 /* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
 All colors MUST be HSL.
 */
