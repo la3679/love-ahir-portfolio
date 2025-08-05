@@ -2,8 +2,10 @@ import { Mail, Phone, MapPin, Github, Linkedin, Send } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { useTranslation } from "react-i18next";
 
 const Contact = () => {
+  const { t } = useTranslation();
   const contactInfo = [
     {
       icon: Mail,
@@ -40,10 +42,10 @@ const Contact = () => {
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="text-4xl font-bold mb-4 bg-gradient-to-r from-accent-bright to-tech-cyan bg-clip-text text-transparent">
-            Get In Touch
+            {t('contact.title')}
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Currently seeking opportunities in software engineering, data science, and machine learning. Let's connect!
+            {t('contact.subtitle')}
           </p>
         </div>
 
@@ -51,11 +53,9 @@ const Contact = () => {
           {/* Contact Information */}
           <div className="space-y-8 animate-slide-up">
             <div>
-              <h3 className="text-2xl font-semibold mb-6 text-accent-bright">Let's Connect</h3>
+              <h3 className="text-2xl font-semibold mb-6 text-accent-bright">{t('contact.letsConnect')}</h3>
               <p className="text-muted-foreground leading-relaxed mb-8">
-                I'm actively seeking opportunities where I can grow as a software engineer while contributing to 
-                cutting-edge projects in full-stack development, AI/ML, or cloud computing. Currently working on 
-                privacy research at RIT and always excited to discuss new opportunities and collaborations.
+                {t('contact.description')}
               </p>
             </div>
 
@@ -85,19 +85,19 @@ const Contact = () => {
 
             {/* Current Status */}
             <div className="p-6 rounded-2xl bg-gradient-to-r from-accent-bright/10 to-tech-cyan/10 border border-accent-bright/20 animate-slide-up animation-delay-400">
-              <h4 className="text-lg font-semibold text-accent-bright mb-3">Current Status</h4>
+              <h4 className="text-lg font-semibold text-accent-bright mb-3">{t('contact.currentStatus')}</h4>
               <ul className="space-y-2 text-muted-foreground">
                 <li className="flex items-center gap-2">
                   <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                  <span>Available for full-time opportunities</span>
+                  <span>{t('contact.available')}</span>
                 </li>
                 <li className="flex items-center gap-2">
                   <div className="w-2 h-2 bg-tech-cyan rounded-full"></div>
-                  <span>Graduate Assistant at RIT (Current)</span>
+                  <span>{t('contact.currentRole')}</span>
                 </li>
                 <li className="flex items-center gap-2">
                   <div className="w-2 h-2 bg-accent-bright rounded-full"></div>
-                  <span>Master's in Software Engineering (Dec 2025)</span>
+                  <span>{t('contact.graduation')}</span>
                 </li>
               </ul>
             </div>
@@ -106,7 +106,7 @@ const Contact = () => {
           {/* Contact Form */}
           <div className="animate-slide-up animation-delay-300">
             <div className="p-8 rounded-2xl bg-card/50 backdrop-blur-sm border border-border/50 hover:border-accent-bright/30 transition-all duration-300">
-              <h3 className="text-2xl font-semibold mb-6 text-tech-cyan">Send a Message</h3>
+              <h3 className="text-2xl font-semibold mb-6 text-tech-cyan">{t('contact.sendMessage')}</h3>
               
               <form 
                 className="space-y-6"
@@ -125,22 +125,22 @@ const Contact = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-sm font-medium text-foreground mb-2">
-                      First Name
+                      {t('contact.firstName')}
                     </label>
                     <Input 
                       name="firstName"
-                      placeholder="Your first name"
+                      placeholder={t('contact.firstNamePlaceholder')}
                       className="bg-background/50 border-border/50 focus:border-accent-bright"
                       required
                     />
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-foreground mb-2">
-                      Last Name
+                      {t('contact.lastName')}
                     </label>
                     <Input 
                       name="lastName"
-                      placeholder="Your last name"
+                      placeholder={t('contact.lastNamePlaceholder')}
                       className="bg-background/50 border-border/50 focus:border-accent-bright"
                       required
                     />
@@ -149,12 +149,12 @@ const Contact = () => {
 
                 <div>
                   <label className="block text-sm font-medium text-foreground mb-2">
-                    Email
+                    {t('contact.email')}
                   </label>
                   <Input 
                     name="email"
                     type="email"
-                    placeholder="your.email@example.com"
+                    placeholder={t('contact.emailPlaceholder')}
                     className="bg-background/50 border-border/50 focus:border-accent-bright"
                     required
                   />
@@ -162,11 +162,11 @@ const Contact = () => {
 
                 <div>
                   <label className="block text-sm font-medium text-foreground mb-2">
-                    Subject
+                    {t('contact.subject')}
                   </label>
                   <Input 
                     name="subject"
-                    placeholder="What's this about?"
+                    placeholder={t('contact.subjectPlaceholder')}
                     className="bg-background/50 border-border/50 focus:border-accent-bright"
                     required
                   />
@@ -174,11 +174,11 @@ const Contact = () => {
 
                 <div>
                   <label className="block text-sm font-medium text-foreground mb-2">
-                    Message
+                    {t('contact.message')}
                   </label>
                   <Textarea 
                     name="message"
-                    placeholder="Tell me about your project or opportunity..."
+                    placeholder={t('contact.messagePlaceholder')}
                     rows={5}
                     className="bg-background/50 border-border/50 focus:border-accent-bright resize-none"
                     required
@@ -191,7 +191,7 @@ const Contact = () => {
                   className="w-full bg-gradient-to-r from-accent-bright to-tech-cyan hover:from-accent-bright/80 hover:to-tech-cyan/80 text-white shadow-neon"
                 >
                   <Send className="mr-2 h-5 w-5" />
-                  Send Message
+                  {t('contact.sendButton')}
                 </Button>
               </form>
             </div>

@@ -1,7 +1,9 @@
 import { User, GraduationCap, MapPin, Calendar, ExternalLink } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
+import { useTranslation } from "react-i18next";
 
 const About = () => {
+  const { t } = useTranslation();
   const [visibleSections, setVisibleSections] = useState(new Set());
   const sectionRefs = useRef([]);
 
@@ -60,11 +62,11 @@ const About = () => {
           <div className="flex items-center justify-center gap-3 mb-4">
             <User className="h-8 w-8 text-primary" />
             <h2 className="text-4xl font-bold bg-gradient-to-r from-primary to-tech-cyan bg-clip-text text-transparent">
-              About Me
+              {t('about.title')}
             </h2>
           </div>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Passionate software engineer with expertise in full-stack development, data science, and machine learning
+            {t('about.subtitle')}
           </p>
         </div>
 
@@ -79,7 +81,7 @@ const About = () => {
             <div className="space-y-4">
               <h3 className="text-2xl font-bold text-foreground flex items-center gap-3">
                 <User className="h-6 w-6 text-primary" />
-                About Me
+                {t('about.title')}
               </h3>
               <p className="text-muted-foreground leading-relaxed">
                 I am a passionate and driven Software Engineering graduate student at Rochester Institute of Technology, 
@@ -106,8 +108,8 @@ const About = () => {
                 <div className="w-24 h-24 mx-auto bg-gradient-to-br from-primary to-tech-cyan rounded-full flex items-center justify-center">
                   <GraduationCap className="h-12 w-12 text-background" />
                 </div>
-                <h4 className="text-xl font-bold text-foreground">Current Focus</h4>
-                <p className="text-muted-foreground">Graduate studies in Software Engineering with research in privacy leak detection and AI applications</p>
+                <h4 className="text-xl font-bold text-foreground">{t('about.currentFocus')}</h4>
+                <p className="text-muted-foreground">{t('about.focusDescription')}</p>
               </div>
             </div>
           </div>
@@ -123,9 +125,9 @@ const About = () => {
           <div className="text-center mb-12">
             <h3 className="text-3xl font-bold text-foreground flex items-center justify-center gap-3 mb-4">
               <GraduationCap className="h-8 w-8 text-primary" />
-              Education
+              {t('about.education')}
             </h3>
-            <p className="text-xl text-muted-foreground">Academic journey in engineering and computer science</p>
+            <p className="text-xl text-muted-foreground">{t('about.educationSubtitle')}</p>
           </div>
 
           <div className="max-w-4xl mx-auto relative">
@@ -173,12 +175,12 @@ const About = () => {
                             <MapPin className="h-3 w-3" />
                             <span>{edu.location}</span>
                           </div>
-                          <span className="font-semibold text-primary">GPA: {edu.gpa}</span>
+                          <span className="font-semibold text-primary">{t('about.gpa')} {edu.gpa}</span>
                         </div>
                       </div>
 
                       <div className="space-y-3">
-                        <h5 className="font-semibold text-foreground">Relevant Coursework:</h5>
+                        <h5 className="font-semibold text-foreground">{t('about.relevantCoursework')}</h5>
                         <div className="flex flex-wrap gap-2">
                           {edu.coursework.map((course, courseIndex) => (
                             <span 

@@ -45,6 +45,48 @@ const resources = {
       "skills.cloud": "Cloud & DevOps",
       "skills.tools": "Tools & Platforms",
       
+      // About section
+      "about.title": "About Me",
+      "about.subtitle": "Passionate software engineer with expertise in full-stack development, data science, and machine learning",
+      "about.currentFocus": "Current Focus",
+      "about.focusDescription": "Graduate studies in Software Engineering with research in privacy leak detection and AI applications",
+      "about.education": "Education",
+      "about.educationSubtitle": "Academic journey in engineering and computer science",
+      "about.relevantCoursework": "Relevant Coursework:",
+      "about.gpa": "GPA:",
+      
+      // Certifications section
+      "certifications.title": "Certifications",
+      "certifications.subtitle": "Continuous learning and professional development in cutting-edge technologies",
+      "certifications.completed": "Completed",
+      "certifications.inProgress": "In Progress",
+      
+      // Hobbies section
+      "hobbies.title": "Hobbies & Interests",
+      "hobbies.subtitle": "Beyond coding, I enjoy exploring creativity and learning through various activities",
+      
+      // Contact section
+      "contact.title": "Get In Touch",
+      "contact.subtitle": "Currently seeking opportunities in software engineering, data science, and machine learning. Let's connect!",
+      "contact.letsConnect": "Let's Connect",
+      "contact.description": "I'm actively seeking opportunities where I can grow as a software engineer while contributing to cutting-edge projects in full-stack development, AI/ML, or cloud computing. Currently working on privacy research at RIT and always excited to discuss new opportunities and collaborations.",
+      "contact.currentStatus": "Current Status",
+      "contact.available": "Available for full-time opportunities",
+      "contact.currentRole": "Graduate Assistant at RIT (Current)",
+      "contact.graduation": "Master's in Software Engineering (Dec 2025)",
+      "contact.sendMessage": "Send a Message",
+      "contact.firstName": "First Name",
+      "contact.lastName": "Last Name",
+      "contact.email": "Email",
+      "contact.subject": "Subject",
+      "contact.message": "Message",
+      "contact.messagePlaceholder": "Tell me about your project or opportunity...",
+      "contact.sendButton": "Send Message",
+      "contact.firstNamePlaceholder": "Your first name",
+      "contact.lastNamePlaceholder": "Your last name",
+      "contact.emailPlaceholder": "your.email@example.com",
+      "contact.subjectPlaceholder": "What's this about?",
+      
       // Common
       "language": "Language",
       "theme": "Theme",
@@ -95,6 +137,48 @@ const resources = {
       "skills.cloud": "Nube y DevOps",
       "skills.tools": "Herramientas y Plataformas",
       
+      // About section
+      "about.title": "Acerca de Mí",
+      "about.subtitle": "Ingeniero de software apasionado con experiencia en desarrollo full-stack, ciencia de datos y aprendizaje automático",
+      "about.currentFocus": "Enfoque Actual",
+      "about.focusDescription": "Estudios de posgrado en Ingeniería de Software con investigación en detección de fugas de privacidad y aplicaciones de IA",
+      "about.education": "Educación",
+      "about.educationSubtitle": "Trayectoria académica en ingeniería y ciencias de la computación",
+      "about.relevantCoursework": "Cursos Relevantes:",
+      "about.gpa": "GPA:",
+      
+      // Certifications section
+      "certifications.title": "Certificaciones",
+      "certifications.subtitle": "Aprendizaje continuo y desarrollo profesional en tecnologías de vanguardia",
+      "certifications.completed": "Completado",
+      "certifications.inProgress": "En Progreso",
+      
+      // Hobbies section
+      "hobbies.title": "Pasatiempos e Intereses",
+      "hobbies.subtitle": "Más allá de la programación, disfruto explorando la creatividad y aprendiendo a través de varias actividades",
+      
+      // Contact section
+      "contact.title": "Ponte en Contacto",
+      "contact.subtitle": "Actualmente buscando oportunidades en ingeniería de software, ciencia de datos y aprendizaje automático. ¡Conectemos!",
+      "contact.letsConnect": "Conectemos",
+      "contact.description": "Estoy buscando activamente oportunidades donde pueda crecer como ingeniero de software mientras contribuyo a proyectos de vanguardia en desarrollo full-stack, AI/ML o computación en la nube. Actualmente trabajando en investigación de privacidad en RIT y siempre emocionado de discutir nuevas oportunidades y colaboraciones.",
+      "contact.currentStatus": "Estado Actual",
+      "contact.available": "Disponible para oportunidades de tiempo completo",
+      "contact.currentRole": "Asistente de Posgrado en RIT (Actual)",
+      "contact.graduation": "Maestría en Ingeniería de Software (Dic 2025)",
+      "contact.sendMessage": "Enviar un Mensaje",
+      "contact.firstName": "Nombre",
+      "contact.lastName": "Apellido",
+      "contact.email": "Correo",
+      "contact.subject": "Asunto",
+      "contact.message": "Mensaje",
+      "contact.messagePlaceholder": "Cuéntame sobre tu proyecto u oportunidad...",
+      "contact.sendButton": "Enviar Mensaje",
+      "contact.firstNamePlaceholder": "Tu nombre",
+      "contact.lastNamePlaceholder": "Tu apellido",
+      "contact.emailPlaceholder": "tu.correo@ejemplo.com",
+      "contact.subjectPlaceholder": "¿De qué se trata?",
+      
       // Common
       "language": "Idioma",
       "theme": "Tema",
@@ -144,6 +228,48 @@ const resources = {
       "skills.frameworks": "Frameworks et Technologies",
       "skills.cloud": "Cloud et DevOps",
       "skills.tools": "Outils et Plateformes",
+      
+      // About section
+      "about.title": "À Propos de Moi",
+      "about.subtitle": "Ingénieur logiciel passionné avec expertise en développement full-stack, science des données et apprentissage automatique",
+      "about.currentFocus": "Focus Actuel",
+      "about.focusDescription": "Études supérieures en Génie Logiciel avec recherche en détection de fuites de confidentialité et applications IA",
+      "about.education": "Éducation",
+      "about.educationSubtitle": "Parcours académique en ingénierie et informatique",
+      "about.relevantCoursework": "Cours Pertinents:",
+      "about.gpa": "GPA:",
+      
+      // Certifications section
+      "certifications.title": "Certifications",
+      "certifications.subtitle": "Apprentissage continu et développement professionnel dans les technologies de pointe",
+      "certifications.completed": "Terminé",
+      "certifications.inProgress": "En Cours",
+      
+      // Hobbies section
+      "hobbies.title": "Loisirs et Intérêts",
+      "hobbies.subtitle": "Au-delà de la programmation, j'aime explorer la créativité et apprendre à travers diverses activités",
+      
+      // Contact section
+      "contact.title": "Entrer en Contact",
+      "contact.subtitle": "Actuellement à la recherche d'opportunités en génie logiciel, science des données et apprentissage automatique. Connectons-nous!",
+      "contact.letsConnect": "Connectons-nous",
+      "contact.description": "Je recherche activement des opportunités où je peux grandir en tant qu'ingénieur logiciel tout en contribuant à des projets de pointe en développement full-stack, AI/ML ou cloud computing. Travaillant actuellement sur la recherche en confidentialité au RIT et toujours excité de discuter de nouvelles opportunités et collaborations.",
+      "contact.currentStatus": "Statut Actuel",
+      "contact.available": "Disponible pour des opportunités à temps plein",
+      "contact.currentRole": "Assistant Diplômé au RIT (Actuel)",
+      "contact.graduation": "Master en Génie Logiciel (Déc 2025)",
+      "contact.sendMessage": "Envoyer un Message",
+      "contact.firstName": "Prénom",
+      "contact.lastName": "Nom",
+      "contact.email": "Email",
+      "contact.subject": "Sujet",
+      "contact.message": "Message",
+      "contact.messagePlaceholder": "Parlez-moi de votre projet ou opportunité...",
+      "contact.sendButton": "Envoyer Message",
+      "contact.firstNamePlaceholder": "Votre prénom",
+      "contact.lastNamePlaceholder": "Votre nom",
+      "contact.emailPlaceholder": "votre.email@exemple.com",
+      "contact.subjectPlaceholder": "De quoi s'agit-il?",
       
       // Common
       "language": "Langue",

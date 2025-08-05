@@ -3,8 +3,30 @@
 @tailwind utilities;
 
 /* Enhanced smooth scrolling for better performance */
-* {
+html {
   scroll-behavior: smooth;
+  scroll-padding-top: 100px;
+}
+
+/* Enhanced scroll performance */
+* {
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+}
+
+/* Optimize intersection observer triggering */
+body {
+  overscroll-behavior: contain;
+}
+
+/* Hardware acceleration for scroll-triggered animations */
+.will-change-transform {
+  will-change: transform;
+}
+
+/* Reduce layout thrashing during scroll */
+.scroll-optimized {
+  contain: layout style paint;
 }
 
 /* Optimize animations for mobile performance */
@@ -301,6 +323,60 @@ All colors MUST be HSL.
     }
   }
   
+  /* Ultra smooth scrolling */
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 80px;
+  }
+
+  * {
+    scroll-behavior: smooth;
+  }
+
+  /* Enhanced smooth scrolling with momentum */
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+    
+    body {
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
+    }
+  }
+
+  /* Butter-smooth animations */
+  .smooth-transition {
+    transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: transform, opacity;
+  }
+
+  .ultra-smooth {
+    transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: hsl(var(--muted));
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: hsl(var(--primary));
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--primary) / 0.8);
+  }
+
   /* Animation delay utilities */
   .animation-delay-200 { animation-delay: 200ms; }
   .animation-delay-300 { animation-delay: 300ms; }

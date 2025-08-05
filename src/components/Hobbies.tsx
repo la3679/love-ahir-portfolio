@@ -1,7 +1,9 @@
 import { Heart, Camera, Plane, Book, Music, Gamepad2 } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
+import { useTranslation } from "react-i18next";
 
 const Hobbies = () => {
+  const { t } = useTranslation();
   const [visibleHobbies, setVisibleHobbies] = useState(new Set());
   const hobbyRefs = useRef([]);
 
@@ -76,10 +78,10 @@ const Hobbies = () => {
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="text-4xl font-bold mb-4 bg-gradient-to-r from-accent-bright to-tech-cyan bg-clip-text text-transparent">
-            Hobbies & Interests
+            {t('hobbies.title')}
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Beyond coding, I enjoy exploring creativity and learning through various activities
+            {t('hobbies.subtitle')}
           </p>
         </div>
 

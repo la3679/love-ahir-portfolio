@@ -1,7 +1,9 @@
 import { Award, Calendar, ExternalLink, CheckCircle, Clock } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
+import { useTranslation } from "react-i18next";
 
 const Certifications = () => {
+  const { t } = useTranslation();
   const [visibleCertifications, setVisibleCertifications] = useState(new Set());
   const certificationRefs = useRef([]);
 
@@ -96,10 +98,10 @@ const Certifications = () => {
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="text-4xl font-bold mb-4 bg-gradient-to-r from-accent-bright to-tech-cyan bg-clip-text text-transparent">
-            Certifications
+            {t('certifications.title')}
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Continuous learning and professional development in cutting-edge technologies
+            {t('certifications.subtitle')}
           </p>
         </div>
 
@@ -130,7 +132,7 @@ const Certifications = () => {
                     <div className="flex items-center gap-2 mt-2">
                       <StatusIcon className={`h-4 w-4 ${cert.status === "Completed" ? 'text-tech-cyan' : 'text-accent-bright'}`} />
                       <span className={`text-sm font-medium ${cert.status === "Completed" ? 'text-tech-cyan' : 'text-accent-bright'}`}>
-                        {cert.status}
+                        {cert.status === "Completed" ? t('certifications.completed') : t('certifications.inProgress')}
                       </span>
                     </div>
                   </div>

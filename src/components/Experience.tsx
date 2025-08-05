@@ -103,7 +103,7 @@ const Experience = () => {
               <div 
                 key={exp.title}
                 ref={el => experienceRefs.current[index] = el}
-                className={`mb-12 last:mb-0 transition-all duration-700 ${
+                className={`mb-12 last:mb-0 ultra-smooth ${
                   isVisible ? 'opacity-100 translate-x-0 scale-100' : 'opacity-0 translate-x-8 scale-95'
                 }`}
                 style={{ transitionDelay: isVisible ? `${index * 200}ms` : '0ms' }}
@@ -111,10 +111,9 @@ const Experience = () => {
                 <div className="flex items-start gap-6">
                   {/* Timeline Node */}
                   <div className="relative flex-shrink-0">
-                    <div className="w-16 h-16 rounded-full bg-gradient-to-br from-primary to-tech-cyan flex items-center justify-center border-4 border-background shadow-lg group-hover:scale-110 transition-transform duration-300">
-                      <Briefcase className="h-8 w-8 text-background transition-transform duration-500" />
+                    <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary/20 to-tech-cyan/20 border-2 border-primary/30 flex items-center justify-center group-hover:scale-110 transition-all duration-300 backdrop-blur-sm">
+                      <div className="w-4 h-4 rounded-full bg-gradient-to-br from-primary to-tech-cyan animate-pulse"></div>
                     </div>
-                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-6 h-6 rounded-full bg-background border-2 border-primary animate-pulse"></div>
                   </div>
 
                   {/* Content Card */}
