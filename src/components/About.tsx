@@ -147,10 +147,9 @@ const About = () => {
                   <div className="flex items-start gap-6">
                     {/* Timeline Node */}
                     <div className="relative flex-shrink-0">
-                      <div className="w-16 h-16 rounded-full bg-gradient-to-br from-primary to-tech-cyan flex items-center justify-center border-4 border-background shadow-lg">
-                        <GraduationCap className="h-8 w-8 text-background" />
+                      <div className="w-16 h-16 rounded-full bg-gradient-to-br from-primary/20 to-tech-cyan/20 border-2 border-primary/30 flex items-center justify-center backdrop-blur-sm group-hover:scale-110 transition-all duration-300">
+                        <GraduationCap className="h-8 w-8 text-primary" />
                       </div>
-                      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-6 h-6 rounded-full bg-background border-2 border-primary animate-pulse"></div>
                     </div>
 
                     {/* Content Card */}

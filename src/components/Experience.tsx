@@ -112,7 +112,7 @@ const Experience = () => {
                   {/* Timeline Node */}
                   <div className="relative flex-shrink-0">
                     <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary/20 to-tech-cyan/20 border-2 border-primary/30 flex items-center justify-center group-hover:scale-110 transition-all duration-300 backdrop-blur-sm">
-                      <div className="w-4 h-4 rounded-full bg-gradient-to-br from-primary to-tech-cyan animate-pulse"></div>
+                      <Briefcase className="h-6 w-6 text-primary" />
                     </div>
                   </div>
 

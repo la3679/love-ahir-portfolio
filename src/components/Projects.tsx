@@ -1,4 +1,5 @@
-import { Github, ExternalLink, Calendar, Code, Smartphone, Globe, Brain, BarChart3, FolderOpen, Filter, BookOpen } from "lucide-react";
+import { Github, ExternalLink, Calendar, Code, Smartphone, Globe, Brain, BarChart3, FolderOpen, Filter, BookOpen, ChevronDown } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { useState, useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 
@@ -6,6 +7,7 @@ const Projects = () => {
   const { t } = useTranslation();
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [visibleProjects, setVisibleProjects] = useState(new Set());
+  const [showMore, setShowMore] = useState(false);
   const projectRefs = useRef([]);
 
   const projectCategories = {
@@ -91,25 +93,15 @@ const Projects = () => {
       type: "Web App"
     },
     {
-      title: "Analyzing Amazon Sales Data",
-      period: "Python, Power BI, Data Science",
+      title: "Data Analytics Portfolio",
+      period: "Python, Power BI, Data Science, MongoDB",
       github: "https://github.com/la3679/Data-Analytics-Projects",
-      description: "Performed ETL on large Amazon sales datasets and identified sales trends month-wise, year-wise, and year-month-wise.",
+      description: "A comprehensive collection of data analytics projects showcasing expertise in ETL processes, dashboard creation, and data visualization across various domains.",
       features: [
-        "Engineered Power BI dashboards visualizing KPIs like Total Revenue, Total Profit, Unit Sold, and revealing sales insights by region, item type, and order priority.",
-        "Conducted in-depth analysis of cost-profit relationships, sales channels, and seasonal patterns, enabling 15% more informed business decisions."
-      ],
-      type: "Data Analysis"
-    },
-    {
-      title: "RIT Apiary Project",
-      period: "MongoDB, Python",
-      github: "https://github.com/la3679/RIT-Apiary-Project", // Assuming a GitHub repo based on the name format
-      description: "A project focused on loading and managing apiary data into a MongoDB time series collection for analysis. It handles data cleaning, missing values, and efficient storage.",
-      features: [
-        "Script to clean column names, handle missing values, and store data as a time series collection in MongoDB.",
-        "Connects to MongoDB and creates a time series collection with `timestamp` and `metadata.hive_id`.",
-        "Processes multiple CSV files, cleaning and importing data efficiently."
+        "Amazon Sales Analysis - ETL on large datasets with Power BI dashboards for KPIs and business insights",
+        "RIT Apiary Project - MongoDB time series data management and cleaning",
+        "Multiple Power BI dashboards for different business domains",
+        "Advanced data visualization and business intelligence solutions"
       ],
       type: "Data Analysis"
     },
@@ -200,90 +192,19 @@ const Projects = () => {
       type: "Publication"
     },
     {
-      title: "Supermarket Sales Data Analysis",
-      period: "Power BI, Data Analysis",
-      github: "https://github.com/la3679/PowerBI", // Assuming this is part of the broader data analytics repo
-      description: "A comprehensive Power BI dashboard providing insights into supermarket sales data, offering analysis of sales trends and product performance.",
+      title: "Power BI Dashboard Collection",
+      period: "Power BI, Business Intelligence, Data Visualization",
+      github: "https://github.com/la3679/PowerBI",
+      description: "A comprehensive portfolio of professional Power BI dashboards covering diverse business domains including retail, streaming, finance, and global development analytics.",
       features: [
-        "Analyzes sales trends and product performance.",
-        "Part of a diverse collection of Power BI dashboards and projects."
-      ],
-      type: "Data Analysis"
-    },
-    {
-      title: "Profit Dashboard",
-      period: "Power BI, Financial Analysis",
-      github: "https://github.com/la3679/PowerBI", // Assuming this is part of the broader data analytics repo
-      description: "An executive-level financial snapshot dashboard focusing on gross profit analysis and sales trends within Power BI.",
-      features: [
-        "Focuses on gross profit analysis and sales trends.",
-        "Provides an executive-level financial overview."
-      ],
-      type: "Data Analysis"
-    },
-    {
-      title: "KPI Drill-Down Dashboard",
-      period: "Power BI, Performance Metrics",
-      github: "https://github.com/la3679/PowerBI", // Assuming this is part of the broader data analytics repo
-      description: "A Power BI KPI drill-down dashboard presenting detailed metrics and performance indicators for in-depth analysis.",
-      features: [
-        "Presents detailed metrics and performance indicators.",
-        "Designed for in-depth analysis."
-      ],
-      type: "Data Analysis"
-    },
-    {
-      title: "Revenue Trend Analyzer",
-      period: "Power BI, Revenue Analysis",
-      github: "https://github.com/la3679/PowerBI", // Assuming this is part of the broader data analytics repo
-      description: "A Power BI dashboard that visualizes revenue growth and patterns over time, serving as a revenue trend analyzer.",
-      features: [
-        "Visualizes revenue growth and patterns over time.",
-        "Analyzes revenue trends."
-      ],
-      type: "Data Analysis"
-    },
-    {
-      title: "GeoSales Sales Heatmap",
-      period: "Power BI, Geographic Data",
-      github: "https://github.com/la3679/PowerBI", // Assuming this is part of the broader data analytics repo
-      description: "This Power BI sales heatmap visualizer uses geographic data to display sales density and distribution.",
-      features: [
-        "Uses geographic data to display sales density and distribution.",
-        "Provides a visual representation of sales hotspots."
-      ],
-      type: "Data Analysis"
-    },
-    {
-      title: "HumanDev Global Progress Insight",
-      period: "Power BI, Development Indicators",
-      github: "https://github.com/la3679/PowerBI", // Assuming this is part of the broader data analytics repo
-      description: "A Power BI global progress insight tool showcasing development indicators across different regions.",
-      features: [
-        "Showcases development indicators across different regions.",
-        "Provides global progress insights."
-      ],
-      type: "Data Analysis"
-    },
-    {
-      title: "BlinkIt Sales Operations Intelligence",
-      period: "Power BI, Grocery Operations",
-      github: "https://github.com/la3679/PowerBI", // Assuming this is part of the broader data analytics repo
-      description: "A Power BI grocery operations intelligence dashboard tracking sales and performance metrics for BlinkIt.",
-      features: [
-        "Tracks sales and performance metrics for BlinkIt.",
-        "Provides intelligence on grocery operations."
-      ],
-      type: "Data Analysis"
-    },
-    {
-      title: "Prime Video Streaming Content Analyzer",
-      period: "Power BI, Streaming Analytics",
-      github: "https://github.com/la3679/PowerBI", // Assuming this is part of the broader data analytics repo
-      description: "A Power BI streaming content analyzer dashboard providing insights into titles, genres, and user engagement on Prime Video.",
-      features: [
-        "Provides insights into titles, genres, and user engagement.",
-        "Analyzes streaming content on Prime Video."
+        "Supermarket Sales Analysis - Comprehensive insights into sales trends and product performance",
+        "Financial Profit Dashboard - Executive-level financial snapshots and profit analysis",
+        "KPI Drill-Down Dashboard - Detailed performance metrics and indicators",
+        "Revenue Trend Analyzer - Growth patterns and revenue visualization over time",
+        "GeoSales Heatmap - Geographic sales density and distribution mapping",
+        "Global Development Insights - Progress indicators across different regions",
+        "BlinkIt Operations Intelligence - Grocery operations and performance tracking",
+        "Prime Video Content Analyzer - Streaming analytics for titles, genres, and engagement"
       ],
       type: "Data Analysis"
     },
@@ -317,6 +238,10 @@ const Projects = () => {
   const filteredProjects = selectedCategory === "All" 
     ? projects 
     : projects.filter(project => project.type === selectedCategory);
+  
+  const INITIAL_PROJECTS_COUNT = 6;
+  const projectsToShow = showMore ? filteredProjects : filteredProjects.slice(0, INITIAL_PROJECTS_COUNT);
+  const hasMoreProjects = filteredProjects.length > INITIAL_PROJECTS_COUNT;
 
   useEffect(() => {
     const observers = new Map();
@@ -389,7 +314,7 @@ const Projects = () => {
 
         {/* Projects Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filteredProjects.map((project, index) => {
+          {projectsToShow.map((project, index) => {
             const categoryConfig = projectCategories[project.type];
             const IconComponent = categoryConfig.icon;
             const isVisible = visibleProjects.has(index);
@@ -465,6 +390,29 @@ const Projects = () => {
             );
           })}
         </div>
+        
+        {/* View More Button */}
+        {hasMoreProjects && (
+          <div className="flex justify-center mt-12">
+            <Button
+              onClick={() => setShowMore(!showMore)}
+              variant="outline"
+              className="group px-8 py-3 text-lg font-medium border-primary/30 hover:border-primary hover:bg-primary/10 transition-all duration-300"
+            >
+              {showMore ? (
+                <>
+                  Show Less
+                  <ChevronDown className="ml-2 h-5 w-5 rotate-180 transition-transform duration-300" />
+                </>
+              ) : (
+                <>
+                  View More Projects
+                  <ChevronDown className="ml-2 h-5 w-5 transition-transform duration-300" />
+                </>
+              )}
+            </Button>
+          </div>
+        )}
       </div>
     </section>
   );
