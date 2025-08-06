@@ -298,10 +298,10 @@ const Projects = () => {
                   <button
                     key={option}
                     onClick={() => setSelectedCategory(option)}
-                    className={`px-4 py-2 rounded-xl font-medium transition-all duration-300 ${
+                    className={`px-4 py-2 rounded-xl font-medium transition-all duration-300 border ${
                       isActive 
-                        ? `bg-${config.color} text-background shadow-[0_0_20px_hsl(var(--${config.color})/0.5)]` 
-                        : `${config.bgColor} text-${config.color} hover:bg-${config.color}/20`
+                        ? "bg-primary text-primary-foreground shadow-lg border-primary/20" 
+                        : "text-muted-foreground hover:text-foreground hover:bg-accent/50 border-transparent"
                     }`}
                   >
                     {getFilterOptionText(option)}
