@@ -31,60 +31,24 @@ const Navigation = () => {
   ];
 
   const scrollToSection = (href: string) => {
+    // Prevent default browser behavior and add immediate visual feedback
+    setIsMobileMenuOpen(false);
+    
     if (href === "#") {
-      // Use requestAnimationFrame for smoother scrolling to top
-      const startPosition = window.pageYOffset;
-      const duration = Math.min(startPosition / 3, 1000); // Max 1s
-      let start = null;
-
-      function animate(timestamp) {
-        if (!start) start = timestamp;
-        const progress = Math.min((timestamp - start) / duration, 1);
-        
-        // Easing function for smoother animation
-        const easeInOutCubic = progress < 0.5 
-          ? 4 * progress * progress * progress 
-          : 1 - Math.pow(-2 * progress + 2, 3) / 2;
-        
-        window.scrollTo(0, startPosition * (1 - easeInOutCubic));
-        
-        if (progress < 1) {
-          requestAnimationFrame(animate);
-        }
-      }
-      
-      requestAnimationFrame(animate);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     } else {
       const element = document.querySelector(href);
       if (element) {
-        const offsetTop = (element as HTMLElement).offsetTop - 80; // Account for fixed navbar
+        const headerHeight = 80;
+        const elementPosition = element.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - headerHeight;
         
-        // Use requestAnimationFrame for smoother scrolling
-        const startPosition = window.pageYOffset;
-        const distance = offsetTop - startPosition;
-        const duration = Math.min(Math.abs(distance) / 3, 1000); // Max 1s, faster for shorter distances
-        let start = null;
-
-        function animate(timestamp) {
-          if (!start) start = timestamp;
-          const progress = Math.min((timestamp - start) / duration, 1);
-          
-          // Ultra smooth easing function
-          const easeInOutQuint = progress < 0.5 
-            ? 16 * progress * progress * progress * progress * progress
-            : 1 - Math.pow(-2 * progress + 2, 5) / 2;
-          
-          window.scrollTo(0, startPosition + distance * easeInOutQuint);
-          
-          if (progress < 1) {
-            requestAnimationFrame(animate);
-          }
-        }
-        
-        requestAnimationFrame(animate);
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        });
       }
     }
-    setIsMobileMenuOpen(false);
   };
 
   return (
