@@ -132,7 +132,7 @@ const Projects = () => {
     {
       title: "Meme Analyzer",
       period: "Flask, HTML, CSS, JavaScript, EasyOCR, Google GenAI",
-      github: "https://github.com/la3679/Meme-Analyzer", // Assuming a GitHub repo based on the name format
+      github: "https://github.com/la3679/WhatDaMeme", // Assuming a GitHub repo based on the name format
       description: "A fun and interactive web application that allows users to upload a meme image and a chat file to analyze the meme using OCR and Google GenAI for detailed explanations.",
       features: [
         "Extracts text from meme images using EasyOCR.",
