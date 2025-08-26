@@ -9,6 +9,21 @@ const Experience = () => {
 
   const experiences = [
     {
+    title: "Teaching Assistant – Software Quality Assurance (SWEN 777)",
+    company: "Rochester Institute of Technology",
+    location: "Rochester, NY",
+    period: "Aug 2025 – Dec 2025",
+    description: "Supported graduate-level instruction for Software Quality Assurance under Professor Xueling Zhang, focusing on software testing methodologies, research integration, and quality improvement practices.",
+    achievements: [
+      "Held weekly office hours (Zoom, Slack, and Email) to mentor students on testing strategies, research papers, and project deliverables.",
+      "Guided student teams in open-source project quality analysis, including unit testing, coverage improvement, bug reporting, and static/mutation testing.",
+      "Assisted with grading, feedback, and seminar facilitation on ~25 research papers in software testing and software quality.",
+      "Reinforced academic integrity and ethical AI usage policies, ensuring adherence to RIT’s standards."
+    ],
+    color: "tech-green",
+    offerLetterLink: "https://www.rit.edu/"
+    },
+    {
       title: "Graduate Assistant",
       company: "Rochester Institute of Technology",
       location: "Rochester, NY",
