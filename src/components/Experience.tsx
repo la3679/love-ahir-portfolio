@@ -12,7 +12,7 @@ const Experience = () => {
     title: "Teaching Assistant – Software Quality Assurance (SWEN 777)",
     company: "Rochester Institute of Technology",
     location: "Rochester, NY",
-    period: "Aug 2025 – Dec 2025",
+    period: "Aug 2025 – Present",
     description: "Supported graduate-level instruction for Software Quality Assurance under Professor Xueling Zhang, focusing on software testing methodologies, research integration, and quality improvement practices.",
     achievements: [
       "Held weekly office hours (Zoom, Slack, and Email) to mentor students on testing strategies, research papers, and project deliverables.",
