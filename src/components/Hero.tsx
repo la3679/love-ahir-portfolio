@@ -174,8 +174,8 @@ const Hero = () => {
               className="bg-gradient-to-r from-accent-bright to-tech-cyan hover:from-accent-bright/80 hover:to-tech-cyan/80 text-white shadow-neon hover:shadow-glow transition-all duration-300 hover:scale-105 animate-glow relative overflow-hidden group"
               onClick={() => {
                 const link = document.createElement('a');
-                link.href = 'https://drive.google.com/uc?export=download&id=1parlrLtVSyYPkcCMVykO-SaqH-JHRLsM';
-                link.download = 'Love_Jayesh_Ahir_Resume.pdf';
+                link.href = 'https://drive.google.com/file/d/13k5BDv9jVaQcV2l_sPcUoRpIdYP6yi3Q/view?usp=sharing';
+                link.download = 'Resume.pdf';
                 document.body.appendChild(link);
                 link.click();
                 document.body.removeChild(link);
