@@ -20,19 +20,18 @@ const Projects = () => {
 
   const projects = [
      {
-      title: "AR Application Testing Automation Tool",
-      period: "Appium (Python/JavaScript), iOS, Android",
-      github: "", // GitHub URL not specified in the chat
-      description: "Developing a tool to automate testing for Augmented Reality (AR) applications. It focuses on checking how AR objects behave during user interactions across different apps, automating dragging, dropping, and pinching AR objects to test their movement, placement, and resizing. It supports real devices, emulators, custom test scenarios, and integration with tools like BrowserStack for enhanced testing. Initial progress includes successfully automating basic interactions within an AR application, connecting to the app, navigating initial menus, and dismissing on-screen advice. This project is currently in progress.",
-      features: [
-        "Automates dragging, dropping, and pinching AR objects.",
-        "Tests movement, placement, and resizing of AR objects.",
-        "Supports AR apps on both iOS and Android platforms.",
-        "Compatible with real devices and emulators.",
-        "Enables custom test scenarios and integration with tools like BrowserStack.",
-        "Successfully connected to an AR app, navigated initial menus, and dismissed on-screen advice using Appium."
-      ],
-      type: "Machine Learning"
+        title: "AR Gesture Lab: Appium Automation",
+        period: "React, Three.js, R3F, Appium, Python",
+        github: "github.com/la3679/ARLabs",
+        description: "An Augmented Reality (AR) laboratory environment developed to solve the challenge of automating gestures on dynamic 3D objects. It utilizes a custom 'Coordinate Bridge' to translate 3D world positions into 2D screen pixels, enabling precise mobile automation with Appium.",
+        features: [
+          "Engineered a real-time 3D-to-2D projection system using Three.js and useFrame to track AR objects at 60fps.",
+          "Implemented a high-performance 'DOM Bridge' (#ar_coords_textview) to expose dynamic coordinates directly to automation scripts.",
+          "Developed a Python-based Appium test suite to automate complex gestures including Tap to Place, Drag & Drop, and Pinch-to-Resize.",
+          "Utilized @use-gesture and @react-spring for fluid, physics-based object manipulation and visual state feedback.",
+          "Designed a functional AR HUD that logs interaction states and displays real-time connection status for mobile debugging."
+        ],
+        type: "Mobile App" 
     },
     {
       title: "Pokémon MongoDB Web Application",
