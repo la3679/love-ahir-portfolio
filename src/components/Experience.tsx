@@ -12,13 +12,13 @@ const Experience = () => {
     title: "Teaching Assistant – Software Quality Assurance (SWEN 777)",
     company: "Rochester Institute of Technology",
     location: "Rochester, NY",
-    period: "Aug 2025 – Present",
+    period: "Aug 2025 – Dec 2025",
     description: "Supported graduate-level instruction for Software Quality Assurance under Professor Xueling Zhang, focusing on software testing methodologies, research integration, and quality improvement practices.",
     achievements: [
-      "Held weekly office hours (Zoom, Slack, and Email) to mentor students on testing strategies, research papers, and project deliverables.",
-      "Guided student teams in open-source project quality analysis, including unit testing, coverage improvement, bug reporting, and static/mutation testing.",
-      "Assisted with grading, feedback, and seminar facilitation on ~25 research papers in software testing and software quality.",
-      "Reinforced academic integrity and ethical AI usage policies, ensuring adherence to RIT’s standards."
+      "Assisted Dr. Xueling Zhang in teaching graduate-level Software Quality Assurance, enhancing student comprehension.",
+      "Held weekly office hours via Slack, Email, and Zoom, answering student questions on assignments and research. papers; this support increased assignment submission quality and raised average class satisfaction scores",
+      "Facilitated engagement in seminars discussing 25+ research papers, fostering critical thinking and collaboration.",
+      "Strengthened understanding of software testing methodologies and academic integrity among students."
     ],
     color: "tech-green",
     offerLetterLink: "https://www.rit.edu/"
@@ -27,11 +27,12 @@ const Experience = () => {
       title: "Graduate Assistant",
       company: "Rochester Institute of Technology",
       location: "Rochester, NY",
-      period: "Aug 2024 – Present",
+      period: "Aug 2024 – Dec 2025",
       description: "Collaborate with Professor Yiming Tang on advanced research in privacy leak detection, designing datasets using Monkey testing and logcat analysis to ensure robust application evaluation.",
       achievements: [
-        "Collaborate with Professor Yiming Tang on advanced research in privacy leak detection, designing datasets using Monkey testing and logcat analysis to ensure robust application evaluation.",
-        "Learned advanced research methods and collaborative problem-solving, strengthening skills in DEI-focused technology development."
+        "Co-authored research paper titled Do Privacy Policies Match with the Logs? An Empirical Study of Privacy Disclosure in Android Application Logs, submitted to the SANER 2026 Research Track",
+        "Conducted privacy leak detection research in Android applications, focusing on automated testing and behavioral analysis, which improved the identification of potential vulnerabilities",
+        "Developed Python scripts for scraping metadata and automating testing processes, enhancing efficiency and consistency. Utilized Android system tools (ADB, Monkey, logcat) for manual and automated testing, ensuring comprehensive app evaluation."
       ],
       color: "tech-cyan",
       offerLetterLink: "https://www.rit.edu/"
@@ -43,9 +44,8 @@ const Experience = () => {
       period: "Jan 2023 – May 2023", 
       description: "Refined Java-based architectures, enhancing software reliability and accelerating delivery timelines by 20%.",
       achievements: [
-        "Refined Java-based architectures, enhancing software reliability and accelerating delivery timelines by 20%.",
-        "Developed machine learning models using Python's Random Forest, increasing the accuracy of the Indian College Recommendation System by 30%.",
-        "Streamlined data workflows by integrating Java SpringBoot and Python Flask, boosting system efficiency by 25%.",
+        "Refined Java-based microservices architecture using Spring Boot, enhancing software reliability and accelerating feature delivery timelines by 20%.",
+        "Built ML models and integrated scalable workflows using Python and Java Spring Boot, improving recommendation accuracy by 30% and system efficiency by 25%.",
         "Upgraded legacy JSP applications with SpringBoot for advanced data visualization, improving team collaboration.",
         "Orchestrated cross-departmental efforts, stabilizing delivery schedules and enhancing project timelines by 20%."
       ],
