@@ -11,22 +11,29 @@ const About = () => {
     {
       institution: "Rochester Institute of Technology",
       degree: "Master of Science in Computer Software Engineering",
-      gpa: "3.91/4.0",
+      gpa: "3.94/4.0",
       period: "Aug 2023 - Dec 2025",
       location: "Rochester, NY",
-      coursework: ["Software Architecture", "Database Design", "Software Quality Assurance", "Cloud Computing", "Non-Relational Data Storage"],
-      documentLink: "https://drive.google.com/file/d/1CLQWs_LEnGDcOs5_CRYSTpJ3bPdpjjl4/view?usp=sharing"
+      coursework: [
+        "Software Construction (SWEN 601)","Foundations of Software Engineering (SWEN 610)","Model-Driven Development (SWEN 746)","Engineering Cloud Software Systems (SWEN 614)","Research Methods (SWEN 640)","Collaborative Software Development (SWEN 732)","Database Design & Implementation (ISTE 608)","Software Architecture (SWEN 755)","Software Quality Assurance (SWEN 777)","Foundations of Data Science & Analytics (DSCI 633)","Non-Relational Data Management (ISTE 610)","Capstone Research Project (SWEN 780)"
+      ],
+      documentLink:
+        "https://drive.google.com/file/d/1CLQWs_LEnGDcOs5_CRYSTpJ3bPdpjjl4/view?usp=sharing"
     },
     {
-      institution: "LJ Institute of Engineering and Technology", 
+      institution: "LJ Institute of Engineering and Technology",
       degree: "Bachelor of Engineering in Electronics and Communication",
       gpa: "3.81/4.0",
       period: "Aug 2019 - May 2023",
       location: "Ahmedabad, India",
-      coursework: ["VLSI Design", "Python Programming", "Microprocessor Systems", "Embedded Systems", "Data Structures"],
-      documentLink: "https://drive.google.com/file/d/1xjhIE7WPiRIKxO9jHZe8ZK7wySq7NRr1/view?usp=sharing"
+      coursework: [
+        "Data Structures","Python Programming","Microprocessor Systems","Embedded Systems","VLSI Design","Digital Electronics","Analog Communication","Digital Communication","Signals & Systems","Control Systems","Computer Networks","Operating Systems","Object-Oriented Programming","Database Management Systems","Engineering Mathematics","Probability & Statistics","Project Work / Final Year Project"
+      ],
+      documentLink:
+        "https://drive.google.com/file/d/1xjhIE7WPiRIKxO9jHZe8ZK7wySq7NRr1/view?usp=sharing"
     }
   ];
+
 
   useEffect(() => {
     const observers = new Map();
