@@ -91,7 +91,7 @@ const About = () => {
                 {t('about.title')}
               </h3>
               <p className="text-muted-foreground leading-relaxed">
-                I am a passionate and driven Software Engineering graduate student at Rochester Institute of Technology, 
+                I am a passionate and driven Software Engineer and a recent graduate of the Rochester Institute of Technology, 
                 with a strong foundation in full-stack development, data science, and machine learning. Over the past few years, 
                 I have built a diverse skill set through academic coursework, industry internships, and hands-on projects.
               </p>
