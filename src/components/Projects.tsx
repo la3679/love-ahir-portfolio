@@ -119,7 +119,7 @@ const Projects = () => {
     {
       title: "Weather Forecast Project",
       period: "OpenWeatherMap API, Python",
-      github: "https://github.com/la3679/Weather-Forecast-Project", // Assuming a GitHub repo based on the name format
+      github: "https://github.com/la3679/Automate-Weather-Forcast", // Assuming a GitHub repo based on the name format
       description: "A project that generates daily weather forecasts for selected cities in the UK, India, and the US by retrieving real-time data from the OpenWeatherMap API and visualizing it.",
       features: [
         "Retrieves real-time temperature and humidity data for predefined cities.",
@@ -144,7 +144,7 @@ const Projects = () => {
     {
       title: "CodeGuard: Automated Review Solution",
       period: "Research Project",
-      github: "https://drive.google.com/file/d/1UgmPaxPO00T3QkmT6q7O4NUmrp3UcC2m/view?usp=sharing", // Retaining original GitHub if no new one is provided in the PDF
+      github: "https://drive.google.com/file/d/1QzUBYsAAjvPtdxV4EGMflthzZUCvTPKa/view?usp=sharing", // Retaining original GitHub if no new one is provided in the PDF
       description: "Introduces a transformative approach to the traditional code review process within software development by integrating advanced machine learning algorithms and automated tools. It aims to autonomously analyze source code, rigorously ensuring code quality and security compliance while proactively identifying and addressing vulnerabilities and errors.",
       features: [
         "Significantly enhances the speed, accuracy, and consistency of code reviews.",
@@ -168,7 +168,7 @@ const Projects = () => {
     {
       title: "An In-Depth Analysis of the Failure of the London Ambulance Service's Computer-Aided Dispatch System",
       period: "Research Case Study, 1992 (Failure Year)",
-      github: "https://drive.google.com/file/d/1ubVAt6MUKOvj-QRprD8_JI5fafnaTs1J/view?usp=sharing", // No GitHub provided in the PDF
+      github: "https://drive.google.com/file/d/1BHo1r96_e7vNktLrAGqikzZwOenSFqND/view?usp=sharing", // No GitHub provided in the PDF
       description: "This case study provides an in-depth analysis of the failure that occurred in the London Ambulance Service Computer-Aided Despatch (LASCAD) system in 1992. The LASCAD project was delayed by 9 months and failed within 2 weeks. The analysis identifies absent practices, poor design decisions, and architectural approaches that could have been implemented differently to prevent the failure.",
       features: [
         "Provides an overview of LASCAD from an architectural perspective and explains which architectural decisions contributed to the system's failure.",
@@ -181,7 +181,7 @@ const Projects = () => {
     {
       title: "Comprehensive Analysis of Pro-Government Vote Prediction in ECtHR Using Machine Learning",
       period: "Research Paper",
-      github: "https://drive.google.com/file/d/1iid_soqeaXz8JJlYstiQIq-jKYuM33BQ/view?usp=sharing", // No GitHub provided in the PDF
+      github: "https://drive.google.com/file/d/1GwFkSXXzZVmZUP4OLoB1I1YckQn8rmcv/view?usp=sharing", // No GitHub provided in the PDF
       description: "This study presents a comprehensive machine learning pipeline to predict pro-government votes in the European Court of Human Rights (ECtHR). It combines structured metadata and semantic legal text embeddings.",
       features: [
         "Applies four classification algorithms: Logistic Regression, Support Vector Machines (SVM), Random Forest, and XGBoost.",
@@ -210,7 +210,7 @@ const Projects = () => {
     {
       title: "Indian College Recommendation System",
       period: "Internship Project (Java), Jan-May 2023",
-      github: "",
+      github: "https://github.com/la3679/ICRS",
       description: "An internship project that involved understanding programming languages, tools, and technologies, along with working on and implementing various modules of a larger project. This work was submitted as part of the requirements for a Bachelor of Engineering degree in Electronics & Communication Engineering.",
       features: [
         "Involved understanding a programming language (Java) and relevant tools & technology.",
