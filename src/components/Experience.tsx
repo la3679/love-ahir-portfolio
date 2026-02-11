@@ -65,7 +65,7 @@ const Experience = () => {
         "Worked on multiple AI/ML models to optimize resource allocation, reducing costs by 15%."
       ],
       color: "tech-pink",
-      offerLetterLink: "https://drive.google.com/file/d/1M_VIli5rw8OYskoQgfm7xkrik3fm2nOT/view?usp=sharing"
+      offerLetterLink: "https://drive.google.com/file/d/1NSkvGMOANb5-mr1zKGDQZNfSDczWdcZj/view?usp=sharing"
     }
   ];
 
