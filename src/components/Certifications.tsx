@@ -62,7 +62,7 @@ const Certifications = () => {
       date: "2022",
       status: "Completed",
       color: "tech-pink",
-      link: "https://drive.google.com/file/d/1WQ3hoFj-Nefw_vXWt_k6-8nWN8Q42ZxN/view?usp=sharing"
+      link: "https://drive.google.com/file/d/1RT9VAduDF422qZg2ho9nak0OUSkk7BL4/view?usp=sharing"
     }
   ];
 
