@@ -37,7 +37,7 @@ const Experience = () => {
           Collaborated with Professor Yiming Tang on advanced research in
           privacy leak detection. Co-authored the research paper{" "}
           <a
-            href="https://conf.researchr.org/track/ease-2026/ease-2026-research-papers"
+            href="https://conf.researchr.org/details/ease-2026/ease-2026-research-papers/2/Do-Privacy-Policies-Match-with-the-Logs-An-Empirical-Study-of-Privacy-Disclosure-in-"
             target="_blank"
             rel="noopener noreferrer"
             className="text-primary hover:underline font-medium"
