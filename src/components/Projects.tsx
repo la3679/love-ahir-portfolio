@@ -222,7 +222,7 @@ const Projects = () => {
     {
       title: "VidKing – AI-Enhanced Streaming Platform",
       period: "React 19, TypeScript, Firebase, Zustand, Motion",
-      github: "github.com/la3679/VidKing-AI-Streaming",
+      github: "https://github.com/la3679/VidKing-AI-Streaming",
       description: "A premium, full-stack video streaming platform featuring a cinematic 'Netflix x Disney+' aesthetic with deep content discovery and AI-powered personalized picks.",
       features: [
         "Integrated Google Gemini AI for contextual movie recommendations based on user watch history.",
@@ -236,7 +236,7 @@ const Projects = () => {
     {
       title: "AURA-GRID: Deterministic 3D Strategy Engine",
       period: "React, Three.js, R3F, GLSL, Gemini AI",
-      github: "github.com/la3679/AURA-GRID",
+      github: "https://github.com/la3679/AURA-GRID",
       description: "A competitive 3D strategy game built on a custom deterministic state machine, featuring reinforcement learning agents and real-time AI procedural commentary.",
       features: [
         "Developed a custom physics-free deterministic game engine for frame-perfect replay synchronization.",
@@ -249,7 +249,7 @@ const Projects = () => {
     {
       title: "Aequitas Intelligence: Financial Analysis Platform",
       period: "Next.js, Python, Firebase, Gemini 1.5 Flash",
-      github: "github.com/la3679/Aequitas-Intelligence",
+      github: "https://github.com/la3679/Aequitas-Intelligence",
       description: "A sophisticated financial dashboard providing neural scanning of market data, stock visualizations, and AI-driven macro insights.",
       features: [
         "Built a 'Neural Scanner' to perform real-time sentiment analysis on financial news and earnings reports.",
@@ -262,7 +262,7 @@ const Projects = () => {
     {
       title: "ResuMatch AI: Intelligent Recruitment Suite",
       period: "FastAPI, Python, React, PostgreSQL, Gemini AI",
-      github: "github.com/la3679/ResuMatch-AI",
+      github: "https://github.com/la3679/ResuMatch-AI",
       description: "An AI-powered recruitment platform that automates resume screening and provides deep matching analysis against job descriptions.",
       features: [
         "Developed a Python-based extraction pipeline to parse unstructured PDF/DOCX data into structured career profiles.",
@@ -275,7 +275,7 @@ const Projects = () => {
     {
       title: "NutriAI: Intelligent Nutrition Tracker",
       period: "React, Firebase, Gemini Vision, Tailwind CSS",
-      github: "github.com/la3679/NutriAI",
+      github: "https://github.com/la3679/NutriAI---Intelligent-Nutrition-Tracker",
       description: "A vision-based health application that uses AI to analyze food images and provide real-time nutritional breakdowns.",
       features: [
         "Integrated Gemini Vision API to identify food items from photos and estimate caloric/macronutrient content.",
@@ -288,7 +288,7 @@ const Projects = () => {
     {
       title: "FinAI Core: Predictive Lending Simulator",
       period: "TypeScript, Firebase, Gemini, Recharts",
-      github: "github.com/la3679/AI-Credit-Risk-Analyzer",
+      github: "https://github.com/la3679/FinAI-Core",
       description: "An AI-driven credit risk analyzer and loan approval simulator designed to visualize financial health and predict lending outcomes.",
       features: [
         "Engineered a predictive model to simulate credit scores based on various financial scenarios.",
