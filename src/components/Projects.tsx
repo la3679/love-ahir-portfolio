@@ -218,6 +218,85 @@ const Projects = () => {
         "Implemented project components based on acquired knowledge."
       ],
       type: "Machine Learning"
+    },
+    {
+      title: "VidKing – AI-Enhanced Streaming Platform",
+      period: "React 19, TypeScript, Firebase, Zustand, Motion",
+      github: "github.com/la3679/VidKing-AI-Streaming",
+      description: "A premium, full-stack video streaming platform featuring a cinematic 'Netflix x Disney+' aesthetic with deep content discovery and AI-powered personalized picks.",
+      features: [
+        "Integrated Google Gemini AI for contextual movie recommendations based on user watch history.",
+        "Engineered a high-performance search architecture with real-time multi-category results via TMDB API.",
+        "Implemented secure Firebase Auth and real-time Firestore synchronization for cross-device watchlists.",
+        "Designed an immersive hero experience with auto-playing trailers and interactive metadata overlays.",
+        "Optimized security with Attribute-Based Access Control (ABAC) and server-side timestamp validation."
+      ],
+      type: "Web App"
+    },
+    {
+      title: "AURA-GRID: Deterministic 3D Strategy Engine",
+      period: "React, Three.js, R3F, GLSL, Gemini AI",
+      github: "github.com/la3679/AURA-GRID",
+      description: "A competitive 3D strategy game built on a custom deterministic state machine, featuring reinforcement learning agents and real-time AI procedural commentary.",
+      features: [
+        "Developed a custom physics-free deterministic game engine for frame-perfect replay synchronization.",
+        "Integrated LLM-driven commentary that analyzes game states in real-time to provide context-aware narration.",
+        "Engineered complex 3D grid-based visualizations using Three.js and custom GLSL shaders for data-driven effects.",
+        "Implemented an RL-based AI opponent capable of evolving strategies based on player movement patterns."
+      ],
+      type: "Machine Learning"
+    },
+    {
+      title: "Aequitas Intelligence: Financial Analysis Platform",
+      period: "Next.js, Python, Firebase, Gemini 1.5 Flash",
+      github: "github.com/la3679/Aequitas-Intelligence",
+      description: "A sophisticated financial dashboard providing neural scanning of market data, stock visualizations, and AI-driven macro insights.",
+      features: [
+        "Built a 'Neural Scanner' to perform real-time sentiment analysis on financial news and earnings reports.",
+        "Implemented interactive D3.js stock charts with technical indicators and multi-ticker comparison.",
+        "Utilized Gemini 1.5 Flash to generate automated 'Aisights' – executive summaries of complex market trends.",
+        "Engineered a low-latency Activity Ledger to track market events and user-specific financial triggers."
+      ],
+      type: "Data Analysis"
+    },
+    {
+      title: "ResuMatch AI: Intelligent Recruitment Suite",
+      period: "FastAPI, Python, React, PostgreSQL, Gemini AI",
+      github: "github.com/la3679/ResuMatch-AI",
+      description: "An AI-powered recruitment platform that automates resume screening and provides deep matching analysis against job descriptions.",
+      features: [
+        "Developed a Python-based extraction pipeline to parse unstructured PDF/DOCX data into structured career profiles.",
+        "Engineered a semantic matching algorithm using LLM embeddings to score candidates beyond keyword matching.",
+        "Created a targeted analysis dashboard for recruiters to visualize skill gaps and experience alignment.",
+        "Automated personalized feedback generation for candidates using generative AI models."
+      ],
+      type: "Web App"
+    },
+    {
+      title: "NutriAI: Intelligent Nutrition Tracker",
+      period: "React, Firebase, Gemini Vision, Tailwind CSS",
+      github: "github.com/la3679/NutriAI",
+      description: "A vision-based health application that uses AI to analyze food images and provide real-time nutritional breakdowns.",
+      features: [
+        "Integrated Gemini Vision API to identify food items from photos and estimate caloric/macronutrient content.",
+        "Developed a personal AI coach that provides dietary advice based on long-term nutritional trends.",
+        "Implemented an automated meal planning engine that suggests recipes based on user health goals.",
+        "Designed a responsive dashboard for tracking hydration, sleep, and macro-nutritional goals."
+      ],
+      type: "Web App"
+    },
+    {
+      title: "FinAI Core: Predictive Lending Simulator",
+      period: "TypeScript, Firebase, Gemini, Recharts",
+      github: "github.com/la3679/AI-Credit-Risk-Analyzer",
+      description: "An AI-driven credit risk analyzer and loan approval simulator designed to visualize financial health and predict lending outcomes.",
+      features: [
+        "Engineered a predictive model to simulate credit scores based on various financial scenarios.",
+        "Integrated real-time financial insights using Gemini to explain the 'why' behind risk assessments.",
+        "Built interactive 'What-If' simulators for users to see how specific financial decisions affect loan eligibility.",
+        "Developed data-driven visualizations for debt-to-income ratios and credit history timelines."
+      ],
+      type: "Data Analysis"
     }
   ];
 
