@@ -297,6 +297,20 @@ const Projects = () => {
         "Developed data-driven visualizations for debt-to-income ratios and credit history timelines."
       ],
       type: "Data Analysis"
+    },
+    {
+      title: "Do Privacy Policies Match with the Logs? An Empirical Study of Privacy Disclosure in Android Application Logs",
+      period: "EASE 2026 Research Track",
+      github: "https://conf.researchr.org/details/ease-2026/ease-2026-research-papers/2/Do-Privacy-Policies-Match-with-the-Logs-An-Empirical-Study-of-Privacy-Disclosure-in-", 
+      description: "A large-scale empirical study analyzing the alignment between Android privacy policies and actual data disclosures within application logs, highlighting significant inconsistencies in industry practices.",
+      features: [
+        "Analyzed 1,000 Android applications across multiple categories, processing over 86 million log entries for privacy leak detection.",
+        "Identified that while 88% of apps provide policies, only 28.5% explicitly disclose logging practices, with 27.7% of those descriptions being vague.",
+        "Discovered widespread privacy leakages, with 67.6% of apps leaking sensitive information not documented in their privacy policies.",
+        "Revealed a critical transparency gap: only 0.4% of applications showed consistent alignment between policy declarations and actual logged data.",
+        "Collaborated with researchers from RIT, Ontario Tech University, and University of Waterloo on privacy-focused empirical software engineering."
+      ],
+      type: "Publication"
     }
   ];
 
