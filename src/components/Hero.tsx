@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { ArrowDown, Github, Linkedin, Mail, Download, Code, Sparkles, Zap } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import TypingAnimation from "./TypingAnimation";
-import profilePhoto from "@/assets/profile-photo.jpg";
+import profilePhoto from "@/assets/profile-photo.png";
 
 const Hero = () => {
   const { t } = useTranslation();
