@@ -1,59 +1,36 @@
-import { Moon, Sun, Languages, Globe } from "lucide-react"
-import { useTheme } from "next-themes"
-import { useTranslation } from "react-i18next"
-import { Button } from "@/components/ui/button"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+import { Moon, Sun } from "lucide-react";
+import { useEffect, useState } from "react";
+import { useTheme } from "next-themes";
 
-export function ThemeToggle() {
-  const { setTheme, theme } = useTheme()
-  const { i18n, t } = useTranslation()
+/**
+ * Accessible light/dark switch wired into next-themes. Renders a single
+ * button that flips the active theme; the sun/moon crossfade is driven by
+ * the `.dark` class so it stays in sync with the global theme transition.
+ *
+ * Guards against hydration mismatch by only resolving the icon after mount.
+ */
+export function ThemeToggle({ className = "" }: { className?: string }) {
+  const { resolvedTheme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => setMounted(true), []);
+
+  const isDark = resolvedTheme === "dark";
+  const next = isDark ? "light" : "dark";
 
   return (
-    <div className="flex gap-2">
-      {/* Theme Toggle */}
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button variant="outline" size="icon" className="bg-background/50 backdrop-blur-sm border-border/50 hover:border-primary/50">
-            <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-            <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-            <span className="sr-only">Toggle theme</span>
-          </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent align="end" className="bg-background/80 backdrop-blur-sm">
-          <DropdownMenuItem onClick={() => setTheme("light")}>
-            {t('light')}
-          </DropdownMenuItem>
-          <DropdownMenuItem onClick={() => setTheme("dark")}>
-            {t('dark')}
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
-
-      {/* Language Toggle */}
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button variant="outline" size="icon" className="bg-background/50 backdrop-blur-sm border-border/50 hover:border-primary/50">
-            <Globe className="h-[1.2rem] w-[1.2rem]" />
-            <span className="sr-only">Toggle language</span>
-          </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent align="end" className="bg-background/80 backdrop-blur-sm">
-          <DropdownMenuItem onClick={() => i18n.changeLanguage('en')}>
-            English
-          </DropdownMenuItem>
-          <DropdownMenuItem onClick={() => i18n.changeLanguage('es')}>
-            Español
-          </DropdownMenuItem>
-          <DropdownMenuItem onClick={() => i18n.changeLanguage('fr')}>
-            Français
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
-    </div>
-  )
+    <button
+      type="button"
+      onClick={() => setTheme(next)}
+      aria-label={mounted ? `Switch to ${next} mode` : "Toggle theme"}
+      title={mounted ? `Switch to ${next} mode` : "Toggle theme"}
+      className={`relative grid h-10 w-10 place-items-center rounded-lg border border-border bg-card/40 text-muted-foreground backdrop-blur transition-colors hover:border-aurora-violet/50 hover:text-foreground ${className}`}
+    >
+      <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all duration-500 dark:-rotate-90 dark:scale-0" />
+      <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all duration-500 dark:rotate-0 dark:scale-100" />
+      <span className="sr-only">Toggle theme</span>
+    </button>
+  );
 }
+
+export default ThemeToggle;

@@ -1,61 +1,47 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from "react";
+import { nextTypingState, type TypingState } from "@/lib/typing";
+
+export type { TypingState };
+export { nextTypingState };
 
 interface TypingAnimationProps {
   words: string[];
   typeSpeed?: number;
   deleteSpeed?: number;
-  delayBetweenWords?: number;
+  pause?: number;
 }
 
-const TypingAnimation = ({ 
-  words, 
-  typeSpeed = 100, 
-  deleteSpeed = 50, 
-  delayBetweenWords = 2000 
+const TypingAnimation = ({
+  words,
+  typeSpeed = 110,
+  deleteSpeed = 55,
+  pause = 1600,
 }: TypingAnimationProps) => {
-  const [currentWordIndex, setCurrentWordIndex] = useState(0);
-  const [currentText, setCurrentText] = useState('');
-  const [isDeleting, setIsDeleting] = useState(false);
-  const [isWaiting, setIsWaiting] = useState(false);
+  const [state, setState] = useState<TypingState>({
+    text: "",
+    wordIndex: 0,
+    phase: "typing",
+  });
 
   useEffect(() => {
-    const currentWord = words[currentWordIndex];
-    
-    if (isWaiting) {
-      const waitTimer = setTimeout(() => {
-        setIsWaiting(false);
-        setIsDeleting(true);
-      }, delayBetweenWords);
-      
-      return () => clearTimeout(waitTimer);
-    }
+    const delay =
+      state.phase === "pausing"
+        ? pause
+        : state.phase === "deleting"
+          ? deleteSpeed
+          : typeSpeed;
 
     const timer = setTimeout(() => {
-      if (!isDeleting) {
-        // Typing
-        if (currentText.length < currentWord.length) {
-          setCurrentText(currentWord.slice(0, currentText.length + 1));
-        } else {
-          setIsWaiting(true);
-        }
-      } else {
-        // Deleting
-        if (currentText.length > 0) {
-          setCurrentText(currentText.slice(0, -1));
-        } else {
-          setIsDeleting(false);
-          setCurrentWordIndex((prev) => (prev + 1) % words.length);
-        }
-      }
-    }, isDeleting ? deleteSpeed : typeSpeed);
+      setState((prev) => nextTypingState(prev, words));
+    }, delay);
 
     return () => clearTimeout(timer);
-  }, [currentText, isDeleting, isWaiting, currentWordIndex, words, typeSpeed, deleteSpeed, delayBetweenWords]);
+  }, [state, words, typeSpeed, deleteSpeed, pause]);
 
   return (
-    <span className="text-accent-bright font-bold">
-      {currentText}
-      <span className="animate-pulse text-accent-bright">|</span>
+    <span className="text-aurora font-semibold">
+      {state.text}
+      <span className="ml-0.5 inline-block h-[1em] w-px animate-blink bg-aurora-cyan align-middle" />
     </span>
   );
 };

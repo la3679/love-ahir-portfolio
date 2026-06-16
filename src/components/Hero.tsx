@@ -1,219 +1,175 @@
-import { Button } from "@/components/ui/button";
-import { useState, useEffect } from "react";
-import { ArrowDown, Github, Linkedin, Mail, Download, Code, Sparkles, Zap } from "lucide-react";
+import { motion } from "framer-motion";
+import { ArrowUpRight, Github, Linkedin, Mail, FileDown, MapPin } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import TypingAnimation from "./TypingAnimation";
+import { profile, stats } from "@/data/portfolio";
 import profilePhoto from "@/assets/profile-photo.png";
+import { scrollToHref } from "./Navigation";
+
+const container = {
+  hidden: { opacity: 0 },
+  show: { opacity: 1, transition: { staggerChildren: 0.12, delayChildren: 0.1 } },
+};
+const item = {
+  hidden: { opacity: 0, y: 24 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] } },
+};
 
 const Hero = () => {
   const { t } = useTranslation();
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const [floatingElements, setFloatingElements] = useState([]);
-
-  const scrollToProjects = () => {
-    const projectsElement = document.getElementById('projects');
-    if (projectsElement) {
-      projectsElement.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
-  useEffect(() => {
-    const isMobile = window.innerWidth < 768;
-    const isLowPowerDevice = navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4;
-    
-    // Reduce floating elements on mobile
-    const elementCount = isMobile || isLowPowerDevice ? 3 : 6;
-    const elements = Array.from({ length: elementCount }, (_, i) => ({
-      id: i,
-      icon: [Code, Github, Sparkles, Zap][i % 4],
-      x: Math.random() * 100,
-      y: Math.random() * 100,
-      delay: i * 0.8,
-      duration: 6 + Math.random() * 2,
-      scale: 0.9 + Math.random() * 0.2
-    }));
-    setFloatingElements(elements);
-
-    // Disable mouse tracking on mobile for performance
-    const handleMouseMove = (e) => {
-      if (!isMobile && !isLowPowerDevice) {
-        // Throttle mouse movement for better performance
-        requestAnimationFrame(() => {
-          setMousePosition({ x: e.clientX, y: e.clientY });
-        });
-      }
-    };
-
-    if (!isMobile) {
-      window.addEventListener('mousemove', handleMouseMove, { passive: true });
-    }
-    
-    return () => {
-      if (!isMobile) {
-        window.removeEventListener('mousemove', handleMouseMove);
-      }
-    };
-  }, []);
-
   return (
-    <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-background via-primary/5 to-accent-bright/10 overflow-hidden">
-      {/* Enhanced Floating Background Elements */}
-      <div className="absolute inset-0 overflow-hidden">
-        {/* Floating tech elements */}
-        {floatingElements.map((element) => {
-          const IconComponent = element.icon;
-          return (
-            <div
-              key={element.id}
-              className="absolute opacity-30 animate-float hover:opacity-60 transition-opacity duration-300"
-              style={{
-                left: `${element.x}%`,
-                top: `${element.y}%`,
-                animationDelay: `${element.delay}s`,
-                animationDuration: `${element.duration}s`,
-                transform: `scale(${element.scale})`,
-                willChange: 'transform, opacity'
-              }}
+    <section
+      id="home"
+      className="relative flex min-h-screen items-center overflow-hidden pt-24"
+    >
+      <div className="container grid items-center gap-14 lg:grid-cols-[1.15fr_0.85fr]">
+        <motion.div variants={container} initial="hidden" animate="show">
+          <motion.div
+            variants={item}
+            className="inline-flex items-center gap-2 rounded-full border border-aurora-emerald/30 bg-aurora-emerald/10 px-3 py-1 text-xs font-medium text-aurora-emerald"
+          >
+            <span className="h-2 w-2 animate-pulse-ring rounded-full bg-aurora-emerald" />
+            {t("hero.badge")}
+          </motion.div>
+
+          <motion.h1
+            variants={item}
+            className="mt-6 font-display text-5xl font-bold leading-[1.05] md:text-7xl"
+          >
+            <span className="text-foreground">Love</span>{" "}
+            <span className="text-gradient">Ahir</span>
+          </motion.h1>
+
+          <motion.div
+            variants={item}
+            className="mt-4 flex items-center gap-2 text-xl font-medium text-muted-foreground md:text-2xl"
+          >
+            <span className="text-foreground/80">{t("hero.intro")}</span>
+            <TypingAnimation words={profile.roles} />
+          </motion.div>
+
+          <motion.p
+            variants={item}
+            className="mt-6 max-w-xl text-base leading-relaxed text-muted-foreground md:text-lg"
+          >
+            {profile.summary}
+          </motion.p>
+
+          <motion.div variants={item} className="mt-8 flex flex-wrap items-center gap-4">
+            <button
+              onClick={() => scrollToHref("#projects")}
+              className="group inline-flex items-center gap-2 rounded-full bg-gradient-aurora px-6 py-3 text-sm font-semibold text-background shadow-glow transition-transform hover:scale-[1.03]"
             >
-              <IconComponent className="h-8 w-8 text-primary" />
-            </div>
-          );
-        })}
-        
-        {/* Optimized gradient orbs - reduced on mobile */}
-        <div 
-          className="absolute w-60 md:w-80 h-60 md:h-80 rounded-full bg-gradient-to-r from-primary/20 to-tech-cyan/20 blur-2xl transition-transform duration-700 ease-out"
-          style={{
-            left: (window.innerWidth >= 768 ? mousePosition.x * 0.02 : 10) + '%',
-            top: (window.innerWidth >= 768 ? mousePosition.y * 0.02 : 20) + '%',
-            transform: `translate(-50%, -50%)`,
-            willChange: window.innerWidth >= 768 ? 'transform' : 'none'
-          }}
-        />
-        <div 
-          className="absolute w-48 md:w-64 h-48 md:h-64 rounded-full bg-gradient-to-r from-tech-pink/15 to-accent-bright/15 blur-2xl transition-transform duration-1000 ease-out"
-          style={{
-            right: (window.innerWidth >= 768 ? mousePosition.x * 0.015 : 15) + '%',
-            bottom: (window.innerWidth >= 768 ? mousePosition.y * 0.015 : 30) + '%',
-            transform: `translate(50%, 50%)`,
-            willChange: window.innerWidth >= 768 ? 'transform' : 'none'
-          }}
-        />
-        
-        {/* Animated geometric shapes - hidden on mobile for performance */}
-        <div className="hidden md:block absolute top-20 left-10 w-32 h-32 border-2 border-primary/30 rotate-45 animate-spin-slow opacity-20" />
-        <div className="hidden md:block absolute bottom-20 right-20 w-24 h-24 border-2 border-tech-cyan/40 animate-bounce-slow opacity-30" />
-        <div className="hidden md:block absolute top-1/2 right-10 w-16 h-16 bg-gradient-to-r from-accent-bright/20 to-tech-pink/20 rounded-full animate-orbit" />
-        
-        {/* Floating code snippets with glow - reduced on mobile */}
-        <div className="hidden lg:block absolute top-20 left-10 opacity-15 animate-float font-mono text-sm text-primary animate-glow">
-          const passion = "unlimited";
-        </div>
-        <div className="hidden lg:block absolute bottom-20 right-10 opacity-15 animate-float font-mono text-sm text-tech-cyan animate-glow" style={{ animationDelay: '1s' }}>
-          while(coding) inspire();
-        </div>
-        <div className="hidden lg:block absolute top-1/2 left-5 opacity-15 animate-float font-mono text-sm text-accent-bright animate-glow" style={{ animationDelay: '2s' }}>
-          {"{ innovation: 'always' }"}
-        </div>
-        <div className="hidden lg:block absolute top-1/3 right-1/4 opacity-15 animate-float font-mono text-sm text-tech-pink animate-glow" style={{ animationDelay: '3s' }}>
-          async function dream() {`{ await reality; }`}
-        </div>
-      </div>
+              {t("hero.explore")}
+              <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+            </button>
+            <a
+              href={profile.resumeUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-full border border-border bg-card/40 px-6 py-3 text-sm font-semibold text-foreground backdrop-blur transition-colors hover:border-aurora-violet/50"
+            >
+              <FileDown className="h-4 w-4" />
+              {t("hero.resume")}
+            </a>
+          </motion.div>
 
-      <div className="container mx-auto px-4 text-center relative z-10">
-        <div className="max-w-4xl mx-auto">
-          {/* Enhanced Profile Image */}
-          <div className="w-36 h-36 mx-auto mb-8 rounded-full bg-gradient-to-r from-accent-bright to-tech-cyan p-1 animate-zoom-in animate-glow relative">
-            <div className="w-full h-full rounded-full relative overflow-hidden">
-              <img 
-                src={profilePhoto} 
-                alt="Love Jayesh Ahir" 
-                className="w-full h-full object-cover rounded-full"
-              />
-              <div className="absolute inset-0 bg-gradient-to-br from-transparent via-white/20 to-transparent animate-spin-slow" />
-            </div>
-            {/* Orbiting dots */}
-            <div className="absolute inset-0 animate-spin-slow">
-              <div className="absolute top-0 left-1/2 w-3 h-3 bg-tech-cyan rounded-full -translate-x-1/2 -translate-y-1/2 animate-pulse" />
-              <div className="absolute bottom-0 left-1/2 w-2 h-2 bg-accent-bright rounded-full -translate-x-1/2 translate-y-1/2 animate-pulse" style={{ animationDelay: '1s' }} />
-            </div>
-          </div>
-
-          <h1 className="text-5xl md:text-7xl font-bold mb-6 animate-slide-up">
-            <span className="text-foreground">
-              {t('hero.title')}
-            </span>
-          </h1>
-          
-          <div className="text-xl md:text-2xl text-muted-foreground mb-8 animate-slide-up animation-delay-200">
-            <span>I'm a </span>
-            <TypingAnimation 
-              words={t('hero.roles', { returnObjects: true }) as string[]}
-              typeSpeed={150}
-              deleteSpeed={100}
-              delayBetweenWords={2000}
-            />
-          </div>
-
-          <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto animate-slide-up animation-delay-300">
-            {t('hero.description')}
-          </p>
-
-          {/* Enhanced Contact Info */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8 animate-slide-up animation-delay-400">
-            <a href="mailto:lahir1269@gmail.com" className="flex items-center gap-2 text-muted-foreground hover:text-accent-bright transition-all duration-300 hover:scale-110 animate-glow">
+          <motion.div variants={item} className="mt-8 flex items-center gap-4">
+            <SocialLink href={profile.github} label="GitHub">
+              <Github className="h-5 w-5" />
+            </SocialLink>
+            <SocialLink href={profile.linkedin} label="LinkedIn">
+              <Linkedin className="h-5 w-5" />
+            </SocialLink>
+            <SocialLink href={`mailto:${profile.email}`} label="Email">
               <Mail className="h-5 w-5" />
-              lahir1269@gmail.com
-            </a>
+            </SocialLink>
+            <span className="ml-1 inline-flex items-center gap-1.5 text-sm text-muted-foreground">
+              <MapPin className="h-4 w-4 text-aurora-cyan" />
+              {profile.location}
+            </span>
+          </motion.div>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
+          className="relative mx-auto w-full max-w-sm"
+        >
+          <div className="relative aspect-square">
+            <div className="absolute inset-0 rounded-full aurora-ring animate-spin-slower opacity-80 blur-[2px]" />
+            <div className="absolute inset-[6px] rounded-full bg-background" />
+            <img
+              src={profilePhoto}
+              alt={profile.name}
+              className="absolute inset-[10px] h-[calc(100%-20px)] w-[calc(100%-20px)] rounded-full object-cover"
+            />
+            <div className="absolute inset-[10px] rounded-full ring-1 ring-inset ring-white/10" />
           </div>
 
-          {/* Enhanced Action Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8 animate-slide-up animation-delay-500">
-            <Button 
-              size="lg" 
-              className="bg-gradient-to-r from-accent-bright to-tech-cyan hover:from-accent-bright/80 hover:to-tech-cyan/80 text-white shadow-neon hover:shadow-glow transition-all duration-300 hover:scale-105 animate-glow relative overflow-hidden group"
-              onClick={() => {
-                const link = document.createElement('a');
-                link.href = 'https://drive.google.com/uc?export=download&id=1gq8PAz8M2m6MWuEKePDAYdVyaoAR-JUV';
-                link.download = 'Love_Jayesh_Ahir_Resume.pdf';
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-              }}
-            >
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000" />
-              <Download className="mr-2 h-5 w-5" />
-              {t('hero.downloadResume')}
-            </Button>
-            <Button 
-              variant="outline" 
-              size="lg" 
-              onClick={scrollToProjects}
-              className="border-accent-bright text-accent-bright hover:bg-accent-bright hover:text-white transition-all duration-300 hover:scale-105 animate-glow"
-            >
-              {t('hero.viewProjects')}
-            </Button>
-          </div>
+          <FloatingChip className="-left-4 top-8 animate-float" label="EASE 2026" sub="Published" />
+          <FloatingChip className="-right-2 top-1/3 animate-float-slow" label="GPA 3.94" sub="RIT M.S." />
+          <FloatingChip className="bottom-6 left-2 animate-float" label="86M+" sub="Logs analyzed" />
+        </motion.div>
+      </div>
 
-          {/* Enhanced Social Links */}
-          <div className="flex justify-center gap-6 animate-slide-up animation-delay-600">
-            <a href="https://github.com/la3679" target="_blank" rel="noopener noreferrer" className="p-4 rounded-full bg-card/50 backdrop-blur-sm border border-border/50 hover:border-accent-bright/50 hover:shadow-glow transition-all duration-300 group hover:scale-110 animate-glow relative overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-br from-accent-bright/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              <Github className="h-6 w-6 text-muted-foreground group-hover:text-accent-bright transition-colors relative z-10" />
-            </a>
-            <a href="https://www.linkedin.com/in/love-jayesh-ahir-188356290/" target="_blank" rel="noopener noreferrer" className="p-4 rounded-full bg-card/50 backdrop-blur-sm border border-border/50 hover:border-tech-cyan/50 hover:shadow-[0_0_30px_rgba(6,182,212,0.5)] transition-all duration-300 group hover:scale-110 animate-glow relative overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-br from-tech-cyan/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              <Linkedin className="h-6 w-6 text-muted-foreground group-hover:text-tech-cyan transition-colors relative z-10" />
-            </a>
-            <a href="mailto:lahir1269@gmail.com" className="p-4 rounded-full bg-card/50 backdrop-blur-sm border border-border/50 hover:border-tech-pink/50 hover:shadow-[0_0_30px_rgba(236,72,153,0.5)] transition-all duration-300 group hover:scale-110 animate-glow relative overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-br from-tech-pink/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              <Mail className="h-6 w-6 text-muted-foreground group-hover:text-tech-pink transition-colors relative z-10" />
-            </a>
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.7, delay: 0.6 }}
+        className="absolute inset-x-0 bottom-0 hidden lg:block"
+      >
+        <div className="container">
+          <div className="grid grid-cols-4 divide-x divide-border/60 rounded-t-2xl glass px-2 py-6">
+            {stats.map((s) => (
+              <div key={s.label} className="px-6 text-center">
+                <div className="text-2xl font-bold text-gradient md:text-3xl">{s.value}</div>
+                <div className="mt-1 text-xs text-muted-foreground">{s.label}</div>
+              </div>
+            ))}
           </div>
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 };
+
+const SocialLink = ({
+  href,
+  label,
+  children,
+}: {
+  href: string;
+  label: string;
+  children: React.ReactNode;
+}) => (
+  <a
+    href={href}
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label={label}
+    className="grid h-11 w-11 place-items-center rounded-full border border-border bg-card/40 text-muted-foreground backdrop-blur transition-all hover:-translate-y-1 hover:border-aurora-violet/50 hover:text-foreground hover:shadow-glow"
+  >
+    {children}
+  </a>
+);
+
+const FloatingChip = ({
+  className,
+  label,
+  sub,
+}: {
+  className: string;
+  label: string;
+  sub: string;
+}) => (
+  <div
+    className={`absolute hidden rounded-2xl glass-strong px-4 py-2.5 shadow-lg sm:block ${className}`}
+  >
+    <div className="text-sm font-bold text-gradient">{label}</div>
+    <div className="text-[10px] uppercase tracking-wider text-muted-foreground">{sub}</div>
+  </div>
+);
 
 export default Hero;
