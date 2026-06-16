@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Mail, MapPin, Github, Linkedin, Send, ArrowUpRight } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import SectionHeading from "./SectionHeading";
 import { profile } from "@/data/portfolio";
 import { buildMailtoUrl, type ContactForm } from "@/lib/mailto";
@@ -9,13 +10,14 @@ export { buildMailtoUrl };
 export type { ContactForm };
 
 const links = [
-  { icon: Mail, label: "Email", value: "lahir1269@gmail.com", href: "mailto:lahir1269@gmail.com" },
-  { icon: Github, label: "GitHub", value: "github.com/la3679", href: "https://github.com/la3679" },
-  { icon: Linkedin, label: "LinkedIn", value: "Love Jayesh Ahir", href: "https://www.linkedin.com/in/love-jayesh-ahir-188356290/" },
-  { icon: MapPin, label: "Location", value: "Rochester, NY", href: "#" },
+  { icon: Mail, labelKey: "contact.link.email", value: "lahir1269@gmail.com", href: "mailto:lahir1269@gmail.com" },
+  { icon: Github, labelKey: "contact.link.github", value: "github.com/la3679", href: "https://github.com/la3679" },
+  { icon: Linkedin, labelKey: "contact.link.linkedin", value: "Love Jayesh Ahir", href: "https://www.linkedin.com/in/love-jayesh-ahir-188356290/" },
+  { icon: MapPin, labelKey: "contact.link.location", value: "Rochester, NY", href: "#" },
 ];
 
 const Contact = () => {
+  const { t } = useTranslation();
   const [form, setForm] = useState<ContactForm>({ name: "", email: "", message: "" });
 
   const onSubmit = (e: React.FormEvent) => {
@@ -30,9 +32,9 @@ const Contact = () => {
     <section id="contact" className="section">
       <div className="container">
         <SectionHeading
-          eyebrow="Contact"
-          title="Let's build something worth shipping"
-          description="I'm open to software engineering and research roles, and always happy to talk through an interesting problem."
+          eyebrow={t("contact.eyebrow")}
+          title={t("contact.title")}
+          description={t("contact.description")}
         />
 
         <div className="mx-auto mt-16 grid max-w-5xl gap-8 lg:grid-cols-2">
@@ -45,7 +47,7 @@ const Contact = () => {
           >
             {links.map((l) => (
               <a
-                key={l.label}
+                key={l.labelKey}
                 href={l.href}
                 target={l.href.startsWith("http") ? "_blank" : undefined}
                 rel="noopener noreferrer"
@@ -56,7 +58,7 @@ const Contact = () => {
                 </span>
                 <div>
                   <div className="text-xs uppercase tracking-wider text-muted-foreground">
-                    {l.label}
+                    {t(l.labelKey)}
                   </div>
                   <div className="text-sm font-medium text-foreground transition-colors group-hover:text-aurora-violet">
                     {l.value}
@@ -69,11 +71,10 @@ const Contact = () => {
             <div className="rounded-2xl border border-aurora-emerald/25 bg-aurora-emerald/5 p-5">
               <div className="flex items-center gap-2 text-sm font-semibold text-aurora-emerald">
                 <span className="h-2 w-2 animate-pulse-ring rounded-full bg-aurora-emerald" />
-                Available now
+                {t("contact.availableNow")}
               </div>
               <p className="mt-2 text-sm text-muted-foreground">
-                Recently completed my M.S. at RIT (Dec 2025). Seeking full-time
-                roles in software engineering, applied AI, and privacy research.
+                {t("contact.availableText")}
               </p>
             </div>
           </motion.div>
@@ -88,7 +89,7 @@ const Contact = () => {
           >
             <div>
               <label htmlFor="name" className="mb-1.5 block text-sm text-muted-foreground">
-                Name
+                {t("contact.name")}
               </label>
               <input
                 id="name"
@@ -96,13 +97,13 @@ const Contact = () => {
                 required
                 value={form.name}
                 onChange={(e) => setForm({ ...form, name: e.target.value })}
-                placeholder="Your name"
+                placeholder={t("contact.namePlaceholder")}
                 className={field}
               />
             </div>
             <div>
               <label htmlFor="email" className="mb-1.5 block text-sm text-muted-foreground">
-                Email
+                {t("contact.email")}
               </label>
               <input
                 id="email"
@@ -111,13 +112,13 @@ const Contact = () => {
                 required
                 value={form.email}
                 onChange={(e) => setForm({ ...form, email: e.target.value })}
-                placeholder="you@example.com"
+                placeholder={t("contact.emailPlaceholder")}
                 className={field}
               />
             </div>
             <div>
               <label htmlFor="message" className="mb-1.5 block text-sm text-muted-foreground">
-                Message
+                {t("contact.message")}
               </label>
               <textarea
                 id="message"
@@ -126,7 +127,7 @@ const Contact = () => {
                 rows={5}
                 value={form.message}
                 onChange={(e) => setForm({ ...form, message: e.target.value })}
-                placeholder="Tell me about the role or project…"
+                placeholder={t("contact.messagePlaceholder")}
                 className={`${field} resize-none`}
               />
             </div>
@@ -135,7 +136,7 @@ const Contact = () => {
               className="group inline-flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-aurora px-6 py-3 text-sm font-semibold text-background shadow-glow transition-transform hover:scale-[1.01]"
             >
               <Send className="h-4 w-4" />
-              Send message
+              {t("contact.send")}
             </button>
           </motion.form>
         </div>

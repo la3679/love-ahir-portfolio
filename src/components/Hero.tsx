@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { ArrowUpRight, Github, Linkedin, Mail, FileDown, MapPin } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import TypingAnimation from "./TypingAnimation";
 import { profile, stats } from "@/data/portfolio";
 import profilePhoto from "@/assets/profile-photo.png";
@@ -15,6 +16,7 @@ const item = {
 };
 
 const Hero = () => {
+  const { t } = useTranslation();
   return (
     <section
       id="home"
@@ -27,7 +29,7 @@ const Hero = () => {
             className="inline-flex items-center gap-2 rounded-full border border-aurora-emerald/30 bg-aurora-emerald/10 px-3 py-1 text-xs font-medium text-aurora-emerald"
           >
             <span className="h-2 w-2 animate-pulse-ring rounded-full bg-aurora-emerald" />
-            Open to software & research roles
+            {t("hero.badge")}
           </motion.div>
 
           <motion.h1
@@ -42,7 +44,7 @@ const Hero = () => {
             variants={item}
             className="mt-4 flex items-center gap-2 text-xl font-medium text-muted-foreground md:text-2xl"
           >
-            <span className="text-foreground/80">I'm a</span>
+            <span className="text-foreground/80">{t("hero.intro")}</span>
             <TypingAnimation words={profile.roles} />
           </motion.div>
 
@@ -58,7 +60,7 @@ const Hero = () => {
               onClick={() => scrollToHref("#projects")}
               className="group inline-flex items-center gap-2 rounded-full bg-gradient-aurora px-6 py-3 text-sm font-semibold text-background shadow-glow transition-transform hover:scale-[1.03]"
             >
-              Explore my work
+              {t("hero.explore")}
               <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
             </button>
             <a
@@ -68,7 +70,7 @@ const Hero = () => {
               className="inline-flex items-center gap-2 rounded-full border border-border bg-card/40 px-6 py-3 text-sm font-semibold text-foreground backdrop-blur transition-colors hover:border-aurora-violet/50"
             >
               <FileDown className="h-4 w-4" />
-              Resume
+              {t("hero.resume")}
             </a>
           </motion.div>
 

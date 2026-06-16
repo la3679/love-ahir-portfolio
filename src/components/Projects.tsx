@@ -9,6 +9,7 @@ import {
   ArrowUpRight,
   Sparkles,
 } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import SectionHeading from "./SectionHeading";
 import {
   projects,
@@ -27,6 +28,7 @@ const categoryIcon: Record<ProjectCategory, typeof Globe> = {
 };
 
 const Projects = () => {
+  const { t } = useTranslation();
   const [active, setActive] = useState<ProjectCategory | "All">("All");
   const counts = useMemo(() => countByCategory(projects), []);
   const visible = useMemo(() => filterProjects(projects, active), [active]);
@@ -35,9 +37,9 @@ const Projects = () => {
     <section id="projects" className="section">
       <div className="container">
         <SectionHeading
-          eyebrow="Selected Work"
-          title="Things I've designed, built, and shipped"
-          description="A mix of production products, research, and ambitious side projects — filter by what you care about."
+          eyebrow={t("projects.eyebrow")}
+          title={t("projects.title")}
+          description={t("projects.description")}
         />
 
         <div className="mt-12 flex flex-wrap justify-center gap-2">
@@ -54,7 +56,7 @@ const Projects = () => {
                     : "border-border bg-card/40 text-muted-foreground hover:border-aurora-violet/40 hover:text-foreground"
                 }`}
               >
-                {cat}
+                {t(`category.${cat}`)}
                 <span className={`ml-1.5 text-xs ${isActive ? "text-background/70" : "text-muted-foreground/60"}`}>
                   {counts[cat] ?? 0}
                 </span>
@@ -83,7 +85,7 @@ const Projects = () => {
                   {project.featured && (
                     <span className="absolute right-4 top-4 inline-flex items-center gap-1 rounded-full bg-aurora-amber/15 px-2 py-0.5 text-[10px] font-medium text-aurora-amber">
                       <Sparkles className="h-3 w-3" />
-                      Featured
+                      {t("projects.featured")}
                     </span>
                   )}
 
@@ -92,7 +94,7 @@ const Projects = () => {
                       <Icon className="h-5 w-5" />
                     </span>
                     <span className="font-mono text-xs uppercase tracking-wider text-muted-foreground">
-                      {project.category}
+                      {t(`category.${project.category}`)}
                     </span>
                   </div>
 
@@ -115,7 +117,7 @@ const Projects = () => {
                   </div>
 
                   <span className="mt-5 inline-flex items-center gap-1 text-sm font-medium text-aurora-cyan">
-                    View project
+                    {t("projects.viewProject")}
                     <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                   </span>
 

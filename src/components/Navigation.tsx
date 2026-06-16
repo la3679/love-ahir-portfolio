@@ -1,20 +1,23 @@
 import { useEffect, useState } from "react";
 import { Menu, X, FileDown } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { profile } from "@/data/portfolio";
 import { ThemeToggle } from "./ThemeToggle";
+import { LanguageSelector } from "./LanguageSelector";
 
 export interface NavItem {
-  label: string;
+  /** i18n key for the visible label. */
+  labelKey: string;
   href: string;
 }
 
 export const navItems: NavItem[] = [
-  { label: "About", href: "#about" },
-  { label: "Experience", href: "#experience" },
-  { label: "Work", href: "#projects" },
-  { label: "Skills", href: "#skills" },
-  { label: "Expertise", href: "#expertise" },
-  { label: "Contact", href: "#contact" },
+  { labelKey: "nav.about", href: "#about" },
+  { labelKey: "nav.experience", href: "#experience" },
+  { labelKey: "nav.work", href: "#projects" },
+  { labelKey: "nav.skills", href: "#skills" },
+  { labelKey: "nav.expertise", href: "#expertise" },
+  { labelKey: "nav.contact", href: "#contact" },
 ];
 
 export function scrollToHref(href: string) {
@@ -30,6 +33,7 @@ export function scrollToHref(href: string) {
 }
 
 const Navigation = () => {
+  const { t } = useTranslation();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -70,7 +74,7 @@ const Navigation = () => {
               onClick={() => go(item.href)}
               className="group relative text-sm text-muted-foreground transition-colors hover:text-foreground"
             >
-              {item.label}
+              {t(item.labelKey)}
               <span className="absolute -bottom-1.5 left-0 h-px w-0 bg-gradient-aurora transition-all duration-300 group-hover:w-full" />
             </button>
           ))}
@@ -81,12 +85,14 @@ const Navigation = () => {
             className="inline-flex items-center gap-2 rounded-full border border-aurora-violet/40 bg-aurora-violet/10 px-4 py-1.5 text-sm font-medium text-foreground transition-all hover:border-aurora-violet hover:shadow-glow"
           >
             <FileDown className="h-4 w-4" />
-            Resume
+            {t("nav.resume")}
           </a>
+          <LanguageSelector />
           <ThemeToggle />
         </div>
 
         <div className="flex items-center gap-2 md:hidden">
+          <LanguageSelector />
           <ThemeToggle />
           <button
             className="grid h-10 w-10 place-items-center rounded-lg glass"
@@ -108,7 +114,7 @@ const Navigation = () => {
                 onClick={() => go(item.href)}
                 className="py-2.5 text-left text-muted-foreground transition-colors hover:text-foreground"
               >
-                {item.label}
+                {t(item.labelKey)}
               </button>
             ))}
             <a
@@ -118,7 +124,7 @@ const Navigation = () => {
               className="mt-2 inline-flex items-center gap-2 rounded-full border border-aurora-violet/40 bg-aurora-violet/10 px-4 py-2 text-sm font-medium"
             >
               <FileDown className="h-4 w-4" />
-              Download Resume
+              {t("nav.downloadResume")}
             </a>
           </div>
         </div>

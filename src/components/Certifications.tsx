@@ -1,16 +1,18 @@
 import { motion } from "framer-motion";
 import { Award, ArrowUpRight, Calendar } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import SectionHeading from "./SectionHeading";
 import { certifications } from "@/data/portfolio";
 
 const Certifications = () => {
+  const { t } = useTranslation();
   return (
     <section id="certifications" className="section">
       <div className="container">
         <SectionHeading
-          eyebrow="Credentials"
-          title="Always learning, on the record"
-          description="A sample of the certifications I've earned while keeping pace with a fast-moving field."
+          eyebrow={t("certifications.eyebrow")}
+          title={t("certifications.title")}
+          description={t("certifications.description")}
         />
 
         <div className="mt-16 grid gap-4 md:grid-cols-2 lg:grid-cols-3">

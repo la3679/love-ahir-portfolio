@@ -1,16 +1,18 @@
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 import SectionHeading from "./SectionHeading";
 import { skillGroups } from "@/data/portfolio";
 import { getAccent } from "@/lib/accents";
 
 const Skills = () => {
+  const { t } = useTranslation();
   return (
     <section id="skills" className="section">
       <div className="container">
         <SectionHeading
-          eyebrow="Toolkit"
-          title="The stack I reach for"
-          description="Languages, frameworks, and platforms I've used to ship real things — grouped by where they live in the stack."
+          eyebrow={t("skills.eyebrow")}
+          title={t("skills.title")}
+          description={t("skills.description")}
         />
 
         <div className="mt-16 grid gap-6 md:grid-cols-2 lg:grid-cols-3">

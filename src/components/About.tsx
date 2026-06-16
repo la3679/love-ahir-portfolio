@@ -1,16 +1,18 @@
 import { motion } from "framer-motion";
 import { GraduationCap, MapPin, Calendar, ArrowUpRight } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import SectionHeading from "./SectionHeading";
 import { education } from "@/data/portfolio";
 
 const About = () => {
+  const { t } = useTranslation();
   return (
     <section id="about" className="section">
       <div className="container">
         <SectionHeading
-          eyebrow="About"
-          title="Engineer by training, researcher by curiosity"
-          description="I care about the unglamorous middle of software — the place where a clean interface meets data that doesn't behave. That's where the interesting problems live."
+          eyebrow={t("about.eyebrow")}
+          title={t("about.title")}
+          description={t("about.description")}
         />
 
         <div className="mt-16 grid gap-10 lg:grid-cols-[1.1fr_0.9fr]">
@@ -21,29 +23,9 @@ const About = () => {
             transition={{ duration: 0.6 }}
             className="space-y-5 text-base leading-relaxed text-muted-foreground"
           >
-            <p>
-              I recently completed my{" "}
-              <span className="text-foreground">
-                M.S. in Computer Software Engineering at RIT
-              </span>{" "}
-              with a 3.94 GPA. Along the way I worked as both a teaching and
-              research assistant — teaching software quality to graduate
-              students while running large-scale privacy experiments of my own.
-            </p>
-            <p>
-              My research asked a deceptively simple question:{" "}
-              <span className="text-foreground">
-                do apps actually do what their privacy policies say?
-              </span>{" "}
-              The answer, across 86 million log entries, was mostly no — and
-              that work is now published in the EASE 2026 Research Track.
-            </p>
-            <p>
-              Outside research, I ship product. I've built AI streaming
-              platforms, recruitment engines, and 3D strategy games — usually
-              full-stack, usually with an LLM doing something genuinely useful
-              rather than decorative.
-            </p>
+            <p>{t("about.p1")}</p>
+            <p>{t("about.p2")}</p>
+            <p>{t("about.p3")}</p>
 
             <div className="flex flex-wrap gap-2 pt-2">
               {["Privacy & Security", "Full-Stack", "Applied AI", "Data"].map(
@@ -62,7 +44,7 @@ const About = () => {
           <div className="space-y-5">
             <h3 className="flex items-center gap-2 font-display text-lg font-semibold text-foreground">
               <GraduationCap className="h-5 w-5 text-aurora-violet" />
-              Education
+              {t("about.education")}
             </h3>
             {education.map((edu, i) => (
               <motion.a
@@ -95,7 +77,7 @@ const About = () => {
                     {edu.location}
                   </span>
                   <span className="font-semibold text-aurora-violet">
-                    GPA {edu.gpa}
+                    {t("about.gpa")} {edu.gpa}
                   </span>
                 </div>
                 <p className="mt-3 text-sm leading-relaxed text-muted-foreground">

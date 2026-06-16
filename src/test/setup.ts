@@ -1,6 +1,9 @@
 import "@testing-library/jest-dom/vitest";
 import { afterEach, vi } from "vitest";
 import { cleanup } from "@testing-library/react";
+// Initialize i18n once for the whole suite so components that call t()
+// render real strings (defaults to the en-US fallback in jsdom).
+import "@/lib/i18n";
 
 // Clean the DOM between tests.
 afterEach(() => {

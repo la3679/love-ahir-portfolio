@@ -1,16 +1,18 @@
 import { motion } from "framer-motion";
 import { Calendar, MapPin, ArrowUpRight, Check } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import SectionHeading from "./SectionHeading";
 import { experiences } from "@/data/portfolio";
 
 const Experience = () => {
+  const { t } = useTranslation();
   return (
     <section id="experience" className="section">
       <div className="container">
         <SectionHeading
-          eyebrow="Experience"
-          title="A track record across teaching, research, and industry"
-          description="From mentoring graduate students to shipping ML-backed features in production, the through-line is the same: rigor that holds up under scrutiny."
+          eyebrow={t("experience.eyebrow")}
+          title={t("experience.title")}
+          description={t("experience.description")}
         />
 
         <div className="relative mx-auto mt-16 max-w-3xl">
@@ -45,7 +47,7 @@ const Experience = () => {
                         {exp.period}
                         {exp.current && (
                           <span className="rounded-full bg-aurora-emerald/15 px-2 py-0.5 text-[10px] font-medium text-aurora-emerald">
-                            Current
+                            {t("experience.current")}
                           </span>
                         )}
                       </span>

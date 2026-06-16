@@ -1,8 +1,16 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import i18n from "@/lib/i18n";
 import Navigation, { navItems, scrollToHref } from "./Navigation";
 import { profile } from "@/data/portfolio";
+
+// Resolve labels through the same i18n instance the component uses.
+const label = (key: string) => i18n.t(key);
+
+beforeEach(async () => {
+  await i18n.changeLanguage("en-US");
+});
 
 describe("navItems config", () => {
   it("exposes the expected anchor sections", () => {
@@ -10,6 +18,12 @@ describe("navItems config", () => {
     expect(hrefs).toContain("#about");
     expect(hrefs).toContain("#projects");
     expect(hrefs).toContain("#contact");
+  });
+
+  it("references i18n keys rather than hardcoded labels", () => {
+    for (const item of navItems) {
+      expect(item.labelKey).toMatch(/^nav\./);
+    }
   });
 });
 
@@ -36,7 +50,7 @@ describe("<Navigation />", () => {
     expect(screen.getByText("Love Ahir")).toBeInTheDocument();
     for (const item of navItems) {
       expect(
-        screen.getAllByText(item.label).length,
+        screen.getAllByText(label(item.labelKey)).length,
       ).toBeGreaterThan(0);
     }
   });
@@ -55,7 +69,7 @@ describe("<Navigation />", () => {
     document.body.appendChild(target);
     const user = userEvent.setup();
     render(<Navigation />);
-    await user.click(screen.getByRole("button", { name: "About" }));
+    await user.click(screen.getByRole("button", { name: label("nav.about") }));
     expect(window.scrollTo).toHaveBeenCalled();
     target.remove();
   });

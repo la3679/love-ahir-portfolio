@@ -7,6 +7,7 @@ import {
   TestTube,
   Layers,
 } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import SectionHeading from "./SectionHeading";
 import { expertise } from "@/data/portfolio";
 import { getAccent } from "@/lib/accents";
@@ -14,13 +15,14 @@ import { getAccent } from "@/lib/accents";
 const icons = [Code2, Sparkles, ShieldCheck, Database, TestTube, Layers];
 
 const Expertise = () => {
+  const { t } = useTranslation();
   return (
     <section id="expertise" className="section">
       <div className="container">
         <SectionHeading
-          eyebrow="What I do"
-          title="Six things I'm genuinely good at"
-          description="The areas where I add the most value, from the front-end pixels all the way down to the research methodology."
+          eyebrow={t("expertise.eyebrow")}
+          title={t("expertise.title")}
+          description={t("expertise.description")}
         />
 
         <div className="mt-16 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
