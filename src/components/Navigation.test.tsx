@@ -49,9 +49,14 @@ describe("<Navigation />", () => {
 
   it("scrolls when a nav item is clicked", async () => {
     window.scrollTo = vi.fn() as unknown as typeof window.scrollTo;
+    // scrollToHref only scrolls when the target anchor exists, so provide it.
+    const target = document.createElement("section");
+    target.id = "about";
+    document.body.appendChild(target);
     const user = userEvent.setup();
     render(<Navigation />);
     await user.click(screen.getByRole("button", { name: "About" }));
     expect(window.scrollTo).toHaveBeenCalled();
+    target.remove();
   });
 });

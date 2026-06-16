@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Menu, X, FileDown } from "lucide-react";
 import { profile } from "@/data/portfolio";
+import { ThemeToggle } from "./ThemeToggle";
 
 export interface NavItem {
   label: string;
@@ -82,16 +83,20 @@ const Navigation = () => {
             <FileDown className="h-4 w-4" />
             Resume
           </a>
+          <ThemeToggle />
         </div>
 
-        <button
-          className="grid h-10 w-10 place-items-center rounded-lg glass md:hidden"
-          onClick={() => setMenuOpen((v) => !v)}
-          aria-label="Toggle menu"
-          aria-expanded={menuOpen}
-        >
-          {menuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-        </button>
+        <div className="flex items-center gap-2 md:hidden">
+          <ThemeToggle />
+          <button
+            className="grid h-10 w-10 place-items-center rounded-lg glass"
+            onClick={() => setMenuOpen((v) => !v)}
+            aria-label="Toggle menu"
+            aria-expanded={menuOpen}
+          >
+            {menuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          </button>
+        </div>
       </nav>
 
       {menuOpen && (

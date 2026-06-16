@@ -11,7 +11,57 @@
 */
 
 @layer base {
+  /*
+    LIGHT MODE — a clean, luminous counterpart to Aurora Noir.
+    Backgrounds go near-white, text goes deep indigo-black, and the
+    aurora accents are nudged a touch darker so they stay legible on
+    light surfaces. The shared aurora + gradient tokens live here so
+    both themes inherit them; .dark only overrides what actually changes.
+  */
   :root {
+    --background: 230 40% 98%;
+    --foreground: 233 39% 11%;
+    --card: 0 0% 100%;
+    --card-foreground: 233 39% 11%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 233 39% 11%;
+    --primary: 255 80% 58%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 231 30% 93%;
+    --secondary-foreground: 233 39% 16%;
+    --muted: 231 30% 95%;
+    --muted-foreground: 231 14% 38%;
+    --accent: 190 85% 40%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 72% 52%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 231 22% 87%;
+    --input: 231 22% 87%;
+    --ring: 255 80% 58%;
+    --radius: 1rem;
+
+    /* Aurora accents — tuned slightly deeper for light surfaces. */
+    --aurora-violet: 255 80% 58%;
+    --aurora-indigo: 232 80% 58%;
+    --aurora-cyan: 190 90% 38%;
+    --aurora-magenta: 320 80% 52%;
+    --aurora-emerald: 158 80% 36%;
+    --aurora-amber: 38 92% 48%;
+
+    --gradient-aurora: linear-gradient(120deg, hsl(255 80% 58%), hsl(190 90% 42%) 55%, hsl(320 80% 56%));
+    --gradient-text: linear-gradient(100deg, hsl(233 39% 14%), hsl(255 80% 50%) 45%, hsl(190 90% 38%));
+
+    /* Mode-aware surface tokens used by .glass / scrollbar / body glow. */
+    --glass-bg: 0 0% 100% / 0.6;
+    --glass-border: 231 22% 80% / 0.7;
+    --glass-bg-strong: 0 0% 100% / 0.82;
+    --glass-border-strong: 231 22% 78% / 0.8;
+    --scrollbar-track: 231 30% 92%;
+    --selection-bg: 255 80% 58% / 0.25;
+    --selection-fg: 233 39% 11%;
+  }
+
+  .dark {
     --background: 233 39% 5%;
     --foreground: 228 24% 92%;
     --card: 232 30% 9%;
@@ -31,7 +81,6 @@
     --border: 232 24% 18%;
     --input: 232 24% 18%;
     --ring: 255 92% 68%;
-    --radius: 1rem;
 
     --aurora-violet: 255 92% 68%;
     --aurora-indigo: 232 90% 66%;
@@ -42,26 +91,14 @@
 
     --gradient-aurora: linear-gradient(120deg, hsl(255 92% 68%), hsl(190 95% 60%) 55%, hsl(320 90% 66%));
     --gradient-text: linear-gradient(100deg, hsl(228 30% 98%), hsl(255 92% 80%) 45%, hsl(190 95% 72%));
-  }
 
-  .dark {
-    --background: 233 39% 5%;
-    --foreground: 228 24% 92%;
-    --card: 232 30% 9%;
-    --card-foreground: 228 24% 92%;
-    --popover: 232 32% 8%;
-    --popover-foreground: 228 24% 92%;
-    --primary: 255 92% 68%;
-    --primary-foreground: 240 40% 6%;
-    --secondary: 231 24% 16%;
-    --secondary-foreground: 228 24% 92%;
-    --muted: 231 22% 14%;
-    --muted-foreground: 230 14% 62%;
-    --accent: 190 95% 60%;
-    --accent-foreground: 240 40% 6%;
-    --border: 232 24% 18%;
-    --input: 232 24% 18%;
-    --ring: 255 92% 68%;
+    --glass-bg: 232 30% 11% / 0.55;
+    --glass-border: 232 24% 24% / 0.7;
+    --glass-bg-strong: 232 30% 12% / 0.8;
+    --glass-border-strong: 232 24% 26% / 0.8;
+    --scrollbar-track: 233 39% 5%;
+    --selection-bg: 255 92% 68% / 0.35;
+    --selection-fg: 228 30% 98%;
   }
 }
 
@@ -80,10 +117,26 @@
     font-family: 'Inter', system-ui, sans-serif;
     overflow-x: hidden;
     background-image:
-      radial-gradient(60rem 60rem at 12% -10%, hsl(255 92% 68% / 0.12), transparent 60%),
-      radial-gradient(48rem 48rem at 100% 0%, hsl(190 95% 60% / 0.10), transparent 55%),
-      radial-gradient(50rem 50rem at 50% 120%, hsl(320 90% 66% / 0.10), transparent 60%);
+      radial-gradient(60rem 60rem at 12% -10%, hsl(var(--aurora-violet) / 0.12), transparent 60%),
+      radial-gradient(48rem 48rem at 100% 0%, hsl(var(--aurora-cyan) / 0.10), transparent 55%),
+      radial-gradient(50rem 50rem at 50% 120%, hsl(var(--aurora-magenta) / 0.10), transparent 60%);
     background-attachment: fixed;
+  }
+
+  /*
+    Seamless theme transition: animate only color-affecting properties so
+    switching light <-> dark fades instead of hard-flashing. Excludes
+    transform/opacity so motion + framer animations stay snappy.
+  */
+  :root,
+  body,
+  .theme-transition * {
+    transition:
+      background-color 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+      border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+      color 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+      fill 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+      stroke 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   h1, h2, h3, h4, h5 {
@@ -92,8 +145,8 @@
   }
 
   ::selection {
-    background: hsl(255 92% 68% / 0.35);
-    color: hsl(228 30% 98%);
+    background: hsl(var(--selection-bg));
+    color: hsl(var(--selection-fg));
   }
 }
 
@@ -113,17 +166,17 @@
   }
 
   .glass {
-    background: hsl(232 30% 11% / 0.55);
+    background: hsl(var(--glass-bg));
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
-    border: 1px solid hsl(232 24% 24% / 0.7);
+    border: 1px solid hsl(var(--glass-border));
   }
 
   .glass-strong {
-    background: hsl(232 30% 12% / 0.8);
+    background: hsl(var(--glass-bg-strong));
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    border: 1px solid hsl(232 24% 26% / 0.8);
+    border: 1px solid hsl(var(--glass-border-strong));
   }
 
   .card-glow {
@@ -174,10 +227,10 @@
 }
 
 ::-webkit-scrollbar { width: 10px; }
-::-webkit-scrollbar-track { background: hsl(233 39% 5%); }
+::-webkit-scrollbar-track { background: hsl(var(--scrollbar-track)); }
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(hsl(255 92% 68%), hsl(190 95% 60%));
+  background: linear-gradient(hsl(var(--aurora-violet)), hsl(var(--aurora-cyan)));
   border-radius: 999px;
-  border: 2px solid hsl(233 39% 5%);
+  border: 2px solid hsl(var(--scrollbar-track));
 }
-::-webkit-scrollbar-thumb:hover { background: hsl(255 92% 72%); }
+::-webkit-scrollbar-thumb:hover { background: hsl(var(--aurora-violet)); }
