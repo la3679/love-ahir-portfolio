@@ -97,7 +97,7 @@ export const profile: Profile = {
   github: "https://github.com/la3679",
   linkedin: "https://www.linkedin.com/in/love-jayesh-ahir-188356290/",
   resumeUrl:
-    "https://drive.google.com/uc?export=download&id=1gq8PAz8M2m6MWuEKePDAYdVyaoAR-JUV",
+    "https://drive.google.com/file/d/1o0Xbs1WtDbkqn4Y_ftTYjaD78rn45o2l/view?usp=drive_link",
 };
 
 export const stats: Stat[] = [
