@@ -1,3 +1,4 @@
+import { useId } from "react";
 import { motion, type Variants } from "framer-motion";
 import { cn } from "@/lib/utils";
 
@@ -50,6 +51,10 @@ export function BrandLogo({
   className,
   title,
 }: BrandLogoProps) {
+  const rawId = useId().replace(/:/g, "");
+  const edgeId = `aurora-prism-edge-${rawId}`;
+  const coreId = `aurora-prism-core-${rawId}`;
+  const glowId = `aurora-prism-glow-${rawId}`;
   const Svg = animated ? motion.svg : "svg";
   const Line = animated ? motion.path : "path";
   const ariaProps = title
@@ -66,16 +71,16 @@ export function BrandLogo({
       {...ariaProps}
     >
       <defs>
-        <linearGradient id="aurora-prism-edge" x1="14" y1="10" x2="82" y2="86">
+        <linearGradient id={edgeId} x1="14" y1="10" x2="82" y2="86">
           <stop offset="0%" stopColor="hsl(var(--aurora-violet))" />
           <stop offset="54%" stopColor="hsl(var(--aurora-cyan))" />
           <stop offset="100%" stopColor="hsl(var(--aurora-magenta))" />
         </linearGradient>
-        <linearGradient id="aurora-prism-core" x1="26" y1="20" x2="70" y2="78">
+        <linearGradient id={coreId} x1="26" y1="20" x2="70" y2="78">
           <stop offset="0%" stopColor="hsl(var(--foreground))" stopOpacity="0.96" />
           <stop offset="100%" stopColor="hsl(var(--foreground))" stopOpacity="0.52" />
         </linearGradient>
-        <filter id="aurora-prism-glow" x="-45%" y="-45%" width="190%" height="190%">
+        <filter id={glowId} x="-45%" y="-45%" width="190%" height="190%">
           <feGaussianBlur stdDeviation="4" result="blur" />
           <feColorMatrix
             in="blur"
@@ -97,13 +102,13 @@ export function BrandLogo({
       <path
         d="M48 9 84 29 84 68 48 88 12 68 12 29 48 9Z"
         fill="hsl(var(--background) / 0.18)"
-        stroke="url(#aurora-prism-edge)"
+        stroke={`url(#${edgeId})`}
         strokeWidth="2.4"
-        filter="url(#aurora-prism-glow)"
+        filter={`url(#${glowId})`}
       />
       <path
         d="M28 66 47 24 68 66H55L48 48 40 66H28Z"
-        fill="url(#aurora-prism-core)"
+        fill={`url(#${coreId})`}
         opacity="0.92"
       />
       <path
@@ -114,7 +119,7 @@ export function BrandLogo({
       <Line
         d="M25 72C37 57 47 47 72 27"
         fill="none"
-        stroke="url(#aurora-prism-edge)"
+        stroke={`url(#${edgeId})`}
         strokeLinecap="round"
         strokeWidth="3.2"
         variants={animated ? pathVariants : undefined}

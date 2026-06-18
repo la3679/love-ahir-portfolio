@@ -3,7 +3,7 @@ import { ArrowUpRight, Github, Linkedin, Mail, FileDown, MapPin } from "lucide-r
 import { useTranslation } from "react-i18next";
 import TypingAnimation from "./TypingAnimation";
 import { profile, stats } from "@/data/portfolio";
-import profilePhoto from "@/assets/profile-photo.png";
+import profilePhoto from "@/assets/profile-photo.jpg";
 import { scrollToHref } from "./Navigation";
 
 const container = {
