@@ -73,4 +73,16 @@ describe("<Navigation />", () => {
     expect(window.scrollTo).toHaveBeenCalled();
     target.remove();
   });
+
+  it("closes the mobile menu when Escape is pressed", async () => {
+    const user = userEvent.setup();
+    render(<Navigation />);
+    const toggle = screen.getByRole("button", { name: /toggle menu/i });
+
+    await user.click(toggle);
+    expect(toggle).toHaveAttribute("aria-expanded", "true");
+
+    await user.keyboard("{Escape}");
+    expect(toggle).toHaveAttribute("aria-expanded", "false");
+  });
 });
