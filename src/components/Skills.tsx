@@ -15,7 +15,7 @@ const Skills = () => {
           description={t("skills.description")}
         />
 
-        <div className="mt-16 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-14 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
           {skillGroups.map((group, i) => {
             const accent = getAccent(group.accent);
             return (
@@ -25,7 +25,7 @@ const Skills = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-60px" }}
                 transition={{ duration: 0.5, delay: i * 0.06 }}
-                className={`card-glow rounded-2xl glass p-6 ${accent.glow}`}
+                className={`card-glow premium-border rounded-2xl glass p-6 ${accent.glow}`}
               >
                 <div className="flex items-center gap-3">
                   <span className={`h-2.5 w-2.5 rounded-full ${accent.dot}`} />
@@ -37,7 +37,7 @@ const Skills = () => {
                   {group.skills.map((skill) => (
                     <span
                       key={skill}
-                      className={`rounded-lg border px-2.5 py-1 text-sm transition-colors ${accent.border} ${accent.softBg} ${accent.text}`}
+                      className={`rounded-lg border px-2.5 py-1.5 text-sm transition-colors ${accent.border} ${accent.softBg} ${accent.text}`}
                     >
                       {skill}
                     </span>

@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { profile } from "@/data/portfolio";
 import { ThemeToggle } from "./ThemeToggle";
 import { LanguageSelector } from "./LanguageSelector";
+import BrandLogo from "./BrandLogo";
 
 export interface NavItem {
   /** i18n key for the visible label. */
@@ -36,6 +37,7 @@ const Navigation = () => {
   const { t } = useTranslation();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [activeHref, setActiveHref] = useState("#home");
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
@@ -44,8 +46,44 @@ const Navigation = () => {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  useEffect(() => {
+    const sections = ["#home", ...navItems.map((item) => item.href)]
+      .map((href) => document.querySelector(href))
+      .filter((el): el is Element => Boolean(el));
+
+    if (!sections.length) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+
+        if (visible?.target.id) {
+          setActiveHref(`#${visible.target.id}`);
+        }
+      },
+      { rootMargin: "-35% 0px -50% 0px", threshold: [0.1, 0.35, 0.6] },
+    );
+
+    sections.forEach((section) => observer.observe(section));
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!menuOpen) return;
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setMenuOpen(false);
+    };
+
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [menuOpen]);
+
   const go = (href: string) => {
     setMenuOpen(false);
+    setActiveHref(href === "#" ? "#home" : href);
     scrollToHref(href);
   };
 
@@ -61,9 +99,7 @@ const Navigation = () => {
           className="group flex items-center gap-2 font-display text-lg font-bold"
           aria-label="Back to top"
         >
-          <span className="grid h-8 w-8 place-items-center rounded-lg bg-gradient-aurora font-mono text-sm text-background shadow-glow">
-            LA
-          </span>
+          <BrandLogo size="sm" title="Love Ahir" />
           <span className="text-gradient">Love Ahir</span>
         </button>
 
@@ -72,10 +108,17 @@ const Navigation = () => {
             <button
               key={item.href}
               onClick={() => go(item.href)}
-              className="group relative text-sm text-muted-foreground transition-colors hover:text-foreground"
+              aria-current={activeHref === item.href ? "true" : undefined}
+              className={`group relative rounded-full px-1.5 py-1 text-sm transition-colors hover:text-foreground ${
+                activeHref === item.href ? "text-foreground" : "text-muted-foreground"
+              }`}
             >
               {t(item.labelKey)}
-              <span className="absolute -bottom-1.5 left-0 h-px w-0 bg-gradient-aurora transition-all duration-300 group-hover:w-full" />
+              <span
+                className={`absolute -bottom-1.5 left-1/2 h-px -translate-x-1/2 bg-gradient-aurora transition-all duration-300 ${
+                  activeHref === item.href ? "w-4/5" : "w-0 group-hover:w-4/5"
+                }`}
+              />
             </button>
           ))}
           <a
@@ -112,7 +155,12 @@ const Navigation = () => {
               <button
                 key={item.href}
                 onClick={() => go(item.href)}
-                className="py-2.5 text-left text-muted-foreground transition-colors hover:text-foreground"
+                aria-current={activeHref === item.href ? "true" : undefined}
+                className={`rounded-xl px-3 py-3 text-left transition-colors hover:bg-card/60 hover:text-foreground ${
+                  activeHref === item.href
+                    ? "bg-aurora-violet/10 text-foreground"
+                    : "text-muted-foreground"
+                }`}
               >
                 {t(item.labelKey)}
               </button>
