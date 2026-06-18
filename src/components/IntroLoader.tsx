@@ -20,6 +20,10 @@ function markIntroSeen() {
   }
 }
 
+function prefersReducedMotion() {
+  return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+}
+
 const IntroLoader = () => {
   const reduceMotion = useReducedMotion();
   const [visible, setVisible] = useState(() => shouldShowIntro());
@@ -28,10 +32,10 @@ const IntroLoader = () => {
     if (!visible) return;
 
     markIntroSeen();
-    const duration = reduceMotion ? 180 : 1550;
+    const duration = prefersReducedMotion() ? 180 : 1550;
     const timer = window.setTimeout(() => setVisible(false), duration);
     return () => window.clearTimeout(timer);
-  }, [reduceMotion, visible]);
+  }, [visible]);
 
   if (!visible) return null;
 
