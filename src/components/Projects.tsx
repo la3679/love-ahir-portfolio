@@ -42,7 +42,7 @@ const Projects = () => {
           description={t("projects.description")}
         />
 
-        <div className="mt-12 flex flex-wrap justify-center gap-2">
+        <div className="mx-auto mt-12 flex max-w-4xl flex-wrap justify-center gap-2 rounded-2xl glass p-2">
           {projectCategories.map((cat) => {
             const isActive = active === cat;
             return (
@@ -50,7 +50,7 @@ const Projects = () => {
                 key={cat}
                 onClick={() => setActive(cat)}
                 aria-pressed={isActive}
-                className={`rounded-full border px-4 py-1.5 text-sm font-medium transition-all ${
+                className={`min-h-10 rounded-full border px-4 py-1.5 text-sm font-medium transition-all ${
                   isActive
                     ? "border-transparent bg-gradient-aurora text-background shadow-glow"
                     : "border-border bg-card/40 text-muted-foreground hover:border-aurora-violet/40 hover:text-foreground"
@@ -80,7 +80,7 @@ const Projects = () => {
                   href={project.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="card-glow group relative flex flex-col overflow-hidden rounded-2xl glass p-6"
+                  className="card-glow premium-border group relative flex min-h-[23rem] flex-col overflow-hidden rounded-2xl glass p-6"
                 >
                   {project.featured && (
                     <span className="absolute right-4 top-4 inline-flex items-center gap-1 rounded-full bg-aurora-amber/15 px-2 py-0.5 text-[10px] font-medium text-aurora-amber">
@@ -98,10 +98,10 @@ const Projects = () => {
                     </span>
                   </div>
 
-                  <h3 className="mt-4 font-display text-lg font-semibold text-foreground transition-colors group-hover:text-aurora-violet">
+                  <h3 className="mt-5 font-display text-xl font-semibold leading-snug text-foreground transition-colors group-hover:text-aurora-violet">
                     {project.title}
                   </h3>
-                  <p className="mt-2 flex-1 text-sm leading-relaxed text-muted-foreground">
+                  <p className="mt-3 flex-1 text-sm leading-7 text-muted-foreground">
                     {project.blurb}
                   </p>
 

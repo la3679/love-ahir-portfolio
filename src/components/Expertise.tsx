@@ -25,7 +25,7 @@ const Expertise = () => {
           description={t("expertise.description")}
         />
 
-        <div className="mt-16 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {expertise.map((area, i) => {
             const Icon = icons[i % icons.length];
             const accent = getAccent(area.accent);
@@ -36,7 +36,7 @@ const Expertise = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-60px" }}
                 transition={{ duration: 0.5, delay: i * 0.06 }}
-                className={`card-glow group rounded-2xl glass p-7 ${accent.glow}`}
+                className={`card-glow premium-border group rounded-2xl glass p-7 ${accent.glow}`}
               >
                 <span
                   className={`grid h-12 w-12 place-items-center rounded-xl border ${accent.border} ${accent.softBg} ${accent.text} transition-transform duration-500 group-hover:-rotate-6 group-hover:scale-110`}
@@ -46,7 +46,7 @@ const Expertise = () => {
                 <h3 className="mt-5 font-display text-lg font-semibold text-foreground">
                   {area.title}
                 </h3>
-                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                <p className="mt-3 text-sm leading-7 text-muted-foreground">
                   {area.description}
                 </p>
               </motion.div>

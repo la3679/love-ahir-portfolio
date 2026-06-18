@@ -26,7 +26,7 @@ const Contact = () => {
   };
 
   const field =
-    "w-full rounded-xl border border-border bg-card/50 px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground/60 outline-none transition-colors focus:border-aurora-violet/60";
+    "w-full rounded-xl border border-border bg-card/50 px-4 py-3.5 text-sm text-foreground placeholder:text-muted-foreground/60 outline-none transition-colors focus:border-aurora-violet/60";
 
   return (
     <section id="contact" className="section">
@@ -37,7 +37,7 @@ const Contact = () => {
           description={t("contact.description")}
         />
 
-        <div className="mx-auto mt-16 grid max-w-5xl gap-8 lg:grid-cols-2">
+        <div className="mx-auto mt-14 grid max-w-6xl gap-8 lg:grid-cols-[0.92fr_1.08fr]">
           <motion.div
             initial={{ opacity: 0, x: -24 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -51,7 +51,7 @@ const Contact = () => {
                 href={l.href}
                 target={l.href.startsWith("http") ? "_blank" : undefined}
                 rel="noopener noreferrer"
-                className="card-glow group flex items-center gap-4 rounded-2xl glass p-4"
+                className="card-glow premium-border group flex min-h-20 items-center gap-4 rounded-2xl glass p-4"
               >
                 <span className="grid h-11 w-11 place-items-center rounded-xl bg-aurora-violet/10 text-aurora-violet">
                   <l.icon className="h-5 w-5" />
@@ -68,7 +68,7 @@ const Contact = () => {
               </a>
             ))}
 
-            <div className="rounded-2xl border border-aurora-emerald/25 bg-aurora-emerald/5 p-5">
+            <div className="rounded-2xl border border-aurora-emerald/25 bg-aurora-emerald/5 p-5 shadow-[0_20px_70px_-40px_hsl(var(--aurora-emerald))]">
               <div className="flex items-center gap-2 text-sm font-semibold text-aurora-emerald">
                 <span className="h-2 w-2 animate-pulse-ring rounded-full bg-aurora-emerald" />
                 {t("contact.availableNow")}
@@ -85,7 +85,7 @@ const Contact = () => {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-60px" }}
             transition={{ duration: 0.55 }}
-            className="space-y-4 rounded-2xl glass-strong p-6"
+            className="space-y-4 rounded-3xl glass-strong p-6 md:p-8"
           >
             <div>
               <label htmlFor="name" className="mb-1.5 block text-sm text-muted-foreground">
@@ -133,7 +133,7 @@ const Contact = () => {
             </div>
             <button
               type="submit"
-              className="group inline-flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-aurora px-6 py-3 text-sm font-semibold text-background shadow-glow transition-transform hover:scale-[1.01]"
+              className="group inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-xl bg-gradient-aurora px-6 py-3 text-sm font-semibold text-background shadow-glow transition-transform hover:scale-[1.01]"
             >
               <Send className="h-4 w-4" />
               {t("contact.send")}
