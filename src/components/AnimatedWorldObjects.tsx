@@ -1,6 +1,20 @@
 import { useEffect, useRef } from 'react';
 import * as d3 from 'd3';
 
+type ParticleShape = 'circle' | 'square' | 'triangle' | 'diamond' | 'hexagon';
+
+interface Particle {
+  id: number;
+  x: number;
+  y: number;
+  radius: number;
+  vx: number;
+  vy: number;
+  type: ParticleShape;
+  opacity: number;
+  pulseSpeed: number;
+}
+
 const AnimatedWorldObjects = () => {
   const svgRef = useRef<SVGSVGElement>(null);
 
@@ -22,14 +36,15 @@ const AnimatedWorldObjects = () => {
     const particleCount = isMobile || isLowPowerDevice ? 15 : 30;
     
     // Create floating particles with tech symbols
-    const particles = Array.from({ length: particleCount }, (_, i) => ({
+    const particleShapes: ParticleShape[] = ['circle', 'square', 'triangle', 'diamond', 'hexagon'];
+    const particles: Particle[] = Array.from({ length: particleCount }, (_, i) => ({
       id: i,
       x: Math.random() * width,
       y: Math.random() * height,
       radius: Math.random() * 4 + 1,
       vx: (Math.random() - 0.5) * 1.2,
       vy: (Math.random() - 0.5) * 1.2,
-      type: ['circle', 'square', 'triangle', 'diamond', 'hexagon'][Math.floor(Math.random() * 5)],
+      type: particleShapes[Math.floor(Math.random() * particleShapes.length)],
       opacity: Math.random() * 0.8 + 0.2,
       pulseSpeed: Math.random() * 0.02 + 0.01
     }));
@@ -252,8 +267,8 @@ const AnimatedWorldObjects = () => {
         if (particle.y > height + 20) particle.y = -20;
       });
 
-      const particleElements = particleGroup.selectAll('.particle')
-        .data(particles, (d: any) => d.id);
+      const particleElements = particleGroup.selectAll<SVGGElement, Particle>('.particle')
+        .data(particles, (d) => d.id);
 
       particleElements.enter()
         .append('g')

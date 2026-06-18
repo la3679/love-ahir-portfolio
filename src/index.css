@@ -56,6 +56,10 @@
     --glass-border: 231 22% 80% / 0.7;
     --glass-bg-strong: 0 0% 100% / 0.82;
     --glass-border-strong: 231 22% 78% / 0.8;
+    --surface-sheen: 0 0% 100% / 0.72;
+    --surface-shadow: 232 34% 24% / 0.14;
+    --focus-glow: 255 80% 58% / 0.42;
+    --hairline: 231 22% 100% / 0.68;
     --scrollbar-track: 231 30% 92%;
     --selection-bg: 255 80% 58% / 0.25;
     --selection-fg: 233 39% 11%;
@@ -96,6 +100,10 @@
     --glass-border: 232 24% 24% / 0.7;
     --glass-bg-strong: 232 30% 12% / 0.8;
     --glass-border-strong: 232 24% 26% / 0.8;
+    --surface-sheen: 228 30% 98% / 0.08;
+    --surface-shadow: 240 48% 2% / 0.55;
+    --focus-glow: 190 95% 60% / 0.36;
+    --hairline: 228 30% 98% / 0.12;
     --scrollbar-track: 233 39% 5%;
     --selection-bg: 255 92% 68% / 0.35;
     --selection-fg: 228 30% 98%;
@@ -110,6 +118,7 @@
   html {
     scroll-behavior: smooth;
     scroll-padding-top: 6rem;
+    text-rendering: optimizeLegibility;
   }
 
   body {
@@ -121,6 +130,19 @@
       radial-gradient(48rem 48rem at 100% 0%, hsl(var(--aurora-cyan) / 0.10), transparent 55%),
       radial-gradient(50rem 50rem at 50% 120%, hsl(var(--aurora-magenta) / 0.10), transparent 60%);
     background-attachment: fixed;
+  }
+
+  a,
+  button,
+  input,
+  textarea,
+  select {
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background;
+  }
+
+  button,
+  a {
+    -webkit-tap-highlight-color: transparent;
   }
 
   /*
@@ -141,7 +163,12 @@
 
   h1, h2, h3, h4, h5 {
     font-family: 'Space Grotesk', 'Inter', sans-serif;
-    letter-spacing: -0.02em;
+    letter-spacing: 0;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
   }
 
   ::selection {
@@ -166,27 +193,80 @@
   }
 
   .glass {
+    position: relative;
     background: hsl(var(--glass-bg));
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     border: 1px solid hsl(var(--glass-border));
+    box-shadow: 0 18px 60px -34px hsl(var(--surface-shadow));
   }
 
   .glass-strong {
+    position: relative;
     background: hsl(var(--glass-bg-strong));
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border: 1px solid hsl(var(--glass-border-strong));
+    box-shadow: 0 24px 80px -40px hsl(var(--surface-shadow));
+  }
+
+  .glass::before,
+  .glass-strong::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    border-radius: inherit;
+    background:
+      linear-gradient(135deg, hsl(var(--surface-sheen)), transparent 34%),
+      linear-gradient(180deg, hsl(var(--hairline)), transparent 42%);
+    opacity: 0.55;
   }
 
   .card-glow {
     position: relative;
-    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease, box-shadow 0.4s ease;
+    isolation: isolate;
+    transition:
+      transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+      border-color 0.4s ease,
+      box-shadow 0.4s ease,
+      background-color 0.4s ease;
   }
   .card-glow:hover {
-    transform: translateY(-6px);
+    transform: translateY(-5px);
     border-color: hsl(255 92% 68% / 0.45);
-    box-shadow: 0 18px 50px -20px hsl(255 92% 68% / 0.45);
+    box-shadow:
+      0 22px 70px -34px hsl(var(--surface-shadow)),
+      0 18px 50px -24px hsl(255 92% 68% / 0.45);
+  }
+
+  .premium-border {
+    position: relative;
+  }
+
+  .premium-border::after {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    z-index: -1;
+    border-radius: inherit;
+    background: linear-gradient(
+      135deg,
+      hsl(var(--aurora-violet) / 0.55),
+      hsl(var(--aurora-cyan) / 0.28),
+      hsl(var(--aurora-magenta) / 0.45)
+    );
+    opacity: 0;
+    transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .premium-border:hover::after {
+    opacity: 1;
+  }
+
+  .focus-premium {
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background;
+    box-shadow: 0 0 0 0 hsl(var(--focus-glow));
   }
 
   .aurora-ring {
@@ -194,11 +274,15 @@
   }
 
   .section {
-    @apply relative py-24 md:py-32;
+    @apply relative py-20 md:py-28 lg:py-32;
   }
 }
 
 @layer utilities {
+  .container-narrow {
+    @apply mx-auto w-full max-w-6xl px-6;
+  }
+
   .bg-grid {
     background-image:
       linear-gradient(to right, hsl(232 24% 30% / 0.18) 1px, transparent 1px),
@@ -210,6 +294,17 @@
 
   .text-shadow-glow {
     text-shadow: 0 0 30px hsl(255 92% 68% / 0.5);
+  }
+
+  .mask-fade-y {
+    mask-image: linear-gradient(to bottom, transparent, #000 12%, #000 88%, transparent);
+    -webkit-mask-image: linear-gradient(to bottom, transparent, #000 12%, #000 88%, transparent);
+  }
+
+  .aurora-noise {
+    background-image:
+      radial-gradient(circle at 1px 1px, hsl(var(--foreground) / 0.08) 1px, transparent 0);
+    background-size: 18px 18px;
   }
 
   .animation-delay-200 { animation-delay: 200ms; }
