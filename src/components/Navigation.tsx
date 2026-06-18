@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { profile } from "@/data/portfolio";
 import { ThemeToggle } from "./ThemeToggle";
 import { LanguageSelector } from "./LanguageSelector";
+import BrandLogo from "./BrandLogo";
 
 export interface NavItem {
   /** i18n key for the visible label. */
@@ -61,9 +62,7 @@ const Navigation = () => {
           className="group flex items-center gap-2 font-display text-lg font-bold"
           aria-label="Back to top"
         >
-          <span className="grid h-8 w-8 place-items-center rounded-lg bg-gradient-aurora font-mono text-sm text-background shadow-glow">
-            LA
-          </span>
+          <BrandLogo size="sm" title="Love Ahir" />
           <span className="text-gradient">Love Ahir</span>
         </button>
 
