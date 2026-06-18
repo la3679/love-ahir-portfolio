@@ -15,17 +15,19 @@ const About = () => {
           description={t("about.description")}
         />
 
-        <div className="mt-16 grid gap-10 lg:grid-cols-[1.1fr_0.9fr]">
+        <div className="mt-14 grid gap-8 lg:grid-cols-[1.05fr_0.95fr]">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-80px" }}
             transition={{ duration: 0.6 }}
-            className="space-y-5 text-base leading-relaxed text-muted-foreground"
+            className="rounded-3xl glass-strong p-6 text-base leading-8 text-muted-foreground md:p-8"
           >
-            <p>{t("about.p1")}</p>
-            <p>{t("about.p2")}</p>
-            <p>{t("about.p3")}</p>
+            <div className="space-y-5">
+              <p>{t("about.p1")}</p>
+              <p>{t("about.p2")}</p>
+              <p>{t("about.p3")}</p>
+            </div>
 
             <div className="flex flex-wrap gap-2 pt-2">
               {["Privacy & Security", "Full-Stack", "Applied AI", "Data"].map(
@@ -56,7 +58,7 @@ const About = () => {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true, margin: "-60px" }}
                 transition={{ duration: 0.5, delay: i * 0.12 }}
-                className="card-glow group block rounded-2xl glass p-6"
+                className="card-glow premium-border group block rounded-2xl glass p-6"
               >
                 <div className="flex items-start justify-between gap-3">
                   <h4 className="font-semibold text-foreground transition-colors group-hover:text-aurora-violet">

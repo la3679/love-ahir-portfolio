@@ -15,7 +15,7 @@ const Certifications = () => {
           description={t("certifications.description")}
         />
 
-        <div className="mt-16 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-14 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {certifications.map((cert, i) => (
             <motion.a
               key={cert.title}
@@ -26,7 +26,7 @@ const Certifications = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-60px" }}
               transition={{ duration: 0.45, delay: i * 0.05 }}
-              className="card-glow group flex items-start gap-4 rounded-2xl glass p-5"
+              className="card-glow premium-border group flex min-h-36 items-start gap-4 rounded-2xl glass p-5"
             >
               <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-aurora-cyan/10 text-aurora-cyan">
                 <Award className="h-5 w-5" />

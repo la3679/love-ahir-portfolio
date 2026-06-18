@@ -15,7 +15,7 @@ const Experience = () => {
           description={t("experience.description")}
         />
 
-        <div className="relative mx-auto mt-16 max-w-3xl">
+        <div className="relative mx-auto mt-16 max-w-5xl">
           <div className="absolute left-4 top-2 bottom-2 w-px bg-gradient-to-b from-aurora-violet via-aurora-cyan to-aurora-magenta md:left-1/2" />
 
           <div className="space-y-10">
@@ -39,10 +39,10 @@ const Experience = () => {
                     href={exp.link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="card-glow group block rounded-2xl glass p-6"
+                    className="card-glow premium-border group block rounded-2xl glass p-6 md:p-7"
                   >
-                    <div className="flex items-center justify-between gap-3">
-                      <span className="inline-flex items-center gap-2 text-xs text-muted-foreground">
+                    <div className="flex flex-wrap items-center justify-between gap-3">
+                      <span className="inline-flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
                         <Calendar className="h-3.5 w-3.5" />
                         {exp.period}
                         {exp.current && (
@@ -54,10 +54,10 @@ const Experience = () => {
                       <ArrowUpRight className="h-4 w-4 text-muted-foreground transition-colors group-hover:text-aurora-violet" />
                     </div>
 
-                    <h3 className="mt-3 font-display text-lg font-semibold text-foreground transition-colors group-hover:text-aurora-violet">
+                    <h3 className="mt-4 font-display text-xl font-semibold leading-snug text-foreground transition-colors group-hover:text-aurora-violet">
                       {exp.role}
                     </h3>
-                    <p className="mt-1 flex items-center gap-2 text-sm font-medium text-aurora-cyan">
+                    <p className="mt-2 flex flex-wrap items-center gap-2 text-sm font-medium text-aurora-cyan">
                       {exp.company}
                       <span className="inline-flex items-center gap-1 text-xs font-normal text-muted-foreground">
                         <MapPin className="h-3 w-3" />
@@ -65,13 +65,13 @@ const Experience = () => {
                       </span>
                     </p>
 
-                    <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                    <p className="mt-4 text-sm leading-7 text-muted-foreground">
                       {exp.summary}
                     </p>
 
-                    <ul className="mt-4 space-y-2">
+                    <ul className="mt-5 space-y-3">
                       {exp.achievements.map((a) => (
-                        <li key={a} className="flex gap-2 text-sm text-muted-foreground">
+                        <li key={a} className="flex gap-2 text-sm leading-6 text-muted-foreground">
                           <Check className="mt-0.5 h-4 w-4 shrink-0 text-aurora-emerald" />
                           <span>{a}</span>
                         </li>

@@ -2,17 +2,21 @@ import { Github, Linkedin, Mail, ArrowUp } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { profile } from "@/data/portfolio";
 import { scrollToHref } from "./Navigation";
+import BrandLogo from "./BrandLogo";
 
 const Footer = () => {
   const { t } = useTranslation();
   return (
     <footer className="border-t border-border/60 py-10">
       <div className="container flex flex-col items-center justify-between gap-6 md:flex-row">
-        <div className="text-center md:text-left">
+        <div className="flex items-center gap-3 text-center md:text-left">
+          <BrandLogo size="sm" title={profile.shortName} />
+          <div>
           <div className="font-display text-lg font-bold text-gradient">{t("brand")}</div>
           <p className="mt-1 text-sm text-muted-foreground">
             {t("footer.tagline")} · {profile.location}
           </p>
+          </div>
         </div>
 
         <div className="flex items-center gap-3">
