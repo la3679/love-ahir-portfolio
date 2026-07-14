@@ -22,3 +22,10 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Graphify generated output (follows generated-file policy, like dist)
+graphify-out/
+
+# Repository policy: Markdown is local except the root README.md
+*.[mM][dD]
+!/README.md
