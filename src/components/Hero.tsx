@@ -7,7 +7,7 @@ import { riseDelay } from "@/lib/motion";
 import { usePointerDepth } from "@/lib/pointerMotion";
 import HeroAmbient from "./ambient/HeroAmbient";
 import SystemsLattice from "./lattice/SystemsLattice";
-import { useSceneSection } from "./lattice/latticeState";
+import { useLattice, useSceneSection } from "./lattice/latticeState";
 
 const TOP_STAGE_TECH = ["Java", "Spring Boot", "React", "PostgreSQL", "AWS"];
 const BOTTOM_STAGE_TECH = [
@@ -28,6 +28,7 @@ const BOTTOM_STAGE_TECH = [
  */
 const Hero = () => {
   const { t } = useTranslation();
+  const { section: activeSceneSection } = useLattice();
   const sectionRef = useSceneSection("hero");
   const stageRef = useRef<HTMLDivElement>(null);
   usePointerDepth(stageRef, "stage", { allowCoarseDrag: true });
@@ -113,6 +114,9 @@ const Hero = () => {
           <div
             ref={stageRef}
             data-depth-surface="stage"
+            data-stage-rails-active={
+              activeSceneSection === "hero" ? "true" : "false"
+            }
             className="observatory-stage relative min-h-[22rem] overflow-hidden rounded-[var(--radius-stage)] border border-border-bright/70 sm:min-h-[28rem] lg:min-h-[34rem] xl:min-h-[38rem]"
           >
             {/* The SVG/WebGL artwork remains decorative; the adjacent transform
@@ -155,22 +159,37 @@ const StageTechRail = ({
 }: {
   position: "top" | "bottom";
   items: readonly string[];
-}) => (
-  <div
-    aria-hidden="true"
-    data-tech-rail={position}
-    className={`stage-tech-rail ${
-      position === "top" ? "stage-tech-rail--top" : "stage-tech-rail--bottom"
-    }`}
-  >
-    {items.map((item, index) => (
-      <span key={item} className="stage-tech-rail__item">
-        <span
-          className={index % 2 === 0 ? "bg-primary" : "bg-signal"}
-          aria-hidden="true"
-        />
-        {item}
-      </span>
-    ))}
-  </div>
-);
+}) => {
+  // Exactly two copies are required for the track's -50% seamless loop.
+  const loop = [...items, ...items];
+  const duration = position === "top" ? 38 : 44;
+
+  return (
+    <div
+      aria-hidden="true"
+      data-tech-rail={position}
+      className={`stage-tech-rail ${
+        position === "top" ? "stage-tech-rail--top" : "stage-tech-rail--bottom"
+      }`}
+    >
+      <div
+        className="stage-tech-rail__track"
+        data-tech-rail-track={position}
+        style={{
+          animationDirection: position === "top" ? "normal" : "reverse",
+          animationDuration: `${duration}s`,
+        }}
+      >
+        {loop.map((item, index) => (
+          <span key={`${item}-${index}`} className="stage-tech-rail__item">
+            <span
+              className={index % 2 === 0 ? "bg-primary" : "bg-signal"}
+              aria-hidden="true"
+            />
+            {item}
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+};

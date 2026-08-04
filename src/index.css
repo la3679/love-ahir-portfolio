@@ -372,18 +372,29 @@
     z-index: 24;
     left: clamp(0.65rem, 2vw, 1.25rem);
     right: clamp(0.65rem, 2vw, 1.25rem);
-    display: flex;
     min-height: 2.25rem;
-    align-items: center;
-    justify-content: space-between;
-    gap: clamp(0.25rem, 1vw, 0.8rem);
     overflow: hidden;
+    padding: 0.875rem 0;
     color: hsl(var(--muted-foreground));
     font-family: "JetBrains Mono", ui-monospace, monospace;
-    font-size: clamp(0.58rem, 1.15vw, 0.66rem);
+    font-size: clamp(0.62rem, 1.15vw, 0.72rem);
     letter-spacing: -0.015em;
     white-space: nowrap;
     pointer-events: none;
+    -webkit-mask-image: linear-gradient(
+      90deg,
+      transparent,
+      hsl(var(--foreground)) 8%,
+      hsl(var(--foreground)) 92%,
+      transparent
+    );
+    mask-image: linear-gradient(
+      90deg,
+      transparent,
+      hsl(var(--foreground)) 8%,
+      hsl(var(--foreground)) 92%,
+      transparent
+    );
     background: linear-gradient(
       90deg,
       transparent,
@@ -403,11 +414,24 @@
     border-top: 1px solid hsl(var(--border) / 0.52);
   }
 
+  .stage-tech-rail__track {
+    display: flex;
+    width: max-content;
+    align-items: center;
+    gap: 2.75rem;
+    /* One trailing gap makes -50% land exactly on copy two's first item. */
+    padding-inline-end: 2.75rem;
+    animation-name: stage-tech-rail-scroll;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    will-change: transform;
+  }
+
   .stage-tech-rail__item {
     display: inline-flex;
-    min-width: 0;
+    flex: 0 0 auto;
     align-items: center;
-    gap: clamp(0.18rem, 0.5vw, 0.38rem);
+    gap: 0.625rem;
   }
 
   .stage-tech-rail__item > span {
@@ -416,6 +440,18 @@
     flex: 0 0 auto;
     border-radius: 999px;
     box-shadow: var(--glow-edge);
+  }
+
+  .observatory-stage:hover .stage-tech-rail__track,
+  .observatory-stage:focus-within .stage-tech-rail__track,
+  .observatory-stage[data-stage-rails-active="false"] .stage-tech-rail__track {
+    animation-play-state: paused;
+  }
+
+  @keyframes stage-tech-rail-scroll {
+    to {
+      transform: translate3d(-50%, 0, 0);
+    }
   }
 
   .home-about-section {
@@ -554,6 +590,12 @@
 
   .rise-in {
     animation: none;
+  }
+
+  .stage-tech-rail__track {
+    animation: none !important;
+    transform: none !important;
+    will-change: auto;
   }
 
   .observatory-stage,

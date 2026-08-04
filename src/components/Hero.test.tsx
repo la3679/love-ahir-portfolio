@@ -1,3 +1,5 @@
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
 import { describe, it, expect, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
@@ -102,9 +104,18 @@ describe("<Hero />", () => {
     const stage = container.querySelector(".observatory-stage");
     const top = stage?.querySelector('[data-tech-rail="top"]');
     const bottom = stage?.querySelector('[data-tech-rail="bottom"]');
+    const topTrack = top?.querySelector<HTMLElement>(
+      '[data-tech-rail-track="top"]',
+    );
+    const bottomTrack = bottom?.querySelector<HTMLElement>(
+      '[data-tech-rail-track="bottom"]',
+    );
 
     expect(top).toBeInTheDocument();
     expect(bottom).toBeInTheDocument();
+    expect(top).toHaveAttribute("aria-hidden", "true");
+    expect(bottom).toHaveAttribute("aria-hidden", "true");
+    expect(stage).toHaveAttribute("data-stage-rails-active", "true");
     expect(top).toHaveTextContent("Java");
     expect(top).toHaveTextContent("Spring Boot");
     expect(top).toHaveTextContent("React");
@@ -116,16 +127,45 @@ describe("<Hero />", () => {
     expect(bottom).toHaveTextContent("Docker");
     expect(bottom).toHaveTextContent("Three.js");
 
-    const topItems = new Set(
-      Array.from(top?.querySelectorAll(".stage-tech-rail__item") ?? []).map(
-        (item) => item.textContent,
-      ),
-    );
+    expect(topTrack?.style.animationDuration).toBe("38s");
+    expect(topTrack?.style.animationDirection).toBe("normal");
+    expect(bottomTrack?.style.animationDuration).toBe("44s");
+    expect(bottomTrack?.style.animationDirection).toBe("reverse");
+
+    const topItems = Array.from(
+      top?.querySelectorAll(".stage-tech-rail__item") ?? [],
+    ).map((item) => item.textContent);
     const bottomItems = Array.from(
       bottom?.querySelectorAll(".stage-tech-rail__item") ?? [],
     ).map((item) => item.textContent);
-    expect(bottomItems.filter((item) => topItems.has(item))).toHaveLength(0);
+
+    // Each five-item source set is duplicated exactly once so translating the
+    // full track by -50% produces the same sequence with no seam.
+    expect(topItems).toHaveLength(10);
+    expect(bottomItems).toHaveLength(10);
+    expect(topItems.slice(0, 5)).toEqual(topItems.slice(5));
+    expect(bottomItems.slice(0, 5)).toEqual(bottomItems.slice(5));
+    expect(
+      bottomItems.slice(0, 5).filter((item) => topItems.slice(0, 5).includes(item)),
+    ).toHaveLength(0);
     expect(container.querySelector("section#home > [data-tech-rail]")).toBeNull();
+  });
+
+  it("defines a seamless, pausable, reduced-motion-safe marquee", () => {
+    const css = readFileSync(join(process.cwd(), "src", "index.css"), "utf8");
+    const reducedMotion = css.slice(
+      css.indexOf("@media (prefers-reduced-motion: reduce)"),
+    );
+
+    expect(css).toContain("@keyframes stage-tech-rail-scroll");
+    expect(css).toContain("transform: translate3d(-50%, 0, 0)");
+    expect(css).toContain(".observatory-stage:hover .stage-tech-rail__track");
+    expect(css).toContain(".observatory-stage:focus-within .stage-tech-rail__track");
+    expect(css).toContain(
+      '.observatory-stage[data-stage-rails-active="false"] .stage-tech-rail__track',
+    );
+    expect(reducedMotion).toContain(".stage-tech-rail__track");
+    expect(reducedMotion).toContain("animation: none !important");
   });
 
   it("keeps research, publication, and education language out of the hero", () => {
