@@ -13,14 +13,45 @@ export default {
   theme: {
     container: {
       center: true,
-      padding: "1.5rem",
-      screens: { "2xl": "1280px" },
+      // Editorial gutters: 20px on mobile up to 64px on wide screens.
+      padding: {
+        DEFAULT: "1.25rem",
+        sm: "1.5rem",
+        md: "2rem",
+        lg: "3.5rem",
+        xl: "4rem",
+      },
+      // Tailwind's container plugin emits padding media queries ONLY for the
+      // screens listed here. The previous `{ "2xl": "1280px" }` override left
+      // sm/md/lg/xl unlisted, so their padding above was silently dropped and
+      // every viewport got the 20px DEFAULT. Listing the four real breakpoints
+      // restores the editorial gutters; ending at xl caps the container at
+      // 1280px without needing a 2xl entry.
+      screens: {
+        sm: "640px",
+        md: "768px",
+        lg: "1024px",
+        xl: "1280px",
+      },
     },
     extend: {
       fontFamily: {
         sans: ["Inter", "system-ui", "sans-serif"],
         display: ["Space Grotesk", "Inter", "sans-serif"],
         mono: ["JetBrains Mono", "ui-monospace", "monospace"],
+      },
+      fontSize: {
+        // Fluid display sizes for hero/section headlines.
+        "display-xl": [
+          "clamp(2.75rem, 1.5rem + 5vw, 5.25rem)",
+          { lineHeight: "1.02", letterSpacing: "-0.02em" },
+        ],
+        "display-lg": [
+          "clamp(2.5rem, 1.4rem + 4.5vw, 4.5rem)",
+          { lineHeight: "1.04", letterSpacing: "-0.015em" },
+        ],
+        "display-md": ["clamp(2rem, 1.2rem + 3vw, 3rem)", { lineHeight: "1.08" }],
+        "display-sm": ["clamp(1.5rem, 1.1rem + 1.5vw, 2rem)", { lineHeight: "1.15" }],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -48,6 +79,13 @@ export default {
           DEFAULT: "hsl(var(--accent))",
           foreground: "hsl(var(--accent-foreground))",
         },
+        signal: "hsl(var(--signal))",
+        faint: "hsl(var(--faint))",
+        "border-bright": "hsl(var(--border-bright))",
+        stage: {
+          DEFAULT: "hsl(var(--stage))",
+          foreground: "hsl(var(--stage-foreground))",
+        },
         popover: {
           DEFAULT: "hsl(var(--popover))",
           foreground: "hsl(var(--popover-foreground))",
@@ -56,26 +94,17 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        aurora: {
-          violet: "hsl(var(--aurora-violet))",
-          indigo: "hsl(var(--aurora-indigo))",
-          cyan: "hsl(var(--aurora-cyan))",
-          magenta: "hsl(var(--aurora-magenta))",
-          emerald: "hsl(var(--aurora-emerald))",
-          amber: "hsl(var(--aurora-amber))",
-        },
       },
       borderRadius: {
         lg: "var(--radius)",
-        md: "calc(var(--radius) - 4px)",
-        sm: "calc(var(--radius) - 8px)",
-      },
-      backgroundImage: {
-        "gradient-aurora": "var(--gradient-aurora)",
+        md: "calc(var(--radius) - 2px)",
+        sm: "calc(var(--radius) - 4px)",
+        stage: "var(--radius-stage)",
       },
       boxShadow: {
-        glow: "0 0 40px -8px hsl(var(--primary) / 0.5)",
-        "glow-cyan": "0 0 40px -8px hsl(var(--aurora-cyan) / 0.5)",
+        card: "var(--shadow-card)",
+        "card-hover": "var(--shadow-card-hover)",
+        stage: "var(--shadow-stage)",
       },
       keyframes: {
         "accordion-down": {
@@ -86,50 +115,15 @@ export default {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
-        float: {
-          "0%, 100%": { transform: "translateY(0)" },
-          "50%": { transform: "translateY(-18px)" },
-        },
-        "float-slow": {
-          "0%, 100%": { transform: "translateY(0) translateX(0)" },
-          "50%": { transform: "translateY(-26px) translateX(14px)" },
-        },
-        "spin-slow": {
-          to: { transform: "rotate(360deg)" },
-        },
-        shimmer: {
-          "100%": { transform: "translateX(100%)" },
-        },
-        "gradient-pan": {
-          "0%, 100%": { backgroundPosition: "0% 50%" },
-          "50%": { backgroundPosition: "100% 50%" },
-        },
-        "pulse-ring": {
-          "0%": { boxShadow: "0 0 0 0 hsl(var(--aurora-emerald) / 0.5)" },
-          "70%": { boxShadow: "0 0 0 10px hsl(var(--aurora-emerald) / 0)" },
-          "100%": { boxShadow: "0 0 0 0 hsl(var(--aurora-emerald) / 0)" },
-        },
         "fade-up": {
-          from: { opacity: "0", transform: "translateY(24px)" },
+          from: { opacity: "0", transform: "translateY(16px)" },
           to: { opacity: "1", transform: "translateY(0)" },
-        },
-        blink: {
-          "0%, 100%": { opacity: "1" },
-          "50%": { opacity: "0" },
         },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
-        float: "float 6s ease-in-out infinite",
-        "float-slow": "float-slow 9s ease-in-out infinite",
-        "spin-slow": "spin-slow 18s linear infinite",
-        "spin-slower": "spin-slow 32s linear infinite",
-        shimmer: "shimmer 2.5s infinite",
-        "gradient-pan": "gradient-pan 6s ease infinite",
-        "pulse-ring": "pulse-ring 2s ease-out infinite",
-        "fade-up": "fade-up 0.7s cubic-bezier(0.16,1,0.3,1) forwards",
-        blink: "blink 1s step-end infinite",
+        "fade-up": "fade-up 0.5s cubic-bezier(0.16,1,0.3,1) forwards",
       },
     },
   },

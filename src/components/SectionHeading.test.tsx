@@ -18,7 +18,10 @@ vi.mock("framer-motion", async () => {
         delete clean[k];
       return React.createElement(tag, { ...clean, ref });
     });
-  return { motion: new Proxy({}, { get: (_t, tag: string) => make(tag) }) };
+  return {
+    motion: new Proxy({}, { get: (_t, tag: string) => make(tag) }),
+    useReducedMotion: () => false,
+  };
 });
 
 import SectionHeading from "./SectionHeading";

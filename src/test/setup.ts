@@ -27,6 +27,34 @@ if (!("IntersectionObserver" in window)) {
   window.IntersectionObserver = IO;
 }
 
+if (!("ResizeObserver" in window)) {
+  class RO {
+    observe() {}
+    unobserve() {}
+    disconnect() {}
+  }
+  // @ts-expect-error -- minimal polyfill; Radix's popper positioner needs it
+  window.ResizeObserver = RO;
+}
+
+// Radix menus call these Pointer Events APIs and scroll the active item into
+// view; jsdom implements none of them.
+if (!Element.prototype.hasPointerCapture) {
+  Element.prototype.hasPointerCapture = () => false;
+  Element.prototype.setPointerCapture = () => {};
+  Element.prototype.releasePointerCapture = () => {};
+}
+if (!Element.prototype.scrollIntoView) {
+  Element.prototype.scrollIntoView = () => {};
+}
+
+// jsdom has no canvas backend at all, and calling getContext logs a noisy
+// "Not implemented" error. Returning null is also the honest answer for the
+// test environment: no WebGL, so the capability gate resolves to the static
+// composition unless a test explicitly stubs otherwise.
+HTMLCanvasElement.prototype.getContext = (() =>
+  null) as unknown as typeof HTMLCanvasElement.prototype.getContext;
+
 if (!window.matchMedia) {
   window.matchMedia = vi.fn().mockImplementation((query: string) => ({
     matches: false,

@@ -35,4 +35,11 @@ i18n
     },
   });
 
+// Keep <html lang> in sync with the active locale for assistive tech + SEO.
+i18n.on("languageChanged", (lng) => {
+  if (typeof document !== "undefined") {
+    document.documentElement.lang = lng;
+  }
+});
+
 export default i18n;

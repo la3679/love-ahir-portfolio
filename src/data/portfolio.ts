@@ -2,7 +2,15 @@
  * Single source of truth for all portfolio content.
  * Pure data + pure helpers — intentionally free of React so the logic
  * can be unit-tested in isolation.
+ *
+ * Experience prose (role, focus, summary, achievements) lives in the locale
+ * dictionaries, not here: this file holds the structural facts (company,
+ * dates, location, grouping, stack tags) and points at translation keys, so
+ * the same canonical dataset renders correctly in all eight locales. The
+ * `TranslationKey` import is type-only — no runtime dependency is added.
  */
+
+import type { TranslationKey } from "@/lib/locales/en-US";
 
 export type ProjectCategory =
   | "Web App"
@@ -24,11 +32,6 @@ export interface Profile {
   resumeUrl: string;
 }
 
-export interface Stat {
-  value: string;
-  label: string;
-}
-
 export interface Education {
   institution: string;
   degree: string;
@@ -39,16 +42,31 @@ export interface Education {
   documentLink: string;
 }
 
+/**
+ * Presentational grouping only. It never changes the real chronology —
+ * every entry always renders its own dates and location.
+ */
+export type ExperienceGroup = "industry" | "research-teaching";
+
 export interface Experience {
-  role: string;
+  /** Stable id; also the namespace of this role's translation keys. */
+  id: string;
+  group: ExperienceGroup;
   company: string;
   location: string;
   period: string;
+  /** True only while the role is ongoing. */
   current?: boolean;
-  summary: string;
-  achievements: string[];
+  /** Official job title. */
+  roleKey: TranslationKey;
+  /** Optional descriptive focus, kept separate from the official title. */
+  focusKey?: TranslationKey;
+  summaryKey: TranslationKey;
+  /** Strongest outcome first — the home page shows the leading one. */
+  achievementKeys: TranslationKey[];
   tags: string[];
-  link: string;
+  /** Public artifact for the role, when one exists. Never invented. */
+  link?: string;
 }
 
 export interface Project {
@@ -58,6 +76,10 @@ export interface Project {
   stack: string[];
   link: string;
   featured?: boolean;
+  /** Slug of the internal case study, when one exists (→ /work/<slug>). */
+  slug?: string;
+  /** One-line headline outcome, shown on index rows. Metrics only — no adjectives. */
+  outcome?: string;
 }
 
 export interface SkillGroup {
@@ -72,40 +94,30 @@ export interface Expertise {
   accent: "violet" | "cyan" | "magenta" | "emerald";
 }
 
-export interface Certification {
-  title: string;
-  provider: string;
-  date: string;
-  link: string;
-}
+// Credentials moved to src/data/credentials.ts at Gate 3: the old
+// `Certification` shape could not express award type, date precision,
+// instructor attribution, or the "not a Microsoft certification" disclaimer
+// the AZ-900 entry requires. See IMPLEMENTATION.md §25.5.
 
 export const profile: Profile = {
   name: "Love Jayesh Ahir",
   shortName: "Love Ahir",
   roles: [
     "Software Engineer",
-    "Privacy Researcher",
-    "Full-Stack Developer",
-    "AI / ML Engineer",
-    "Data Analyst",
+    "Full-Stack Engineer",
+    "Backend Engineer",
+    "AI Engineer",
+    "Published Software Engineering Researcher",
   ],
-  headline: "I build software where craft, data, and privacy meet.",
+  headline: "I build reliable full-stack products and applied AI systems.",
   summary:
-    "Master's-trained software engineer and published privacy researcher. I design full-stack products, ship AI-driven features, and dig into the data most people never read — like the 86 million Android log entries behind my EASE 2026 paper.",
-  location: "Rochester, NY",
+    "Software engineer with 4+ years of experience building production backend, full-stack, and applied AI systems across financial services and enterprise platforms. I work across event-driven Python and Java services, React and TypeScript interfaces, relational data systems, cloud delivery, automated quality gates, and AI-powered retrieval workflows — with an emphasis on reliability, speed, and measurable operational impact. My RIT research adds experience in large-scale automation, data processing, and rigorous validation.",
+  location: "Phoenix, AZ",
   email: "lahir1269@gmail.com",
   github: "https://github.com/la3679",
   linkedin: "https://www.linkedin.com/in/love-jayesh-ahir-188356290/",
-  resumeUrl:
-    "https://drive.google.com/file/d/1o0Xbs1WtDbkqn4Y_ftTYjaD78rn45o2l/view?usp=drive_link",
+  resumeUrl: "/resume.pdf",
 };
-
-export const stats: Stat[] = [
-  { value: "3.94", label: "Graduate GPA at RIT" },
-  { value: "EASE '26", label: "Peer-reviewed publication" },
-  { value: "86M+", label: "Log entries analyzed" },
-  { value: "20+", label: "Shipped projects" },
-];
 
 export const education: Education[] = [
   {
@@ -132,70 +144,156 @@ export const education: Education[] = [
   },
 ];
 
+/**
+ * Every role Love has held, newest-ending first inside each group.
+ * One canonical dataset — the home summary and the /about timeline both
+ * read from here, so the two can never drift apart.
+ */
 export const experiences: Experience[] = [
   {
-    role: "Teaching Assistant — Software Quality Assurance",
-    company: "Rochester Institute of Technology",
-    location: "Rochester, NY",
-    period: "Aug 2025 — Dec 2025",
+    id: "morgan-stanley",
+    group: "industry",
+    company: "Morgan Stanley",
+    location: "Phoenix, AZ",
+    period: "Aug 2025 — Present",
     current: true,
-    summary:
-      "Supported graduate instruction for SWEN 777 under Dr. Xueling Zhang, mentoring students through testing methodology and research-paper seminars.",
-    achievements: [
-      "Mentored graduate students through software testing methodology, raising assignment quality and class satisfaction.",
-      "Led seminars dissecting 25+ research papers, sharpening critical reading and discussion across the cohort.",
-      "Ran weekly office hours across Slack, email, and Zoom to unblock students on assignments and research.",
+    roleKey: "exp.morgan-stanley.role",
+    focusKey: "exp.morgan-stanley.focus",
+    summaryKey: "exp.morgan-stanley.summary",
+    achievementKeys: [
+      "exp.morgan-stanley.a1",
+      "exp.morgan-stanley.a2",
+      "exp.morgan-stanley.a3",
+      "exp.morgan-stanley.a4",
+      "exp.morgan-stanley.a5",
+      "exp.morgan-stanley.a6",
     ],
-    tags: ["Testing", "Mentorship", "Research"],
-    link: "https://www.rit.edu/",
+    tags: [
+      "Python",
+      "FastAPI",
+      "React 18",
+      "TypeScript",
+      "AWS ECS/Fargate",
+      "LangGraph",
+      "RAG",
+      "CI/CD",
+    ],
   },
   {
-    role: "Graduate Research Assistant — Privacy & Security",
+    id: "sage-software-engineer-2",
+    group: "industry",
+    company: "Sage Softtech",
+    location: "Ahmedabad, India",
+    period: "Oct 2021 — Jul 2023",
+    roleKey: "exp.sage-software-engineer-2.role",
+    summaryKey: "exp.sage-software-engineer-2.summary",
+    achievementKeys: [
+      "exp.sage-software-engineer-2.a1",
+      "exp.sage-software-engineer-2.a2",
+      "exp.sage-software-engineer-2.a3",
+      "exp.sage-software-engineer-2.a4",
+      "exp.sage-software-engineer-2.a5",
+    ],
+    tags: [
+      "Java",
+      "Spring Boot",
+      "Kafka",
+      "PostgreSQL",
+      "React 17",
+      "GCP",
+      "Grafana",
+    ],
+  },
+  {
+    id: "axisray",
+    group: "industry",
+    company: "Axisray Pvt Ltd",
+    location: "Ahmedabad, India",
+    period: "Jan 2023 — May 2023",
+    roleKey: "exp.axisray.role",
+    summaryKey: "exp.axisray.summary",
+    achievementKeys: ["exp.axisray.a1", "exp.axisray.a2", "exp.axisray.a3"],
+    tags: ["Java", "Spring Boot", "Python", "ML"],
+    link: "https://drive.google.com/file/d/1y6q0oPhLX4bjA9EYl9T6jEtiki8fRQOw/view?usp=sharing",
+  },
+  {
+    id: "moon-technolabs",
+    group: "industry",
+    company: "Moon Technolabs Pvt Ltd",
+    location: "Ahmedabad, India",
+    period: "May 2022 — Oct 2022",
+    roleKey: "exp.moon-technolabs.role",
+    summaryKey: "exp.moon-technolabs.summary",
+    achievementKeys: [
+      "exp.moon-technolabs.a1",
+      "exp.moon-technolabs.a2",
+      "exp.moon-technolabs.a3",
+    ],
+    tags: ["Data Science", "AI/ML", "Pipelines"],
+    link: "https://drive.google.com/file/d/1NSkvGMOANb5-mr1zKGDQZNfSDczWdcZj/view?usp=sharing",
+  },
+  {
+    id: "sage-associate-developer",
+    group: "industry",
+    company: "Sage Softtech",
+    location: "Ahmedabad, India",
+    period: "Feb 2021 — Sep 2021",
+    roleKey: "exp.sage-associate-developer.role",
+    summaryKey: "exp.sage-associate-developer.summary",
+    achievementKeys: [
+      "exp.sage-associate-developer.a1",
+      "exp.sage-associate-developer.a2",
+      "exp.sage-associate-developer.a3",
+    ],
+    tags: ["Java", "Spring Boot", "React", "MySQL", "PostgreSQL", "ELK"],
+  },
+  {
+    id: "rit-research-assistant",
+    group: "research-teaching",
     company: "Rochester Institute of Technology",
     location: "Rochester, NY",
     period: "Aug 2024 — Dec 2025",
-    current: true,
-    summary:
-      "Co-authored an EASE 2026 paper measuring the gap between what Android apps promise in their privacy policies and what they actually log.",
-    achievements: [
-      "Published in the EASE 2026 Research Track, analyzing 86M+ real log entries against stated privacy policies.",
-      "Built Python tooling for automated app exploration and behavioral analysis using ADB, Monkey, and logcat.",
-      "Surfaced that 67.6% of studied apps leaked sensitive data never disclosed in their policies.",
+    roleKey: "exp.rit-research-assistant.role",
+    summaryKey: "exp.rit-research-assistant.summary",
+    achievementKeys: [
+      "exp.rit-research-assistant.a1",
+      "exp.rit-research-assistant.a2",
+      "exp.rit-research-assistant.a3",
     ],
     tags: ["Python", "Android", "Empirical Research", "ADB"],
     link: "https://conf.researchr.org/details/ease-2026/ease-2026-research-papers/2/Do-Privacy-Policies-Match-with-the-Logs-An-Empirical-Study-of-Privacy-Disclosure-in-",
   },
   {
-    role: "Software Engineer Intern",
-    company: "Axisray Pvt Ltd",
-    location: "Ahmedabad, India",
-    period: "Jan 2023 — May 2023",
-    summary:
-      "Hardened Java microservices and shipped ML-backed features that improved reliability and accelerated delivery.",
-    achievements: [
-      "Refactored Spring Boot microservices, improving reliability and cutting feature delivery time by 20%.",
-      "Built and integrated ML models in Python and Java, lifting recommendation accuracy by 30%.",
-      "Modernized legacy JSP applications into Spring Boot for richer data visualization.",
+    id: "rit-teaching-assistant",
+    group: "research-teaching",
+    company: "Rochester Institute of Technology",
+    location: "Rochester, NY",
+    period: "Aug 2025 — Dec 2025",
+    roleKey: "exp.rit-teaching-assistant.role",
+    summaryKey: "exp.rit-teaching-assistant.summary",
+    achievementKeys: [
+      "exp.rit-teaching-assistant.a1",
+      "exp.rit-teaching-assistant.a2",
+      "exp.rit-teaching-assistant.a3",
     ],
-    tags: ["Java", "Spring Boot", "Python", "ML"],
-    link: "https://drive.google.com/file/d/1y6q0oPhLX4bjA9EYl9T6jEtiki8fRQOw/view?usp=sharing",
-  },
-  {
-    role: "Data Science & AI/ML Engineering Intern",
-    company: "Moon Technolabs Pvt Ltd",
-    location: "Ahmedabad, India",
-    period: "May 2022 — Oct 2022",
-    summary:
-      "Led a SaaS supply-chain resiliency initiative, building data pipelines and AI-driven optimization across HRMS and CRM systems.",
-    achievements: [
-      "Drove a supply-chain resiliency project that raised operational efficiency by 30%.",
-      "Designed scalable data pipelines and AI solutions powering adaptive operations.",
-      "Tuned ML models for resource allocation, reducing operational cost by 15%.",
-    ],
-    tags: ["Data Science", "AI/ML", "Pipelines"],
-    link: "https://drive.google.com/file/d/1NSkvGMOANb5-mr1zKGDQZNfSDczWdcZj/view?usp=sharing",
+    tags: ["Testing", "Mentorship", "Research"],
+    link: "https://www.rit.edu/",
   },
 ];
+
+/** Group order used by both the home summary and the /about timeline. */
+export const experienceGroups: ExperienceGroup[] = [
+  "industry",
+  "research-teaching",
+];
+
+/** Pure helper: the roles in one group, preserving the canonical order. */
+export function experiencesInGroup(
+  list: Experience[],
+  group: ExperienceGroup,
+): Experience[] {
+  return list.filter((experience) => experience.group === group);
+}
 
 export const projects: Project[] = [
   {
@@ -206,6 +304,8 @@ export const projects: Project[] = [
     stack: ["Python", "ADB", "Monkey", "Empirical SE"],
     link: "https://conf.researchr.org/details/ease-2026/ease-2026-research-papers/2/Do-Privacy-Policies-Match-with-the-Logs-An-Empirical-Study-of-Privacy-Disclosure-in-",
     featured: true,
+    slug: "privacy-policies-vs-logs",
+    outcome: "67.6% of apps leaked undisclosed data",
   },
   {
     title: "AR Gesture Lab",
@@ -215,6 +315,8 @@ export const projects: Project[] = [
     stack: ["React", "Three.js", "R3F", "Appium", "Python"],
     link: "https://github.com/la3679/ARLabs",
     featured: true,
+    slug: "ar-gesture-lab",
+    outcome: "60fps automated gestures on live AR objects",
   },
   {
     title: "VidKing — AI Streaming Platform",
@@ -224,6 +326,8 @@ export const projects: Project[] = [
     stack: ["React 19", "TypeScript", "Firebase", "Gemini"],
     link: "https://github.com/la3679/VidKing-AI-Streaming",
     featured: true,
+    slug: "vidking-ai-streaming",
+    outcome: "Real-time TMDB search with Gemini recommendations",
   },
   {
     title: "AURA-GRID — 3D Strategy Engine",
@@ -233,6 +337,8 @@ export const projects: Project[] = [
     stack: ["React", "Three.js", "GLSL", "Gemini AI"],
     link: "https://github.com/la3679/AURA-GRID",
     featured: true,
+    slug: "aura-grid",
+    outcome: "Frame-perfect replays on a deterministic engine",
   },
   {
     title: "ResuMatch AI — Recruitment Suite",
@@ -242,6 +348,8 @@ export const projects: Project[] = [
     stack: ["FastAPI", "React", "PostgreSQL", "Gemini"],
     link: "https://github.com/la3679/ResuMatch-AI",
     featured: true,
+    slug: "resumatch-ai",
+    outcome: "Semantic matching beyond keyword overlap",
   },
   {
     title: "Pokédex MongoDB Platform",
@@ -251,6 +359,8 @@ export const projects: Project[] = [
     stack: ["Flask", "React", "MongoDB", "Maps API"],
     link: "https://github.com/la3679/Pok-dex",
     featured: true,
+    slug: "pokedex-mongodb",
+    outcome: "296k+ geospatial records on 2dsphere indexes",
   },
   {
     title: "Aequitas Intelligence",
@@ -291,6 +401,7 @@ export const projects: Project[] = [
       "Visualizes 1M+ car-sales records as an interactive graph of buyers, cars, and countries using Neo4j and custom D3.js Cypher-query exploration.",
     stack: ["Neo4j", "D3.js", "Python"],
     link: "https://github.com/la3679/Car-Sales-Network-Visualization",
+    outcome: "1M+ records as an interactive graph",
   },
   {
     title: "Sentiment Analysis Engine",
@@ -315,6 +426,7 @@ export const projects: Project[] = [
       "Personalized meal planning and nutritional analysis that cut planning time by 75% with a responsive React interface over a Flask API.",
     stack: ["React", "Flask", "PostgreSQL"],
     link: "https://github.com/la3679/Nutrikit",
+    outcome: "−75% meal-planning time",
   },
   {
     title: "ECtHR Vote Prediction",
@@ -323,6 +435,7 @@ export const projects: Project[] = [
       "An ML pipeline predicting pro-government votes in the European Court of Human Rights, where ensemble XGBoost reached 95.9% validation accuracy on legal text embeddings.",
     stack: ["XGBoost", "SVM", "NLP", "Python"],
     link: "https://drive.google.com/file/d/1GwFkSXXzZVmZUP4OLoB1I1YckQn8rmcv/view?usp=sharing",
+    outcome: "95.9% validation accuracy",
   },
   {
     title: "CodeGuard — Automated Review",
@@ -439,12 +552,6 @@ export const expertise: Expertise[] = [
     accent: "cyan",
   },
   {
-    title: "Privacy & Security Research",
-    description:
-      "Empirical, large-scale analysis of mobile app behavior and privacy disclosure, with published, peer-reviewed results.",
-    accent: "magenta",
-  },
-  {
     title: "Data Engineering & Analytics",
     description:
       "Turning millions of messy records into pipelines, geospatial graphs, and executive dashboards that drive decisions.",
@@ -462,46 +569,29 @@ export const expertise: Expertise[] = [
       "Designing maintainable systems: microservices, clean API boundaries, and architecture that survives real-world change.",
     accent: "cyan",
   },
+  {
+    title: "Privacy & Security Research",
+    description:
+      "Empirical, large-scale analysis of mobile app behavior and privacy disclosure, with published, peer-reviewed results.",
+    accent: "magenta",
+  },
 ];
 
-export const certifications: Certification[] = [
-  {
-    title: "Microsoft Azure Fundamentals (AZ-900) Prep",
-    provider: "Microsoft · LinkedIn Learning",
-    date: "Jun 2025",
-    link: "https://www.linkedin.com/learning/certificates/53b8f4559dd722ff7fb5e3a6438894f33da0e7cb07636ca3936ff99f150ab5bc",
-  },
-  {
-    title: "Career Essentials in Data Analysis",
-    provider: "Microsoft · LinkedIn",
-    date: "Jun 2025",
-    link: "https://www.linkedin.com/learning/certificates/b7e85032290a4f063ef4905f75d28d23df2ef7d98a738df62e79268b6ce3eb14",
-  },
-  {
-    title: "Learning Data Analytics: Foundations",
-    provider: "LinkedIn Learning",
-    date: "Jun 2025",
-    link: "https://www.linkedin.com/learning/certificates/b3e66a7d7344afa613aea09e7dba21533b25eb62d2d6506917ca3e6f1f6ca3f3",
-  },
-  {
-    title: "Python Essential Training",
-    provider: "LinkedIn Learning",
-    date: "May 2025",
-    link: "https://www.linkedin.com/learning/certificates/4c32a950aef5b51ab3e526d3daa47af2bdb69bc99c58400c61d4fb4243674cce",
-  },
-  {
-    title: "Data Analytics Part 2: Applying Core Knowledge",
-    provider: "LinkedIn Learning",
-    date: "Jun 2025",
-    link: "https://www.linkedin.com/learning/certificates/83056fccabeba7e7f5127c74177147622ced93f8e9d1cdc5f202a62bb7b046f1",
-  },
-  {
-    title: "C Programming",
-    provider: "CDAC",
-    date: "2022",
-    link: "https://drive.google.com/file/d/1RT9VAduDF422qZg2ho9nak0OUSkk7BL4/view?usp=sharing",
-  },
-];
+/**
+ * The roles the homepage previews, newest first — explicit curation rather
+ * than a slice, so reordering `experiences` never silently changes what a
+ * recruiter reads first. Three engineering roles only; `/about#experience`
+ * carries all seven with their real dates, locations, and titles.
+ */
+export const homeExperienceIds = [
+  "morgan-stanley",
+  "sage-software-engineer-2",
+  "moon-technolabs",
+] as const;
+
+export const homeExperiences: Experience[] = homeExperienceIds.flatMap((id) =>
+  experiences.filter((role) => role.id === id),
+);
 
 export const projectCategories: (ProjectCategory | "All")[] = [
   "All",

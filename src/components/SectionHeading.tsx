@@ -1,45 +1,43 @@
 import { motion } from "framer-motion";
+import { useReveal } from "@/lib/motion";
 
 interface SectionHeadingProps {
   eyebrow: string;
   title: string;
   description?: string;
   align?: "center" | "left";
+  /** Applied to the <h2> so a section can reference it via aria-labelledby. */
+  id?: string;
 }
 
 /**
- * Shared section header: a small monospaced eyebrow, a gradient title,
- * and an optional supporting line. Animates in on scroll.
+ * Shared section header: a small monospaced evidence eyebrow, a display
+ * title, and an optional supporting line. Reveals once on scroll.
  */
 const SectionHeading = ({
   eyebrow,
   title,
   description,
-  align = "center",
+  align = "left",
+  id,
 }: SectionHeadingProps) => {
+  const reveal = useReveal();
   const isCenter = align === "center";
 
   return (
     <motion.header
-      initial={{ opacity: 0, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-80px" }}
-      transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+      {...reveal}
       className={isCenter ? "mx-auto max-w-3xl text-center" : "max-w-3xl"}
     >
-      <span
-        className={`inline-flex items-center gap-2 rounded-full border border-aurora-cyan/20 bg-aurora-cyan/10 px-3 py-1 font-mono text-xs uppercase tracking-[0.22em] text-aurora-cyan ${
-          isCenter ? "justify-center" : ""
-        }`}
-      >
-        <span className="h-px w-6 bg-aurora-cyan/60" />
+      <span className={`meta-line inline-flex items-center gap-2 uppercase ${isCenter ? "justify-center" : ""}`}>
+        <span className="h-px w-6 bg-signal/60" aria-hidden="true" />
         {eyebrow}
       </span>
-      <h2 className="mt-5 text-3xl font-bold leading-tight text-gradient md:text-5xl">
+      <h2 id={id} className="mt-4 font-display text-display-md font-bold text-foreground">
         {title}
       </h2>
       {description && (
-        <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground md:text-lg">
+        <p className={`mt-4 max-w-2xl text-base leading-relaxed text-muted-foreground md:text-lg ${isCenter ? "mx-auto" : ""}`}>
           {description}
         </p>
       )}

@@ -1,32 +1,47 @@
-import AuroraBackground from "@/components/AuroraBackground";
-import Navigation from "@/components/Navigation";
+import Seo from "@/components/Seo";
 import Hero from "@/components/Hero";
-import About from "@/components/About";
-import Experience from "@/components/Experience";
-import Projects from "@/components/Projects";
-import Skills from "@/components/Skills";
-import Expertise from "@/components/Expertise";
-import Certifications from "@/components/Certifications";
-import Contact from "@/components/Contact";
-import Footer from "@/components/Footer";
+import ProofStrip from "@/components/ProofStrip";
+import AboutSection from "@/components/AboutSection";
+import ExperienceSection from "@/components/ExperienceSection";
+import FeaturedWork from "@/components/FeaturedWork";
+import Capabilities from "@/components/Capabilities";
+import CredentialsPreview from "@/components/CredentialsPreview";
+import ResearchNote from "@/components/ResearchNote";
+import { LatticeProvider } from "@/components/lattice/LatticeProvider";
 
+/**
+ * Home page — integrated "Ember Systems Observatory" (IMPLEMENTATION.md §33).
+ *
+ * Approved order: hero → proof strip → about with the real photograph →
+ * experience → featured projects led by Pokédex → technical capabilities →
+ * credentials and education → compact research. Contact and Footer close the
+ * page from the Layout shell.
+ *
+ * Experience deliberately precedes projects: a recruiter reads where the work
+ * happened before what was built.
+ *
+ * `SystemsLattice` is mounted by Hero inside its real observatory stage. It
+ * renders the authored SVG immediately and upgrades only after every
+ * capability gate passes, so no section depends on WebGL for meaning, layout
+ * or legibility.
+ */
 const Index = () => {
   return (
-    <div className="relative min-h-screen">
-      <AuroraBackground />
-      <Navigation />
-      <main>
-        <Hero />
-        <About />
-        <Experience />
-        <Projects />
-        <Skills />
-        <Expertise />
-        <Certifications />
-        <Contact />
-      </main>
-      <Footer />
-    </div>
+    <LatticeProvider>
+      <Seo
+        title="Love Ahir — Software Engineer | Full-Stack, Backend & Applied AI"
+        description="Software engineer with 4+ years building reliable backends, full-stack products, cloud systems, and applied AI across financial services and enterprise platforms."
+        path="/"
+      />
+      <Hero />
+      <ProofStrip />
+      <AboutSection />
+      <ExperienceSection />
+      <FeaturedWork />
+      <Capabilities />
+      <CredentialsPreview />
+      <ResearchNote />
+    </LatticeProvider>
   );
 };
 

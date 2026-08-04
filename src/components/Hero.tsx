@@ -1,129 +1,127 @@
-import { motion } from "framer-motion";
-import { ArrowUpRight, Github, Linkedin, Mail, FileDown, MapPin } from "lucide-react";
+import { ArrowRight, FileDown, Github, Linkedin, Mail } from "lucide-react";
+import { useRef } from "react";
 import { useTranslation } from "react-i18next";
-import TypingAnimation from "./TypingAnimation";
-import { profile, stats } from "@/data/portfolio";
-import profilePhoto from "@/assets/profile-photo.jpg";
-import { scrollToHref } from "./Navigation";
+import { Link } from "react-router-dom";
+import { profile } from "@/data/portfolio";
+import { riseDelay } from "@/lib/motion";
+import { usePointerDepth } from "@/lib/pointerMotion";
+import HeroAmbient from "./ambient/HeroAmbient";
+import SystemsLattice from "./lattice/SystemsLattice";
+import { useSceneSection } from "./lattice/latticeState";
 
-const container = {
-  hidden: { opacity: 0 },
-  show: { opacity: 1, transition: { staggerChildren: 0.12, delayChildren: 0.1 } },
-};
-const item = {
-  hidden: { opacity: 0, y: 24 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] } },
-};
+const TOP_STAGE_TECH = ["Java", "Spring Boot", "React", "PostgreSQL", "AWS"];
+const BOTTOM_STAGE_TECH = [
+  "Python",
+  "FastAPI",
+  "MongoDB",
+  "Docker",
+  "Three.js",
+];
 
+/**
+ * Recruiter-first hero for the warm voxel observatory (§34).
+ *
+ * Copy owns the left plane and the spatial system is physically mounted inside
+ * the right-hand stage. SVG first paint and the lazy WebGL enhancement now
+ * share one clipped coordinate system. A separate, quiet 2D particle layer
+ * gives the surrounding hero depth without moving or obscuring any content.
+ */
 const Hero = () => {
   const { t } = useTranslation();
+  const sectionRef = useSceneSection("hero");
+  const stageRef = useRef<HTMLDivElement>(null);
+  usePointerDepth(stageRef, "stage", { allowCoarseDrag: true });
+
   return (
     <section
       id="home"
-      className="relative flex min-h-[100svh] items-center overflow-hidden px-0 pt-24"
+      ref={sectionRef}
+      className="relative isolate overflow-hidden pt-28 lg:min-h-[46rem] lg:pt-32"
     >
-      <div className="absolute left-1/2 top-28 h-px w-[min(56rem,80vw)] -translate-x-1/2 bg-gradient-to-r from-transparent via-aurora-cyan/40 to-transparent" />
-      <div className="container grid items-center gap-12 pb-14 lg:grid-cols-[1.08fr_0.92fr] lg:pb-28">
-        <motion.div variants={container} initial="hidden" animate="show">
-          <motion.div
-            variants={item}
-            className="inline-flex items-center gap-2 rounded-full border border-aurora-emerald/30 bg-aurora-emerald/10 px-3 py-1.5 text-xs font-medium text-aurora-emerald shadow-[0_0_40px_-20px_hsl(var(--aurora-emerald))]"
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 -z-[1] bg-[radial-gradient(55%_65%_at_84%_36%,hsl(var(--primary)/0.08),transparent_72%)]"
+      />
+
+      <HeroAmbient excludeRef={stageRef} />
+
+      <div className="container relative z-10 grid items-center gap-10 pb-10 lg:grid-cols-[minmax(20rem,0.84fr)_minmax(30rem,1.16fr)] lg:gap-10 lg:pb-16 xl:gap-14">
+        <div className="relative z-10 max-w-3xl">
+          <div
+            className="rise-in inline-flex items-center rounded-full border border-signal/30 bg-background/80 px-3 py-1.5 text-xs font-medium text-signal"
+            style={riseDelay(0)}
           >
-            <span className="h-2 w-2 animate-pulse-ring rounded-full bg-aurora-emerald" />
             {t("hero.badge")}
-          </motion.div>
+          </div>
 
-          <motion.h1
-            variants={item}
-            className="mt-6 max-w-3xl font-display text-5xl font-bold leading-[1.02] md:text-7xl xl:text-8xl"
+          <h1
+            className="rise-in mt-7 max-w-[13ch] font-display text-display-lg font-bold text-foreground"
+            style={riseDelay(1)}
           >
-            <span className="text-foreground">Love</span>{" "}
-            <span className="text-gradient">Ahir</span>
-          </motion.h1>
+            {t("hero.statement")}
+          </h1>
 
-          <motion.div
-            variants={item}
-            className="mt-5 flex min-h-9 flex-wrap items-center gap-2 text-xl font-medium text-muted-foreground md:text-2xl"
+          <p
+            className="rise-in mt-6 max-w-2xl text-base leading-relaxed text-muted-foreground md:text-lg"
+            style={riseDelay(2)}
           >
-            <span className="text-foreground/80">{t("hero.intro")}</span>
-            <TypingAnimation words={profile.roles} />
-          </motion.div>
+            {t("hero.roles")}
+          </p>
 
-          <motion.p
-            variants={item}
-            className="mt-6 max-w-2xl text-base leading-8 text-muted-foreground md:text-lg"
+          <div
+            className="rise-in mt-8 flex flex-col items-stretch gap-3 sm:flex-row sm:items-center"
+            style={riseDelay(3)}
           >
-            {profile.summary}
-          </motion.p>
-
-          <motion.div variants={item} className="mt-8 flex flex-wrap items-center gap-3">
-            <button
-              onClick={() => scrollToHref("#projects")}
-              className="group inline-flex min-h-12 items-center gap-2 rounded-full bg-gradient-aurora px-6 py-3 text-sm font-semibold text-background shadow-glow transition-transform hover:scale-[1.03]"
+            <Link
+              to="/work"
+              className="group inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-primary px-7 py-3 text-sm font-semibold text-primary-foreground transition-transform hover:translate-y-[-1px]"
             >
-              {t("hero.explore")}
-              <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-            </button>
+              {t("hero.seeWork")}
+              <ArrowRight
+                className="h-4 w-4 transition-transform group-hover:translate-x-0.5"
+                aria-hidden="true"
+              />
+            </Link>
             <a
               href={profile.resumeUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex min-h-12 items-center gap-2 rounded-full border border-border bg-card/50 px-6 py-3 text-sm font-semibold text-foreground backdrop-blur transition-colors hover:border-aurora-violet/50"
+              className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-border-bright bg-background/65 px-7 py-3 text-sm font-semibold text-foreground transition-colors hover:border-primary/70"
             >
-              <FileDown className="h-4 w-4" />
+              <FileDown className="h-4 w-4" aria-hidden="true" />
               {t("hero.resume")}
             </a>
-          </motion.div>
-
-          <motion.div variants={item} className="mt-8 flex flex-wrap items-center gap-4">
-            <div className="flex items-center gap-3">
-              <SocialLink href={profile.github} label="GitHub">
-                <Github className="h-5 w-5" />
-              </SocialLink>
-              <SocialLink href={profile.linkedin} label="LinkedIn">
-                <Linkedin className="h-5 w-5" />
-              </SocialLink>
-              <SocialLink href={`mailto:${profile.email}`} label="Email">
-                <Mail className="h-5 w-5" />
-              </SocialLink>
-            </div>
-            <span className="inline-flex min-h-10 items-center gap-1.5 rounded-full border border-border bg-card/40 px-3 text-sm text-muted-foreground backdrop-blur">
-              <MapPin className="h-4 w-4 text-aurora-cyan" />
-              {profile.location}
-            </span>
-          </motion.div>
-
-          <motion.div variants={item} className="mt-8 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
-            {stats.map((s) => (
-              <div key={s.label} className="rounded-2xl glass px-4 py-3">
-                <div className="text-xl font-bold text-gradient">{s.value}</div>
-                <div className="mt-1 text-xs leading-snug text-muted-foreground">{s.label}</div>
-              </div>
-            ))}
-          </motion.div>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
-          className="relative mx-auto w-full max-w-[24rem] lg:max-w-[28rem]"
-        >
-          <div className="relative aspect-square premium-border rounded-[2rem] glass-strong p-4">
-            <div className="absolute inset-3 rounded-[1.5rem] aurora-ring animate-spin-slower opacity-50 blur-[2px]" />
-            <div className="absolute inset-[18px] rounded-[1.35rem] bg-background" />
-            <img
-              src={profilePhoto}
-              alt={profile.name}
-              className="absolute inset-6 h-[calc(100%-48px)] w-[calc(100%-48px)] rounded-[1.1rem] object-cover"
-            />
-            <div className="absolute inset-6 rounded-[1.1rem] ring-1 ring-inset ring-white/10" />
           </div>
 
-          <FloatingChip className="-left-3 top-6 animate-float" label="EASE 2026" sub="Published" />
-          <FloatingChip className="-right-3 top-1/3 animate-float-slow" label="GPA 3.94" sub="RIT M.S." />
-          <FloatingChip className="bottom-8 left-3 animate-float" label="86M+" sub="Logs analyzed" />
-        </motion.div>
+          <div
+            className="rise-in mt-6 flex items-center gap-3"
+            style={riseDelay(4)}
+          >
+            <SocialLink href={profile.github} label="GitHub">
+              <Github className="h-5 w-5" />
+            </SocialLink>
+            <SocialLink href={profile.linkedin} label="LinkedIn">
+              <Linkedin className="h-5 w-5" />
+            </SocialLink>
+            <SocialLink href={`mailto:${profile.email}`} label="Email">
+              <Mail className="h-5 w-5" />
+            </SocialLink>
+          </div>
+        </div>
+
+        <div className="rise-in relative" style={riseDelay(2)}>
+          <div
+            ref={stageRef}
+            data-depth-surface="stage"
+            className="observatory-stage relative min-h-[22rem] overflow-hidden rounded-[var(--radius-stage)] border border-border-bright/70 sm:min-h-[28rem] lg:min-h-[34rem] xl:min-h-[38rem]"
+          >
+            {/* The SVG/WebGL artwork remains decorative; the adjacent transform
+                button is intentionally outside that aria-hidden subtree. */}
+            <SystemsLattice />
+            <StageTechRail position="top" items={TOP_STAGE_TECH} />
+            <StageTechRail position="bottom" items={BOTTOM_STAGE_TECH} />
+          </div>
+        </div>
       </div>
     </section>
   );
@@ -143,27 +141,36 @@ const SocialLink = ({
     target="_blank"
     rel="noopener noreferrer"
     aria-label={label}
-    className="grid h-11 w-11 place-items-center rounded-full border border-border bg-card/40 text-muted-foreground backdrop-blur transition-all hover:-translate-y-1 hover:border-aurora-violet/50 hover:text-foreground hover:shadow-glow"
+    className="grid h-11 w-11 place-items-center rounded-full border border-border bg-background/55 text-muted-foreground transition-colors hover:border-primary/60 hover:text-foreground"
   >
     {children}
   </a>
 );
 
-const FloatingChip = ({
-  className,
-  label,
-  sub,
+export default Hero;
+
+const StageTechRail = ({
+  position,
+  items,
 }: {
-  className: string;
-  label: string;
-  sub: string;
+  position: "top" | "bottom";
+  items: readonly string[];
 }) => (
   <div
-    className={`absolute hidden rounded-2xl glass-strong px-4 py-2.5 shadow-lg sm:block ${className}`}
+    aria-hidden="true"
+    data-tech-rail={position}
+    className={`stage-tech-rail ${
+      position === "top" ? "stage-tech-rail--top" : "stage-tech-rail--bottom"
+    }`}
   >
-    <div className="text-sm font-bold text-gradient">{label}</div>
-    <div className="text-[10px] uppercase tracking-wider text-muted-foreground">{sub}</div>
+    {items.map((item, index) => (
+      <span key={item} className="stage-tech-rail__item">
+        <span
+          className={index % 2 === 0 ? "bg-primary" : "bg-signal"}
+          aria-hidden="true"
+        />
+        {item}
+      </span>
+    ))}
   </div>
 );
-
-export default Hero;

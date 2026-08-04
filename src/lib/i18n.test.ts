@@ -61,7 +61,7 @@ describe("i18n translation loading", () => {
 
   it("loads English (US) strings by default", () => {
     expect(i18n.t("nav.about")).toBe("About");
-    expect(i18n.t("hero.explore")).toBe("Explore my work");
+    expect(i18n.t("hero.seeWork")).toBe("View work");
   });
 
   it("switches the active language and returns localized strings", async () => {

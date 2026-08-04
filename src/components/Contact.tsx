@@ -1,145 +1,139 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Mail, MapPin, Github, Linkedin, Send, ArrowUpRight } from "lucide-react";
+import { Mail, Copy, Check, Github, Linkedin, FileDown, MapPin } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import SectionHeading from "./SectionHeading";
 import { profile } from "@/data/portfolio";
-import { buildMailtoUrl, type ContactForm } from "@/lib/mailto";
+import { useReveal } from "@/lib/motion";
 
-export { buildMailtoUrl };
-export type { ContactForm };
-
-const links = [
-  { icon: Mail, labelKey: "contact.link.email", value: "lahir1269@gmail.com", href: "mailto:lahir1269@gmail.com" },
-  { icon: Github, labelKey: "contact.link.github", value: "github.com/la3679", href: "https://github.com/la3679" },
-  { icon: Linkedin, labelKey: "contact.link.linkedin", value: "Love Jayesh Ahir", href: "https://www.linkedin.com/in/love-jayesh-ahir-188356290/" },
-  { icon: MapPin, labelKey: "contact.link.location", value: "Rochester, NY", href: "#" },
-];
-
+/**
+ * Contact CTA block, rendered at the bottom of every page. No form —
+ * one obvious email action (open mail client or copy the address),
+ * plus the profile links and availability note.
+ */
 const Contact = () => {
   const { t } = useTranslation();
-  const [form, setForm] = useState<ContactForm>({ name: "", email: "", message: "" });
+  const reveal = useReveal();
+  const [copied, setCopied] = useState(false);
 
-  const onSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    window.location.href = buildMailtoUrl(profile.email, form);
+  const copyEmail = async () => {
+    try {
+      await navigator.clipboard.writeText(profile.email);
+      setCopied(true);
+      window.setTimeout(() => setCopied(false), 2000);
+    } catch {
+      // Clipboard unavailable (e.g. insecure context) — mailto link still works.
+    }
   };
 
-  const field =
-    "w-full rounded-xl border border-border bg-card/50 px-4 py-3.5 text-sm text-foreground placeholder:text-muted-foreground/60 outline-none transition-colors focus:border-aurora-violet/60";
-
   return (
-    <section id="contact" className="section">
+    // tabIndex={-1} for the same reason as #experience: the nav's #contact
+    // anchor should move focus, not just the viewport.
+    <section
+      id="contact"
+      tabIndex={-1}
+      className="hairline-t py-14 outline-none md:py-20"
+      aria-labelledby="contact-heading"
+    >
       <div className="container">
-        <SectionHeading
-          eyebrow={t("contact.eyebrow")}
-          title={t("contact.title")}
-          description={t("contact.description")}
-        />
-
-        <div className="mx-auto mt-14 grid max-w-6xl gap-8 lg:grid-cols-[0.92fr_1.08fr]">
-          <motion.div
-            initial={{ opacity: 0, x: -24 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-60px" }}
-            transition={{ duration: 0.55 }}
-            className="space-y-3"
-          >
-            {links.map((l) => (
-              <a
-                key={l.labelKey}
-                href={l.href}
-                target={l.href.startsWith("http") ? "_blank" : undefined}
-                rel="noopener noreferrer"
-                className="card-glow premium-border group flex min-h-20 items-center gap-4 rounded-2xl glass p-4"
+        <motion.div
+          {...reveal}
+          className="relative overflow-hidden rounded-2xl border border-border bg-card p-6 shadow-card md:p-10"
+        >
+          <span
+            className="pointer-events-none absolute -right-20 -top-20 h-64 w-64 rounded-full bg-primary/10 blur-3xl"
+            aria-hidden="true"
+          />
+          <div className="relative grid gap-10 lg:grid-cols-[minmax(0,1.05fr)_minmax(20rem,0.95fr)] lg:items-end lg:gap-14">
+            <div>
+              <span className="meta-line inline-flex items-center gap-2 uppercase">
+                <span className="h-px w-6 bg-signal/60" aria-hidden="true" />
+                {t("contact.eyebrow")}
+              </span>
+              <h2
+                id="contact-heading"
+                className="mt-4 max-w-2xl font-display text-display-md font-bold text-foreground"
               >
-                <span className="grid h-11 w-11 place-items-center rounded-xl bg-aurora-violet/10 text-aurora-violet">
-                  <l.icon className="h-5 w-5" />
-                </span>
-                <div>
-                  <div className="text-xs uppercase tracking-wider text-muted-foreground">
-                    {t(l.labelKey)}
-                  </div>
-                  <div className="text-sm font-medium text-foreground transition-colors group-hover:text-aurora-violet">
-                    {l.value}
-                  </div>
-                </div>
-                <ArrowUpRight className="ml-auto h-4 w-4 text-muted-foreground transition-colors group-hover:text-aurora-violet" />
-              </a>
-            ))}
-
-            <div className="rounded-2xl border border-aurora-emerald/25 bg-aurora-emerald/5 p-5 shadow-[0_20px_70px_-40px_hsl(var(--aurora-emerald))]">
-              <div className="flex items-center gap-2 text-sm font-semibold text-aurora-emerald">
-                <span className="h-2 w-2 animate-pulse-ring rounded-full bg-aurora-emerald" />
-                {t("contact.availableNow")}
-              </div>
-              <p className="mt-2 text-sm text-muted-foreground">
-                {t("contact.availableText")}
+                {t("contact.title")}
+              </h2>
+              <p className="mt-4 max-w-xl text-base leading-relaxed text-muted-foreground md:text-lg">
+                {t("contact.description")}
               </p>
-            </div>
-          </motion.div>
 
-          <motion.form
-            onSubmit={onSubmit}
-            initial={{ opacity: 0, x: 24 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-60px" }}
-            transition={{ duration: 0.55 }}
-            className="space-y-4 rounded-3xl glass-strong p-6 md:p-8"
-          >
-            <div>
-              <label htmlFor="name" className="mb-1.5 block text-sm text-muted-foreground">
-                {t("contact.name")}
-              </label>
-              <input
-                id="name"
-                name="name"
-                required
-                value={form.name}
-                onChange={(e) => setForm({ ...form, name: e.target.value })}
-                placeholder={t("contact.namePlaceholder")}
-                className={field}
-              />
+              <div className="mt-6 inline-flex max-w-xl items-start gap-2 rounded-lg border border-signal/25 bg-signal/5 px-4 py-3">
+                <span
+                  className="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-signal"
+                  aria-hidden="true"
+                />
+                <span>
+                  <span className="block text-sm font-semibold text-signal">
+                    {t("contact.openTo")}
+                  </span>
+                  <span className="mt-1 block text-sm leading-relaxed text-muted-foreground">
+                    {t("contact.openToText")}
+                  </span>
+                </span>
+              </div>
             </div>
-            <div>
-              <label htmlFor="email" className="mb-1.5 block text-sm text-muted-foreground">
-                {t("contact.email")}
-              </label>
-              <input
-                id="email"
-                name="email"
-                type="email"
-                required
-                value={form.email}
-                onChange={(e) => setForm({ ...form, email: e.target.value })}
-                placeholder={t("contact.emailPlaceholder")}
-                className={field}
-              />
+
+            <div className="min-w-0">
+              <div className="flex flex-wrap items-center gap-3">
+                <a
+                  href={`mailto:${profile.email}`}
+                  className="inline-flex min-h-12 min-w-0 items-center gap-2 rounded-full bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground transition-transform hover:scale-[1.02]"
+                >
+                  <Mail className="h-4 w-4 shrink-0" aria-hidden="true" />
+                  <span className="truncate">{profile.email}</span>
+                </a>
+                <button
+                  type="button"
+                  onClick={copyEmail}
+                  className="inline-flex min-h-12 items-center gap-2 rounded-full border border-border px-4 py-3 text-sm font-medium text-muted-foreground transition-colors hover:border-accent/50 hover:text-foreground"
+                >
+                  {copied ? (
+                    <Check className="h-4 w-4 text-signal" aria-hidden="true" />
+                  ) : (
+                    <Copy className="h-4 w-4" aria-hidden="true" />
+                  )}
+                  {copied ? t("contact.copied") : t("contact.copyEmail")}
+                </button>
+              </div>
+
+              <div className="mt-5 flex flex-wrap items-center gap-x-5 gap-y-1 text-sm text-muted-foreground">
+                <a
+                  href={profile.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="link-underline inline-flex min-h-11 items-center gap-1.5 rounded-sm hover:text-foreground"
+                >
+                  <Github className="h-4 w-4" aria-hidden="true" />
+                  {t("contact.link.github")}
+                </a>
+                <a
+                  href={profile.linkedin}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="link-underline inline-flex min-h-11 items-center gap-1.5 rounded-sm hover:text-foreground"
+                >
+                  <Linkedin className="h-4 w-4" aria-hidden="true" />
+                  {t("contact.link.linkedin")}
+                </a>
+                <a
+                  href={profile.resumeUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="link-underline inline-flex min-h-11 items-center gap-1.5 rounded-sm hover:text-foreground"
+                >
+                  <FileDown className="h-4 w-4" aria-hidden="true" />
+                  {t("nav.resume")}
+                </a>
+                <span className="inline-flex min-h-11 items-center gap-1.5">
+                  <MapPin className="h-4 w-4 text-signal" aria-hidden="true" />
+                  {profile.location}
+                </span>
+              </div>
             </div>
-            <div>
-              <label htmlFor="message" className="mb-1.5 block text-sm text-muted-foreground">
-                {t("contact.message")}
-              </label>
-              <textarea
-                id="message"
-                name="message"
-                required
-                rows={5}
-                value={form.message}
-                onChange={(e) => setForm({ ...form, message: e.target.value })}
-                placeholder={t("contact.messagePlaceholder")}
-                className={`${field} resize-none`}
-              />
-            </div>
-            <button
-              type="submit"
-              className="group inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-xl bg-gradient-aurora px-6 py-3 text-sm font-semibold text-background shadow-glow transition-transform hover:scale-[1.01]"
-            >
-              <Send className="h-4 w-4" />
-              {t("contact.send")}
-            </button>
-          </motion.form>
-        </div>
+          </div>
+        </motion.div>
       </div>
     </section>
   );

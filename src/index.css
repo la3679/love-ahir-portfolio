@@ -1,112 +1,130 @@
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import "@fontsource/space-grotesk/500.css";
+@import "@fontsource/space-grotesk/700.css";
+@import "@fontsource/inter/400.css";
+@import "@fontsource/inter/500.css";
+@import "@fontsource/inter/600.css";
+@import "@fontsource/jetbrains-mono/400.css";
+@import "@fontsource/jetbrains-mono/500.css";
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 /*
-  AURORA NOIR — design system for Love Ahir's portfolio.
-  A sleek, dark, editorial aesthetic with glassmorphism and an
-  aurora accent palette (violet, cyan, magenta). All colors are HSL.
+  WARM SYSTEMS EDITORIAL — design system for Love Ahir's portfolio.
+
+  Direction A, approved 2026-08-03. A warm cinematic engineering aesthetic:
+  near-black and warm-charcoal surfaces, directional ember/amber accents used
+  sparingly, one pale ivory "stage" surface that carries real engineering
+  artifacts, thin warm borders, and generous editorial whitespace.
+
+  Dark is the default (`<html class="dark">`); light is re-derived in the same
+  warm family rather than inverted. Every colour is an HSL triple consumed as
+  hsl(var(--token) / <alpha>).
 */
 
 @layer base {
-  /*
-    LIGHT MODE — a clean, luminous counterpart to Aurora Noir.
-    Backgrounds go near-white, text goes deep indigo-black, and the
-    aurora accents are nudged a touch darker so they stay legible on
-    light surfaces. The shared aurora + gradient tokens live here so
-    both themes inherit them; .dark only overrides what actually changes.
-  */
   :root {
-    --background: 230 40% 98%;
-    --foreground: 233 39% 11%;
+    /* Light — warm ivory */
+    --background: 40 33% 96%;
+    --foreground: 24 20% 10%;
     --card: 0 0% 100%;
-    --card-foreground: 233 39% 11%;
+    --card-foreground: 24 20% 10%;
     --popover: 0 0% 100%;
-    --popover-foreground: 233 39% 11%;
-    --primary: 255 80% 58%;
+    --popover-foreground: 24 20% 10%;
+    --primary: 21 90% 42%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 231 30% 93%;
-    --secondary-foreground: 233 39% 16%;
-    --muted: 231 30% 95%;
-    --muted-foreground: 231 14% 38%;
-    --accent: 190 85% 40%;
+    --secondary: 38 25% 91%;
+    --secondary-foreground: 24 20% 14%;
+    --muted: 38 25% 91%;
+    --muted-foreground: 26 10% 38%;
+    --accent: 24 95% 38%;
     --accent-foreground: 0 0% 100%;
+    /* Mono metadata accent (replaces the retired --evidence token). */
+    --signal: 24 95% 36%;
+    /* Independently plotted fan-art voxels: warm red mask, ivory eyes, dark web. */
+    --voxel-mask: 7 79% 47%;
+    --voxel-eye: 38 48% 96%;
+    --voxel-web: 22 28% 10%;
+    --voxel-dust: 27 22% 54%;
+    /* Decorative / large-mono only — never body copy. */
+    --faint: 27 8% 52%;
+    /* The ivory stage inverts to charcoal in light mode so it stays a stage. */
+    --stage: 22 18% 9%;
+    --stage-foreground: 37 45% 94%;
     --destructive: 0 72% 52%;
     --destructive-foreground: 0 0% 100%;
-    --border: 231 22% 87%;
-    --input: 231 22% 87%;
-    --ring: 255 80% 58%;
-    --radius: 1rem;
+    --border: 30 15% 84%;
+    --border-bright: 28 20% 72%;
+    --input: 30 15% 84%;
+    --ring: 21 90% 40%;
+    --radius: 0.75rem;
+    --radius-stage: 1.75rem;
 
-    /* Aurora accents — tuned slightly deeper for light surfaces. */
-    --aurora-violet: 255 80% 58%;
-    --aurora-indigo: 232 80% 58%;
-    --aurora-cyan: 190 90% 38%;
-    --aurora-magenta: 320 80% 52%;
-    --aurora-emerald: 158 80% 36%;
-    --aurora-amber: 38 92% 48%;
-
-    --gradient-aurora: linear-gradient(120deg, hsl(255 80% 58%), hsl(190 90% 42%) 55%, hsl(320 80% 56%));
-    --gradient-text: linear-gradient(100deg, hsl(233 39% 14%), hsl(255 80% 50%) 45%, hsl(190 90% 38%));
-
-    /* Mode-aware surface tokens used by .glass / scrollbar / body glow. */
-    --glass-bg: 0 0% 100% / 0.6;
-    --glass-border: 231 22% 80% / 0.7;
-    --glass-bg-strong: 0 0% 100% / 0.82;
-    --glass-border-strong: 231 22% 78% / 0.8;
-    --surface-sheen: 0 0% 100% / 0.72;
-    --surface-shadow: 232 34% 24% / 0.14;
-    --focus-glow: 255 80% 58% / 0.42;
-    --hairline: 231 22% 100% / 0.68;
-    --scrollbar-track: 231 30% 92%;
-    --selection-bg: 255 80% 58% / 0.25;
-    --selection-fg: 233 39% 11%;
+    --hairline: 30 15% 87%;
+    --scrollbar-track: 38 25% 91%;
+    --selection-bg: 21 90% 42% / 0.2;
+    --selection-fg: 24 20% 10%;
   }
 
   .dark {
-    --background: 233 39% 5%;
-    --foreground: 228 24% 92%;
-    --card: 232 30% 9%;
-    --card-foreground: 228 24% 92%;
-    --popover: 232 32% 8%;
-    --popover-foreground: 228 24% 92%;
-    --primary: 255 92% 68%;
-    --primary-foreground: 240 40% 6%;
-    --secondary: 231 24% 16%;
-    --secondary-foreground: 228 24% 92%;
-    --muted: 231 22% 14%;
-    --muted-foreground: 230 14% 62%;
-    --accent: 190 95% 60%;
-    --accent-foreground: 240 40% 6%;
+    /* Dark — canonical */
+    --background: 20 16% 4%;
+    --foreground: 37 45% 94%;
+    --card: 22 18% 9%;
+    --card-foreground: 37 45% 94%;
+    --popover: 24 15% 6%;
+    --popover-foreground: 37 45% 94%;
+    --primary: 21 100% 55%;
+    --primary-foreground: 20 16% 4%;
+    --secondary: 24 15% 6%;
+    --secondary-foreground: 37 45% 94%;
+    --muted: 24 15% 6%;
+    --muted-foreground: 26 11% 64%;
+    --accent: 28 100% 62%;
+    --accent-foreground: 20 16% 4%;
+    --signal: 28 100% 62%;
+    --voxel-mask: 8 88% 58%;
+    --voxel-eye: 38 48% 96%;
+    --voxel-web: 22 32% 8%;
+    --voxel-dust: 30 28% 70%;
+    --faint: 27 8% 44%;
+    --stage: 38 31% 93%;
+    --stage-foreground: 24 20% 10%;
     --destructive: 0 72% 58%;
     --destructive-foreground: 0 0% 100%;
-    --border: 232 24% 18%;
-    --input: 232 24% 18%;
-    --ring: 255 92% 68%;
+    --border: 26 10% 16%;
+    --border-bright: 27 14% 24%;
+    --input: 26 10% 16%;
+    --ring: 28 100% 70%;
 
-    --aurora-violet: 255 92% 68%;
-    --aurora-indigo: 232 90% 66%;
-    --aurora-cyan: 190 95% 60%;
-    --aurora-magenta: 320 90% 66%;
-    --aurora-emerald: 158 80% 52%;
-    --aurora-amber: 38 96% 60%;
+    --hairline: 26 10% 13%;
+    --scrollbar-track: 24 15% 6%;
+    --selection-bg: 21 100% 55% / 0.35;
+    --selection-fg: 37 45% 94%;
+  }
 
-    --gradient-aurora: linear-gradient(120deg, hsl(255 92% 68%), hsl(190 95% 60%) 55%, hsl(320 90% 66%));
-    --gradient-text: linear-gradient(100deg, hsl(228 30% 98%), hsl(255 92% 80%) 45%, hsl(190 95% 72%));
+  /* Depth and light — decorative only, never load-bearing for meaning. */
+  :root {
+    --shadow-card: 0 16px 48px -24px hsl(20 60% 2% / 0.8);
+    --shadow-card-hover: 0 28px 64px -28px hsl(20 60% 2% / 0.9);
+    --shadow-stage: 0 48px 140px -48px hsl(20 60% 2% / 0.95);
+    --glow-ember: 0 0 120px -40px hsl(21 100% 55% / 0.45);
+    --glow-card: 0 0 56px -28px hsl(21 100% 55% / 0.28);
+    --glow-edge: 0 0 24px -12px hsl(28 100% 62% / 0.35);
+    --gradient-trail: linear-gradient(
+      90deg,
+      transparent,
+      hsl(21 100% 55% / 0.55),
+      transparent
+    );
 
-    --glass-bg: 232 30% 11% / 0.55;
-    --glass-border: 232 24% 24% / 0.7;
-    --glass-bg-strong: 232 30% 12% / 0.8;
-    --glass-border-strong: 232 24% 26% / 0.8;
-    --surface-sheen: 228 30% 98% / 0.08;
-    --surface-shadow: 240 48% 2% / 0.55;
-    --focus-glow: 190 95% 60% / 0.36;
-    --hairline: 228 30% 98% / 0.12;
-    --scrollbar-track: 233 39% 5%;
-    --selection-bg: 255 92% 68% / 0.35;
-    --selection-fg: 228 30% 98%;
+    --dur-pointer: 120ms;
+    --dur-quick: 240ms;
+    --dur-return: 380ms;
+    --dur-reveal: 500ms;
+    --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-glide: cubic-bezier(0.22, 1, 0.36, 1);
   }
 }
 
@@ -116,6 +134,8 @@
   }
 
   html {
+    background-color: hsl(var(--background));
+    overflow-x: clip;
     scroll-behavior: smooth;
     scroll-padding-top: 6rem;
     text-rendering: optimizeLegibility;
@@ -123,13 +143,13 @@
 
   body {
     @apply bg-background text-foreground antialiased;
-    font-family: 'Inter', system-ui, sans-serif;
+    font-family: "Inter", system-ui, sans-serif;
     overflow-x: hidden;
     background-image:
-      radial-gradient(60rem 60rem at 12% -10%, hsl(var(--aurora-violet) / 0.12), transparent 60%),
-      radial-gradient(48rem 48rem at 100% 0%, hsl(var(--aurora-cyan) / 0.10), transparent 55%),
-      radial-gradient(50rem 50rem at 50% 120%, hsl(var(--aurora-magenta) / 0.10), transparent 60%);
-    background-attachment: fixed;
+      radial-gradient(circle at 88% 8%, hsl(var(--primary) / 0.045), transparent 26rem),
+      linear-gradient(90deg, transparent 0, hsl(var(--hairline) / 0.22) 50%, transparent 100%);
+    background-size: auto, 100% 1px;
+    background-repeat: no-repeat;
   }
 
   a,
@@ -145,25 +165,21 @@
     -webkit-tap-highlight-color: transparent;
   }
 
-  /*
-    Seamless theme transition: animate only color-affecting properties so
-    switching light <-> dark fades instead of hard-flashing. Excludes
-    transform/opacity so motion + framer animations stay snappy.
-  */
+  /* Fade colors on theme switch without slowing transform/opacity motion. */
   :root,
   body,
   .theme-transition * {
     transition:
-      background-color 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-      border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-      color 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-      fill 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-      stroke 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      background-color 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+      border-color 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+      color 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+      fill 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+      stroke 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   h1, h2, h3, h4, h5 {
-    font-family: 'Space Grotesk', 'Inter', sans-serif;
-    letter-spacing: 0;
+    font-family: "Space Grotesk", "Inter", sans-serif;
+    letter-spacing: -0.01em;
     text-wrap: balance;
   }
 
@@ -178,103 +194,335 @@
 }
 
 @layer components {
-  .text-gradient {
-    background-image: var(--gradient-text);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
+  /* Visible only when focused — first tabbable element on every page.
+     min-h-11 + inline-flex give it a 44px target once visible; padding alone
+     left it at 36px. */
+  .skip-link {
+    @apply sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:inline-flex focus:min-h-11 focus:items-center focus:rounded-md focus:bg-primary focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-primary-foreground;
   }
 
-  .text-aurora {
-    background-image: var(--gradient-aurora);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
+  /* Monospace metadata line: dates, locations, stack, venues. */
+  .meta-line {
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    @apply text-xs tracking-wide text-signal;
   }
 
-  .glass {
-    position: relative;
-    background: hsl(var(--glass-bg));
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid hsl(var(--glass-border));
-    box-shadow: 0 18px 60px -34px hsl(var(--surface-shadow));
+  /*
+    First-paint-safe entrance.
+
+    Content is VISIBLE by default. The animation only nudges transform, never
+    opacity, so critical content is visible immediately once React mounts,
+    even when Framer/rAF does not advance or the tab is in the background.
+    Compare the previous system, where Framer Motion wrote an inline
+    `opacity: 0` before its JS ran and a background tab painted nothing.
+
+    Scope, stated exactly: this is a post-mount guarantee. index.html still
+    ships an empty #root, so it does NOT protect against application
+    JavaScript failing to load or execute at all. SSR/prerendering is out of
+    scope for this gate.
+  */
+  .rise-in {
+    animation: rise-in var(--dur-reveal) var(--ease-out) both;
   }
 
-  .glass-strong {
-    position: relative;
-    background: hsl(var(--glass-bg-strong));
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid hsl(var(--glass-border-strong));
-    box-shadow: 0 24px 80px -40px hsl(var(--surface-shadow));
+  @keyframes rise-in {
+    from {
+      transform: translateY(10px);
+    }
+    to {
+      transform: translateY(0);
+    }
   }
 
-  .glass::before,
-  .glass-strong::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    border-radius: inherit;
-    background:
-      linear-gradient(135deg, hsl(var(--surface-sheen)), transparent 34%),
-      linear-gradient(180deg, hsl(var(--hairline)), transparent 42%);
-    opacity: 0.55;
+  /*
+    The ivory engineering stage.
+
+    `--stage` is deliberately the opposite polarity of the page: ivory inside
+    the dark theme, charcoal inside the light one. Contextual tokens are
+    therefore re-pointed inside it, or ember text on ivory would sit near
+    2.5:1. Every value below is an existing entry from the other theme in §9 —
+    no new colour is introduced and the approved palette is unchanged.
+  */
+  .stage-surface {
+    background: hsl(var(--stage));
+    color: hsl(var(--stage-foreground));
+    --foreground: var(--stage-foreground);
+    /* Light page → charcoal stage → dark-theme tokens. */
+    --muted-foreground: 26 11% 64%;
+    --primary: 21 100% 55%;
+    --accent: 28 100% 62%;
+    --signal: 28 100% 62%;
+    --border: 26 10% 16%;
+    --border-bright: 27 14% 24%;
+    --ring: 28 100% 70%;
   }
 
-  .card-glow {
-    position: relative;
-    isolation: isolate;
-    transition:
-      transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-      border-color 0.4s ease,
-      box-shadow 0.4s ease,
-      background-color 0.4s ease;
-  }
-  .card-glow:hover {
-    transform: translateY(-5px);
-    border-color: hsl(255 92% 68% / 0.45);
-    box-shadow:
-      0 22px 70px -34px hsl(var(--surface-shadow)),
-      0 18px 50px -24px hsl(255 92% 68% / 0.45);
+  /* Dark page → ivory stage → light-theme tokens. */
+  .dark .stage-surface {
+    --muted-foreground: 26 10% 38%;
+    --primary: 21 90% 42%;
+    --accent: 24 95% 38%;
+    --signal: 24 95% 36%;
+    --border: 30 15% 84%;
+    --border-bright: 28 20% 72%;
+    --ring: 21 90% 40%;
   }
 
-  .premium-border {
-    position: relative;
+  .hairline-t {
+    border-top: 1px solid hsl(var(--hairline));
   }
 
-  .premium-border::after {
-    content: "";
-    position: absolute;
-    inset: -1px;
-    z-index: -1;
-    border-radius: inherit;
-    background: linear-gradient(
-      135deg,
-      hsl(var(--aurora-violet) / 0.55),
-      hsl(var(--aurora-cyan) / 0.28),
-      hsl(var(--aurora-magenta) / 0.45)
-    );
-    opacity: 0;
-    transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  .hairline-b {
+    border-bottom: 1px solid hsl(var(--hairline));
   }
 
-  .premium-border:hover::after {
-    opacity: 1;
+  /* Underline that draws in on hover/focus for inline links. */
+  .link-underline {
+    background-image: linear-gradient(hsl(var(--accent)), hsl(var(--accent)));
+    background-size: 0% 1px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    transition: background-size 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
-  .focus-premium {
-    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background;
-    box-shadow: 0 0 0 0 hsl(var(--focus-glow));
-  }
-
-  .aurora-ring {
-    background: conic-gradient(from 0deg, hsl(255 92% 68%), hsl(190 95% 60%), hsl(320 90% 66%), hsl(255 92% 68%));
+  .link-underline:hover,
+  .link-underline:focus-visible {
+    background-size: 100% 1px;
   }
 
   .section {
-    @apply relative py-20 md:py-28 lg:py-32;
+    @apply relative py-14 md:py-20;
+  }
+
+  /* The scene is a physical child of the hero stage. SVG, canvas, grid, clip,
+     border radius and pointer coordinates therefore share one box. */
+  .systems-observatory {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    border-radius: inherit;
+    contain: layout paint style;
+    transition: opacity 420ms var(--ease-glide);
+  }
+
+  .observatory-stage {
+    --depth-rx: 0deg;
+    --depth-ry: 0deg;
+    --depth-rz: 0deg;
+    --depth-x: 0px;
+    --depth-y: 0px;
+    --depth-scale: 1;
+    isolation: isolate;
+    transform:
+      perspective(1100px)
+      translate3d(var(--depth-x), var(--depth-y), 0)
+      rotateX(var(--depth-rx))
+      rotateY(var(--depth-ry))
+      rotateZ(var(--depth-rz))
+      scale(var(--depth-scale));
+    transform-style: preserve-3d;
+    transform-origin: 50% 48%;
+    touch-action: pan-y;
+    transition:
+      transform 620ms cubic-bezier(0.16, 1.16, 0.3, 1),
+      box-shadow 320ms var(--ease-out);
+    background:
+      radial-gradient(circle at 54% 44%, hsl(var(--voxel-mask) / 0.14), transparent 48%),
+      linear-gradient(145deg, hsl(var(--card) / 0.96), hsl(var(--background) / 0.9));
+    box-shadow:
+      inset 0 0 0 1px hsl(var(--foreground) / 0.018),
+      var(--shadow-card);
+  }
+
+  .observatory-stage[data-depth-active="true"] {
+    transition:
+      transform 90ms ease-out,
+      box-shadow 220ms ease-out;
+    box-shadow:
+      inset 0 0 0 1px hsl(var(--foreground) / 0.025),
+      var(--shadow-card-hover);
+  }
+
+  .observatory-stage::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0.26;
+    background-image:
+      linear-gradient(hsl(var(--border) / 0.5) 1px, transparent 1px),
+      linear-gradient(90deg, hsl(var(--border) / 0.5) 1px, transparent 1px);
+    background-size: 4rem 4rem;
+    mask-image: radial-gradient(circle at 52% 46%, black 10%, transparent 82%);
+  }
+
+  .systems-observatory > svg,
+  .systems-observatory canvas {
+    display: block;
+    width: 100% !important;
+    height: 100% !important;
+  }
+
+  .stage-tech-rail {
+    position: absolute;
+    z-index: 24;
+    left: clamp(0.65rem, 2vw, 1.25rem);
+    right: clamp(0.65rem, 2vw, 1.25rem);
+    display: flex;
+    min-height: 2.25rem;
+    align-items: center;
+    justify-content: space-between;
+    gap: clamp(0.25rem, 1vw, 0.8rem);
+    overflow: hidden;
+    color: hsl(var(--muted-foreground));
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: clamp(0.58rem, 1.15vw, 0.66rem);
+    letter-spacing: -0.015em;
+    white-space: nowrap;
+    pointer-events: none;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      hsl(var(--background) / 0.88) 8%,
+      hsl(var(--background) / 0.88) 92%,
+      transparent
+    );
+  }
+
+  .stage-tech-rail--top {
+    top: 0.35rem;
+    border-bottom: 1px solid hsl(var(--border) / 0.52);
+  }
+
+  .stage-tech-rail--bottom {
+    bottom: 0.35rem;
+    border-top: 1px solid hsl(var(--border) / 0.52);
+  }
+
+  .stage-tech-rail__item {
+    display: inline-flex;
+    min-width: 0;
+    align-items: center;
+    gap: clamp(0.18rem, 0.5vw, 0.38rem);
+  }
+
+  .stage-tech-rail__item > span {
+    width: 0.28rem;
+    height: 0.28rem;
+    flex: 0 0 auto;
+    border-radius: 999px;
+    box-shadow: var(--glow-edge);
+  }
+
+  .home-about-section {
+    background:
+      linear-gradient(90deg, hsl(var(--secondary) / 0.38), transparent 44%),
+      radial-gradient(circle at 12% 45%, hsl(var(--primary) / 0.055), transparent 24rem);
+  }
+
+  .portrait-depth-scene {
+    --depth-rx: 0deg;
+    --depth-ry: 0deg;
+    --depth-rz: 0deg;
+    --depth-x: 0px;
+    --depth-y: 0px;
+    --depth-scale: 1;
+    --depth-inner-x: 0px;
+    --depth-inner-y: 0px;
+    --depth-back-x: 0px;
+    --depth-back-y: 0px;
+    --depth-caption-x: 0px;
+    --depth-caption-y: 0px;
+    perspective: 900px;
+    transform-style: preserve-3d;
+  }
+
+  .portrait-depth-frame,
+  .portrait-depth-back,
+  .portrait-depth-photo,
+  .portrait-depth-caption {
+    transform-style: preserve-3d;
+    transition: transform 560ms cubic-bezier(0.16, 1.18, 0.3, 1);
+  }
+
+  .portrait-depth-frame {
+    transform:
+      translate3d(var(--depth-x), var(--depth-y), 18px)
+      rotateX(var(--depth-rx))
+      rotateY(var(--depth-ry))
+      rotateZ(var(--depth-rz))
+      scale(var(--depth-scale));
+    transform-origin: 50% 45%;
+  }
+
+  .portrait-depth-back {
+    transform: translate3d(var(--depth-back-x), var(--depth-back-y), -18px);
+  }
+
+  .portrait-depth-photo {
+    transform: translate3d(var(--depth-inner-x), var(--depth-inner-y), 24px) scale(1);
+  }
+
+  .portrait-depth-caption {
+    transform: translate3d(
+      var(--depth-caption-x),
+      var(--depth-caption-y),
+      30px
+    );
+  }
+
+  .portrait-depth-scene[data-depth-active="true"] .portrait-depth-frame,
+  .portrait-depth-scene[data-depth-active="true"] .portrait-depth-back,
+  .portrait-depth-scene[data-depth-active="true"] .portrait-depth-photo,
+  .portrait-depth-scene[data-depth-active="true"] .portrait-depth-caption {
+    transition-duration: 80ms;
+    transition-timing-function: ease-out;
+  }
+
+  .portrait-depth-scene[data-depth-active="true"] .portrait-depth-photo {
+    transform: translate3d(var(--depth-inner-x), var(--depth-inner-y), 24px) scale(1.025);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .observatory-stage,
+    .portrait-depth-frame,
+    .portrait-depth-photo,
+    .portrait-depth-back {
+      will-change: transform;
+    }
+  }
+
+  /*
+    Restrained depth response for project entries (§31 "Project interactions").
+
+    Capped at ~1.2° and a 2px lift. The media query does the gating for us, so
+    there is no JS and no way for the behaviour to drift from the rules:
+    - `hover: hover` + `pointer: fine` excludes touch-only devices outright;
+    - `prefers-reduced-motion: no-preference` excludes reduced-motion users;
+    - `:focus-within` gives keyboard users the identical emphasis.
+
+    Transform and border only — nothing here can obscure an outcome, and no
+    information is hidden until hover.
+  */
+  .depth-hover {
+    transition: border-color var(--dur-quick) var(--ease-glide);
+  }
+
+  @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+    .depth-hover {
+      transition:
+        transform var(--dur-quick) var(--ease-glide),
+        border-color var(--dur-quick) var(--ease-glide);
+    }
+
+    .depth-hover:hover,
+    .depth-hover:focus-within {
+      transform: perspective(900px) rotateX(1.2deg) translateY(-2px);
+    }
   }
 }
 
@@ -283,35 +531,19 @@
     @apply mx-auto w-full max-w-6xl px-6;
   }
 
-  .bg-grid {
-    background-image:
-      linear-gradient(to right, hsl(232 24% 30% / 0.18) 1px, transparent 1px),
-      linear-gradient(to bottom, hsl(232 24% 30% / 0.18) 1px, transparent 1px);
-    background-size: 56px 56px;
-    mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, #000 30%, transparent 75%);
-    -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, #000 30%, transparent 75%);
+  .container-prose {
+    @apply mx-auto w-full max-w-2xl px-6;
   }
-
-  .text-shadow-glow {
-    text-shadow: 0 0 30px hsl(255 92% 68% / 0.5);
-  }
-
-  .mask-fade-y {
-    mask-image: linear-gradient(to bottom, transparent, #000 12%, #000 88%, transparent);
-    -webkit-mask-image: linear-gradient(to bottom, transparent, #000 12%, #000 88%, transparent);
-  }
-
-  .aurora-noise {
-    background-image:
-      radial-gradient(circle at 1px 1px, hsl(var(--foreground) / 0.08) 1px, transparent 0);
-    background-size: 18px 18px;
-  }
-
-  .animation-delay-200 { animation-delay: 200ms; }
-  .animation-delay-400 { animation-delay: 400ms; }
-  .animation-delay-600 { animation-delay: 600ms; }
 }
 
+/*
+  Reduced motion.
+
+  This block only governs CSS animation/transition. Framer Motion animates via
+  JS-driven inline styles and is NOT affected by it — those paths call
+  `useReducedMotion()` through the `useReveal()` helper in src/lib/motion.ts,
+  which returns the settled state immediately instead of animating.
+*/
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
@@ -319,13 +551,26 @@
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+
+  .rise-in {
+    animation: none;
+  }
+
+  .observatory-stage,
+  .portrait-depth-frame,
+  .portrait-depth-back,
+  .portrait-depth-photo,
+  .portrait-depth-caption {
+    transform: none !important;
+    transition: none !important;
+  }
 }
 
 ::-webkit-scrollbar { width: 10px; }
 ::-webkit-scrollbar-track { background: hsl(var(--scrollbar-track)); }
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(hsl(var(--aurora-violet)), hsl(var(--aurora-cyan)));
+  background: hsl(var(--muted-foreground) / 0.5);
   border-radius: 999px;
   border: 2px solid hsl(var(--scrollbar-track));
 }
-::-webkit-scrollbar-thumb:hover { background: hsl(var(--aurora-violet)); }
+::-webkit-scrollbar-thumb:hover { background: hsl(var(--accent)); }
