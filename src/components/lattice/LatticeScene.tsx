@@ -159,6 +159,7 @@ const VoxelField = ({
   const buffers = useMemo(createPoseBuffers, []);
   const initialized = useRef(false);
   const matricesDirty = useRef(true);
+  const contextLost = useRef(false);
   const activeFormation = useRef<VoxelFormationId>(formation);
   const transition = useRef({ active: false, startedAt: 0, maximumDistance: 1 });
   const idleYaw = useRef(0);
@@ -345,6 +346,43 @@ const VoxelField = ({
     };
   }, [gl, invalidate, section]);
 
+  /*
+    Context loss is survivable and must be survived in place.
+
+    three.js already calls preventDefault() and re-initialises its own GL state
+    on restore, so the work left here is to re-upload what this component owns
+    — the instance matrices and colours — and to stop drawing in the window
+    between the two events. The canvas is never unmounted for this; tearing it
+    down is what previously turned one recoverable loss into a dead scene.
+  */
+  useEffect(() => {
+    const canvas = gl.domElement;
+
+    const onLost = (event: Event) => {
+      event.preventDefault();
+      contextLost.current = true;
+    };
+
+    const onRestored = () => {
+      contextLost.current = false;
+      initialized.current = false;
+      matricesDirty.current = true;
+      const mesh = meshRef.current;
+      if (mesh) {
+        mesh.instanceMatrix.needsUpdate = true;
+        if (mesh.instanceColor) mesh.instanceColor.needsUpdate = true;
+      }
+      invalidate();
+    };
+
+    canvas.addEventListener("webglcontextlost", onLost);
+    canvas.addEventListener("webglcontextrestored", onRestored);
+    return () => {
+      canvas.removeEventListener("webglcontextlost", onLost);
+      canvas.removeEventListener("webglcontextrestored", onRestored);
+    };
+  }, [gl, invalidate]);
+
   useEffect(() => {
     return () => {
       geometry.dispose();
@@ -355,7 +393,7 @@ const VoxelField = ({
   useFrame((_state, delta) => {
     const mesh = meshRef.current;
     const group = groupRef.current;
-    if (!mesh || !group || document.hidden) return;
+    if (!mesh || !group || document.hidden || contextLost.current) return;
 
     if (!initialized.current) {
       copyTargetToBuffers(
@@ -530,6 +568,13 @@ interface Props {
   onFail: () => void;
 }
 
+/**
+ * How long a lost context gets to come back before the static monogram takes
+ * over permanently. Browsers normally restore within a frame or two; anything
+ * past this is a real GPU-side failure rather than a routine eviction.
+ */
+const CONTEXT_RESTORE_GRACE_MS = 4000;
+
 const LatticeScene = ({
   section,
   activeLayer,
@@ -556,17 +601,34 @@ const LatticeScene = ({
         canvas.setAttribute("aria-hidden", "true");
         canvas.setAttribute("tabindex", "-1");
         canvas.setAttribute("data-voxel-webgl", "true");
-        canvas.addEventListener(
-          "webglcontextlost",
-          (event) => {
-            event.preventDefault();
+        canvas.dataset.voxelContext = "ready";
+
+        /*
+          A lost context is not a failure. preventDefault() is what makes the
+          browser willing to restore it, and VoxelField re-uploads its instance
+          data when the restore lands. Falling back is now a timeout, not a
+          reflex: previously the first loss unmounted the canvas immediately,
+          which guaranteed the restore event could never arrive. The listeners
+          are not `once`, so a second loss is handled just like the first.
+        */
+        let restoreTimer = 0;
+
+        canvas.addEventListener("webglcontextlost", (event) => {
+          event.preventDefault();
+          canvas.dataset.voxelContext = "lost";
+          window.clearTimeout(restoreTimer);
+          restoreTimer = window.setTimeout(() => {
             if (!failed.current) {
               failed.current = true;
               onFail();
             }
-          },
-          { once: true },
-        );
+          }, CONTEXT_RESTORE_GRACE_MS);
+        });
+
+        canvas.addEventListener("webglcontextrestored", () => {
+          window.clearTimeout(restoreTimer);
+          canvas.dataset.voxelContext = "ready";
+        });
       }}
     >
       <VoxelField

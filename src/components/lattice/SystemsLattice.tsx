@@ -140,16 +140,30 @@ const SystemsLattice = () => {
     return () => query.removeEventListener?.("change", onChange);
   }, []);
 
+  /*
+    The WebGL scene is created once and then kept.
+
+    This effect used to call `setEnhanced(false)` whenever the page became
+    hidden, which unmounted the whole <Canvas>. Every unmount destroys a WebGL
+    context and every remount asks the browser for a new one, so an ordinary
+    tab-away/tab-back cycle churned contexts — and once enough live contexts
+    accumulate the browser force-loses the oldest, which is what made the
+    renderer log "Context Lost" repeatedly during normal use and left
+    `querySelector('canvas')` returning null.
+
+    Visibility now only feeds `pageVisible`, which flows into `motionAllowed`
+    and pauses the frame loop. The canvas stays mounted and the context stays
+    alive. `enhanced` is cleared only by a real, unrecoverable scene failure
+    (`onFail`) or by the user asking for reduced motion.
+  */
   useEffect(() => {
     setCoarse(isCoarsePointer());
     let cancelIdle = () => undefined;
 
     const armUpgrade = () => {
-      const visible = !document.hidden;
-      setPageVisible(visible);
+      setPageVisible(!document.hidden);
       cancelIdle();
-      if (reducedMotion || !visible || decideSceneMode() !== "webgl") {
-        setEnhanced(false);
+      if (reducedMotion || document.hidden || decideSceneMode() !== "webgl") {
         return;
       }
       cancelIdle = whenIdle(() => {
