@@ -76,7 +76,7 @@ describe("<Hero />", () => {
   it("shows no portrait in the hero", () => {
     // The homepage leads with what was built. Love's portrait stays on /about.
     const { container } = renderHero();
-    expect(container.querySelector("img")).toBeNull();
+    expect(container.querySelector('img[src*="profile-photo"]')).toBeNull();
   });
 
   it("no longer carries the architecture artifact", () => {
@@ -124,8 +124,21 @@ describe("<Hero />", () => {
     expect(bottom).toHaveTextContent("Python");
     expect(bottom).toHaveTextContent("FastAPI");
     expect(bottom).toHaveTextContent("MongoDB");
-    expect(bottom).toHaveTextContent("Docker");
+    expect(bottom).toHaveTextContent("Appium");
     expect(bottom).toHaveTextContent("Three.js");
+    expect(bottom).not.toHaveTextContent("Docker");
+
+    const logos = Array.from(
+      stage?.querySelectorAll<HTMLImageElement>(".stage-tech-rail__logo img") ??
+        [],
+    );
+    expect(logos).toHaveLength(20);
+    for (const logo of logos) {
+      expect(logo.getAttribute("src")).toMatch(/^\/img\/tech\/.+\.svg$/);
+      expect(logo).toHaveAttribute("alt", "");
+      expect(logo).toHaveAttribute("width");
+      expect(logo).toHaveAttribute("height", "24");
+    }
 
     expect(topTrack?.style.animationDuration).toBe("38s");
     expect(topTrack?.style.animationDirection).toBe("normal");

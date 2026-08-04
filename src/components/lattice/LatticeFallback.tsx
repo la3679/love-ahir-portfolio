@@ -4,6 +4,7 @@ import type { SceneSection } from "./latticeState";
 import {
   DEFAULT_VOXEL_FORMATION,
   VOXEL_FORMATION_SPEC,
+  voxelToneAt,
   type VoxelFormationId,
   type VoxelTone,
   type VoxelVector,
@@ -53,14 +54,15 @@ const LatticeFallback = ({
 }: Props) => {
   const glowId = `voxel-monogram-glow-${useId().replace(/:/g, "")}`;
   const calm = section === "calm" || section === "experience";
-  const pose = VOXEL_FORMATION_SPEC.formations[formation];
+  const target = VOXEL_FORMATION_SPEC.formations[formation];
 
   const ordered = useMemo(
     () =>
       [...VOXEL_FORMATION_SPEC.staticIndices].sort(
-        (left, right) => pose[left].position[2] - pose[right].position[2],
+        (left, right) =>
+          target.position[left * 3 + 2] - target.position[right * 3 + 2],
       ),
-    [pose],
+    [target],
   );
 
   return (
@@ -92,14 +94,21 @@ const LatticeFallback = ({
         fill={`url(#${glowId})`}
       />
 
-      <g data-voxel-composition="la-monogram">
+      <g data-voxel-composition={`${formation}-system`}>
         {ordered.map((index) => {
           const cell = VOXEL_FORMATION_SPEC.cells[index];
-          const voxelPose = pose[index];
-          const projected = projectVoxelPoint(voxelPose.position);
+          const offset = index * 3;
+          const position: VoxelVector = [
+            target.position[offset],
+            target.position[offset + 1],
+            target.position[offset + 2],
+          ];
+          const projected = projectVoxelPoint(position);
           const selected = activeLayer === cell.layer;
-          const size = 38 * voxelPose.scale * (selected ? 1.2 : 1);
-          const rotation = (voxelPose.rotation[2] * 180) / Math.PI;
+          const tone = voxelToneAt(target, index);
+          const size = 38 * target.scale[index] * (selected ? 1.2 : 1);
+          const rotation = (target.rotation[offset + 2] * 180) / Math.PI;
+          const restingOpacity = tone === "dust" ? 0.72 : tone === "side" ? 0.84 : 0.98;
 
           return (
             <rect
@@ -111,17 +120,16 @@ const LatticeFallback = ({
               rx="3"
               transform={`rotate(${rotation.toFixed(2)} ${projected.x.toFixed(2)} ${projected.y.toFixed(2)})`}
               data-voxel-id={cell.id}
-              data-voxel-tone={cell.tone}
+              data-voxel-tone={tone}
               data-voxel-layer={cell.layer}
-              fill={toneFill(cell.tone)}
+              fill={toneFill(tone)}
               stroke={
                 selected
                   ? "hsl(var(--signal))"
                   : "hsl(var(--stage-foreground) / 0.2)"
               }
               strokeWidth={selected ? 2.4 : 0.75}
-              opacity={selected ? 1 : cell.tone === "dust" ? 0.78 :
-                cell.tone === "side" ? 0.84 : 0.98}
+              opacity={selected ? 1 : restingOpacity}
               vectorEffect="non-scaling-stroke"
             />
           );

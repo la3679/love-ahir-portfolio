@@ -36,9 +36,10 @@ const enUS = {
   "hero.resume": "Resume",
   "hero.transformScene": "Transform voxel scene",
   "hero.formation.identity": "Identity",
-  "hero.formation.cloud": "Cloud",
-  "hero.formation.helix": "Helix",
+  "hero.formation.architecture": "Architecture",
+  "hero.formation.throughput": "Throughput",
   "hero.monogramAlt": "Love Ahir monogram",
+  "hero.sceneDisclaimer": "shape only — not live telemetry.",
 
   // Hero — ivory engineering stage (an architecture diagram, never a mockup)
   "hero.stage.label": "Architecture summary",
@@ -110,22 +111,25 @@ const enUS = {
   "capabilities.eyebrow": "Capabilities",
   "capabilities.title": "What I actually work on",
   "capabilities.description":
-    "Five areas, each backed by a shipped project or a dated role — not a self-assessment.",
-  "capabilities.fullstack.title": "Full-stack product engineering",
-  "capabilities.fullstack.body":
-    "End-to-end products: typed React interfaces sitting on services I also design and run.",
-  "capabilities.backend.title": "Backend systems and APIs",
-  "capabilities.backend.body":
-    "Event-driven Python and Java services, relational data models, and the delivery pipelines around them.",
-  "capabilities.ai.title": "Applied AI and LLM integration",
+    "Six areas, each backed by a shipped project or a dated role — not a self-assessment.",
+  "capabilities.languages.title": "Languages & frameworks",
+  "capabilities.languages.body":
+    "Production services and interfaces across JVM, Python, TypeScript, mobile, and 3D web stacks.",
+  "capabilities.cloud.title": "Cloud & DevOps",
+  "capabilities.cloud.body":
+    "Cloud delivery and observability across AWS and GCP, backed by repeatable automation.",
+  "capabilities.databases.title": "Databases",
+  "capabilities.databases.body":
+    "Relational, document, graph, cache, and media-storage systems chosen for the shape of the data.",
+  "capabilities.ai.title": "Data & AI",
   "capabilities.ai.body":
-    "Retrieval and agent workflows in production, semantic matching on embeddings, and classic ML where it earns its place.",
-  "capabilities.data.title": "Data-intensive applications",
-  "capabilities.data.body":
-    "Geospatial indexing, graph data, and pipelines that stay correct at millions of records.",
-  "capabilities.quality.title": "Testing, reliability and architecture",
-  "capabilities.quality.body":
-    "Automated quality gates, UI test automation, and system boundaries that survive change.",
+    "Agent workflows and production retrieval alongside semantic matching and classic machine learning.",
+  "capabilities.testing.title": "Testing & QA",
+  "capabilities.testing.body":
+    "Automated UI and service-level quality gates that keep releases repeatable.",
+  "capabilities.practices.title": "Practices",
+  "capabilities.practices.body":
+    "Event-driven architecture, retrieval patterns, embeddings, and delivery pipelines measured in production.",
   "capabilities.footnote":
     "Each technology listed above appears in a project or role that actually used it.",
 

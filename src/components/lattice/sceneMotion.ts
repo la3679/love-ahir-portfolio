@@ -6,7 +6,11 @@
  * not depend on Tween.js, so the existing lazy Three.js chunk stays bounded.
  */
 
-export const VOXEL_MORPH_DURATION_MS = 1050;
+export const VOXEL_MORPH_ACTIVE_MS = 1500;
+export const VOXEL_MORPH_STAGGER_MS = 180;
+export const VOXEL_MORPH_DURATION_MS =
+  VOXEL_MORPH_ACTIVE_MS + VOXEL_MORPH_STAGGER_MS;
+export const VOXEL_IDLE_YAW_RADIANS_PER_SECOND = 0.05;
 
 export const VOXEL_ORBIT = {
   hoverPitchRadians: (3.5 * Math.PI) / 180,
@@ -28,12 +32,26 @@ export function clampUnit(value: number): number {
   return clamp(value, 0, 1);
 }
 
-/** Symmetric exponential easing with exact endpoints. */
-export function easeInOutExpo(value: number): number {
+/** Fast departure with a calm settle, matching the narrative morph. */
+export function easeOutCubic(value: number): number {
   const t = clampUnit(value);
-  if (t === 0 || t === 1) return t;
-  if (t < 0.5) return 2 ** (20 * t - 10) / 2;
-  return (2 - 2 ** (-20 * t + 10)) / 2;
+  return 1 - (1 - t) ** 3;
+}
+
+/**
+ * Distance-staggered per-voxel progress. The furthest voxel starts 180ms
+ * after the centre and still settles at the shared 1.68-second deadline.
+ */
+export function voxelMorphProgress(
+  elapsedMs: number,
+  distanceFromCentre: number,
+  maximumDistance: number,
+): number {
+  const distance = maximumDistance <= 0
+    ? 0
+    : clampUnit(distanceFromCentre / maximumDistance);
+  const delay = distance * VOXEL_MORPH_STAGGER_MS;
+  return easeOutCubic((elapsedMs - delay) / VOXEL_MORPH_ACTIVE_MS);
 }
 
 export function interpolate(from: number, to: number, progress: number): number {

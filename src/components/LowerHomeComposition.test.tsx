@@ -44,9 +44,16 @@ describe("recruiter-focused lower-home composition", () => {
     }
   });
 
-  it("renders the five evidence-backed capability rows without proficiency UI", () => {
+  it("renders the six evidence-backed capability rows without proficiency UI", () => {
     const { container } = render(<Capabilities />);
-    const capabilityIds = ["fullstack", "backend", "ai", "data", "quality"] as const;
+    const capabilityIds = [
+      "languages",
+      "cloud",
+      "databases",
+      "ai",
+      "testing",
+      "practices",
+    ] as const;
 
     for (const id of capabilityIds) {
       const heading = screen.getByRole("heading", {
@@ -58,6 +65,9 @@ describe("recruiter-focused lower-home composition", () => {
       expect(within(row!).getByText(i18n.t(`capabilities.${id}.body`))).toBeInTheDocument();
     }
 
+    expect(container.querySelectorAll(".technology-chip")).toHaveLength(33);
+    expect(container).not.toHaveTextContent("Docker");
+    expect(container).not.toHaveTextContent("Selenium");
     expect(container.querySelector('[role="progressbar"]')).toBeNull();
   });
 
@@ -81,7 +91,12 @@ describe("recruiter-focused lower-home composition", () => {
       const heading = screen.getByRole("heading", { level: 3, name: study.project });
       const card = heading.closest("li");
       expect(card).not.toBeNull();
-      expect(card).toHaveClass("depth-hover", "rounded-xl", "border");
+      // `card` + `data-project-tilt` are what opt this entry into the tilt and
+      // glow tier; the delegated controller finds cards by that attribute.
+      expect(card).toHaveClass("card", "rounded-xl", "border");
+      expect(card).toHaveAttribute("data-project-tilt");
+      expect(card!.querySelector(".card__shine")).not.toBeNull();
+      expect(card!.querySelector(".card__glow")).not.toBeNull();
       expect(card).toHaveTextContent(study.metrics[0].value);
       expect(
         within(card!).getByRole("link", {

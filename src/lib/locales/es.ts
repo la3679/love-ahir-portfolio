@@ -23,9 +23,10 @@ const es: Translation = {
   "hero.resume": "CV",
   "hero.transformScene": "Transformar escena de vóxeles",
   "hero.formation.identity": "Identidad",
-  "hero.formation.cloud": "Nube",
-  "hero.formation.helix": "Hélice",
+  "hero.formation.architecture": "Arquitectura",
+  "hero.formation.throughput": "Rendimiento",
   "hero.monogramAlt": "Monograma de Love Ahir",
+  "hero.sceneDisclaimer": "solo una forma — no es telemetría en vivo.",
 
   "hero.stage.label": "Resumen de arquitectura",
   "hero.stage.step.client": "Los reclutadores suben currículums y definen el puesto.",
@@ -91,22 +92,25 @@ const es: Translation = {
   "capabilities.eyebrow": "Capacidades",
   "capabilities.title": "En qué trabajo realmente",
   "capabilities.description":
-    "Cinco áreas, cada una respaldada por un proyecto entregado o un puesto con fechas — no una autoevaluación.",
-  "capabilities.fullstack.title": "Ingeniería de producto full-stack",
-  "capabilities.fullstack.body":
-    "Productos de extremo a extremo: interfaces React tipadas sobre servicios que también diseño y opero.",
-  "capabilities.backend.title": "Sistemas backend y APIs",
-  "capabilities.backend.body":
-    "Servicios en Python y Java orientados a eventos, modelos de datos relacionales y las canalizaciones de entrega que los rodean.",
-  "capabilities.ai.title": "IA aplicada e integración de LLM",
+    "Seis áreas, cada una respaldada por un proyecto entregado o un puesto con fechas — no una autoevaluación.",
+  "capabilities.languages.title": "Lenguajes y frameworks",
+  "capabilities.languages.body":
+    "Servicios e interfaces de producción en stacks JVM, Python, TypeScript, móviles y web 3D.",
+  "capabilities.cloud.title": "Cloud y DevOps",
+  "capabilities.cloud.body":
+    "Entrega y observabilidad en AWS y GCP, respaldadas por automatización repetible.",
+  "capabilities.databases.title": "Bases de datos",
+  "capabilities.databases.body":
+    "Sistemas relacionales, documentales, de grafos, caché y almacenamiento multimedia elegidos según los datos.",
+  "capabilities.ai.title": "Datos e IA",
   "capabilities.ai.body":
-    "Flujos de recuperación y agentes en producción, emparejamiento semántico con embeddings y ML clásico cuando aporta valor.",
-  "capabilities.data.title": "Aplicaciones intensivas en datos",
-  "capabilities.data.body":
-    "Indexación geoespacial, datos en grafo y canalizaciones que siguen siendo correctas con millones de registros.",
-  "capabilities.quality.title": "Pruebas, fiabilidad y arquitectura",
-  "capabilities.quality.body":
-    "Controles de calidad automatizados, automatización de pruebas de interfaz y límites de sistema que resisten el cambio.",
+    "Flujos de agentes y recuperación en producción junto con emparejamiento semántico y aprendizaje automático clásico.",
+  "capabilities.testing.title": "Pruebas y QA",
+  "capabilities.testing.body":
+    "Controles automatizados de calidad de interfaces y servicios que hacen repetibles los lanzamientos.",
+  "capabilities.practices.title": "Prácticas",
+  "capabilities.practices.body":
+    "Arquitectura orientada a eventos, patrones de recuperación, embeddings y canalizaciones medidas en producción.",
   "capabilities.footnote":
     "Cada tecnología listada aparece en un proyecto o puesto que realmente la utilizó.",
 

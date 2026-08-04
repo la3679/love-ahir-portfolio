@@ -49,12 +49,12 @@ const AUTO_MORPH_STEP_LIMIT = VOXEL_FORMATION_SEQUENCE.length;
 const FORMATION_LABEL_KEYS: Record<
   VoxelFormationId,
   | "hero.formation.identity"
-  | "hero.formation.cloud"
-  | "hero.formation.helix"
+  | "hero.formation.architecture"
+  | "hero.formation.throughput"
 > = {
   identity: "hero.formation.identity",
-  cloud: "hero.formation.cloud",
-  helix: "hero.formation.helix",
+  architecture: "hero.formation.architecture",
+  throughput: "hero.formation.throughput",
 };
 
 function whenIdle(callback: () => void): () => void {
@@ -194,10 +194,8 @@ const SystemsLattice = () => {
       accessibleName={accessibleName}
     />
   );
-  const formationIndex = VOXEL_FORMATION_SEQUENCE.indexOf(formation) + 1;
   const nextFormation = nextVoxelFormation(formation);
   const currentFormationLabel = t(FORMATION_LABEL_KEYS[formation]);
-  const nextFormationLabel = t(FORMATION_LABEL_KEYS[nextFormation]);
 
   return (
     <Fragment>
@@ -216,6 +214,7 @@ const SystemsLattice = () => {
                 coarse={coarse}
                 formation={formation}
                 accessibleName={accessibleName}
+                motionAllowed={!reducedMotion && pageVisible}
                 onFail={() => setEnhanced(false)}
               />
             </Suspense>
@@ -225,22 +224,37 @@ const SystemsLattice = () => {
         )}
       </div>
 
-      <button
-        type="button"
-        data-voxel-control
-        onClick={() => {
-          setAutoMorphSteps(AUTO_MORPH_STEP_LIMIT);
-          setFormation(nextFormation);
-        }}
-        aria-label={`${t("hero.transformScene")}: ${nextFormationLabel}`}
-        title={`${t("hero.transformScene")}: ${nextFormationLabel}`}
-        className="voxel-transform-control absolute bottom-14 right-4 z-30 inline-flex min-h-11 min-w-11 items-center justify-center gap-2 rounded-full border border-border-bright/70 bg-background/80 px-3 font-mono text-[0.68rem] tracking-[0.18em] text-foreground shadow-sm backdrop-blur-sm transition-colors hover:border-primary/70 hover:text-primary sm:right-5"
-      >
-        <RefreshCw className="h-4 w-4" aria-hidden="true" />
-        <span className="hidden sm:inline" aria-hidden="true">
-          {String(formationIndex).padStart(2, "0")} / 03
-        </span>
-      </button>
+      <div className="absolute bottom-14 right-4 z-30 flex max-w-[calc(100%-2rem)] flex-col items-end gap-1.5 sm:right-5">
+        <button
+          type="button"
+          data-voxel-control
+          data-voxel-state={formation}
+          onClick={() => {
+            setAutoMorphSteps(AUTO_MORPH_STEP_LIMIT);
+            setFormation(nextFormation);
+          }}
+          aria-label={`${t("hero.transformScene")}: ${currentFormationLabel}`}
+          title={`${t("hero.transformScene")}: ${currentFormationLabel}`}
+          className="voxel-transform-control inline-flex min-h-11 min-w-11 items-center justify-center gap-2.5 rounded-full border border-border-bright/70 bg-background/80 px-3 font-mono text-[0.64rem] font-medium uppercase tracking-[0.14em] text-foreground shadow-sm backdrop-blur-sm transition-colors hover:border-primary/70 hover:text-primary"
+        >
+          <RefreshCw className="h-4 w-4" aria-hidden="true" />
+          <span>{currentFormationLabel}</span>
+          <span className="inline-flex gap-1" aria-hidden="true">
+            {VOXEL_FORMATION_SEQUENCE.map((state) => (
+              <span
+                key={state}
+                data-active={state === formation ? "true" : "false"}
+                className={`h-1.5 w-1.5 rounded-full ${
+                  state === formation ? "bg-signal" : "bg-muted-foreground/35"
+                }`}
+              />
+            ))}
+          </span>
+        </button>
+        <p className="rounded-full bg-background/70 px-2 py-1 text-right font-mono text-[0.58rem] leading-tight text-muted-foreground backdrop-blur-sm">
+          {t("hero.sceneDisclaimer")}
+        </p>
+      </div>
       <span className="sr-only" role="status" aria-live="polite">
         {currentFormationLabel}
       </span>

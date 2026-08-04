@@ -23,9 +23,10 @@ const de: Translation = {
   "hero.resume": "Lebenslauf",
   "hero.transformScene": "Voxelszene umformen",
   "hero.formation.identity": "Identität",
-  "hero.formation.cloud": "Wolke",
-  "hero.formation.helix": "Helix",
+  "hero.formation.architecture": "Architektur",
+  "hero.formation.throughput": "Durchsatz",
   "hero.monogramAlt": "Love-Ahir-Monogramm",
+  "hero.sceneDisclaimer": "nur eine Form — keine Live-Telemetrie.",
 
   "hero.stage.label": "Architekturüberblick",
   "hero.stage.step.client":
@@ -91,22 +92,25 @@ const de: Translation = {
   "capabilities.eyebrow": "Fähigkeiten",
   "capabilities.title": "Woran ich tatsächlich arbeite",
   "capabilities.description":
-    "Fünf Bereiche, jeder belegt durch ein ausgeliefertes Projekt oder eine datierte Rolle — keine Selbsteinschätzung.",
-  "capabilities.fullstack.title": "Full-Stack-Produktentwicklung",
-  "capabilities.fullstack.body":
-    "Produkte von Anfang bis Ende: typisierte React-Oberflächen auf Diensten, die ich ebenfalls entwerfe und betreibe.",
-  "capabilities.backend.title": "Backend-Systeme und APIs",
-  "capabilities.backend.body":
-    "Ereignisgetriebene Python- und Java-Dienste, relationale Datenmodelle und die zugehörigen Auslieferungs-Pipelines.",
-  "capabilities.ai.title": "Angewandte KI und LLM-Integration",
+    "Sechs Bereiche, jeder belegt durch ein ausgeliefertes Projekt oder eine datierte Rolle — keine Selbsteinschätzung.",
+  "capabilities.languages.title": "Sprachen & Frameworks",
+  "capabilities.languages.body":
+    "Produktionsdienste und Oberflächen für JVM-, Python-, TypeScript-, Mobile- und 3D-Web-Stacks.",
+  "capabilities.cloud.title": "Cloud & DevOps",
+  "capabilities.cloud.body":
+    "Cloud-Bereitstellung und Observability auf AWS und GCP, gestützt durch wiederholbare Automatisierung.",
+  "capabilities.databases.title": "Datenbanken",
+  "capabilities.databases.body":
+    "Relationale, Dokument-, Graph-, Cache- und Medienspeichersysteme, passend zur Struktur der Daten.",
+  "capabilities.ai.title": "Daten & KI",
   "capabilities.ai.body":
-    "Retrieval- und Agenten-Workflows in Produktion, semantisches Matching über Embeddings und klassisches ML, wo es sich lohnt.",
-  "capabilities.data.title": "Datenintensive Anwendungen",
-  "capabilities.data.body":
-    "Geospatiale Indizierung, Graphdaten und Pipelines, die auch bei Millionen von Datensätzen korrekt bleiben.",
-  "capabilities.quality.title": "Tests, Zuverlässigkeit und Architektur",
-  "capabilities.quality.body":
-    "Automatisierte Qualitätsprüfungen, UI-Testautomatisierung und Systemgrenzen, die Veränderungen überstehen.",
+    "Agenten-Workflows und Retrieval in Produktion sowie semantisches Matching und klassisches maschinelles Lernen.",
+  "capabilities.testing.title": "Tests & Qualitätssicherung",
+  "capabilities.testing.body":
+    "Automatisierte UI- und Service-Qualitätsprüfungen, die Releases wiederholbar machen.",
+  "capabilities.practices.title": "Arbeitsweisen",
+  "capabilities.practices.body":
+    "Ereignisgetriebene Architektur, Retrieval-Muster, Embeddings und in Produktion gemessene Delivery-Pipelines.",
   "capabilities.footnote":
     "Jede oben genannte Technologie stammt aus einem Projekt oder einer Rolle, in der sie tatsächlich eingesetzt wurde.",
 

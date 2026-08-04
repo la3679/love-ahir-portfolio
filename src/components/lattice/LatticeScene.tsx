@@ -15,20 +15,22 @@ import type { SystemLayer } from "./layers";
 import type { SceneSection } from "./latticeState";
 import {
   VOXEL_MORPH_DURATION_MS,
+  VOXEL_IDLE_YAW_RADIANS_PER_SECOND,
   VOXEL_POINTER_RESPONSE,
   dampingFactor,
-  easeInOutExpo,
   interpolate,
   mapVoxelOrbit,
   motionSettled,
+  voxelMorphProgress,
   type OrbitTarget,
 } from "./sceneMotion";
 import {
   VOXEL_COUNT,
   VOXEL_FORMATION_SPEC,
   VOXEL_IDENTITY_ORIENTATION,
+  voxelToneAt,
   type VoxelFormationId,
-  type VoxelPose,
+  type VoxelFormationTarget,
   type VoxelTone,
 } from "./voxelFormationSpec";
 
@@ -37,8 +39,9 @@ import {
  *
  * cx20's “Test of Three.js and Tween.js” is interaction inspiration only.
  * This renderer is independently authored: one InstancedMesh, original
- * algorithmic poses, a local easing state machine, no copied voxel matrix,
- * no image/texture/model, no Tween.js and no continuous render loop.
+ * algorithmic targets, a local easing state machine, no copied voxel matrix,
+ * no image/texture/model and no Tween.js. Its demand loop stays active only
+ * for a visible hero's subtle idle yaw, traffic pulse, morph or pointer return.
  */
 
 interface Palette {
@@ -117,29 +120,28 @@ function createPoseBuffers(): PoseBuffers {
   };
 }
 
-function copyPoseToBuffers(
-  pose: ReadonlyArray<VoxelPose>,
+function copyTargetToBuffers(
+  target: VoxelFormationTarget,
   buffers: PoseBuffers,
 ): void {
-  pose.forEach((item, index) => {
-    const offset = index * 3;
-    buffers.position[offset] = item.position[0];
-    buffers.position[offset + 1] = item.position[1];
-    buffers.position[offset + 2] = item.position[2];
-    buffers.rotation[offset] = item.rotation[0];
-    buffers.rotation[offset + 1] = item.rotation[1];
-    buffers.rotation[offset + 2] = item.rotation[2];
-    buffers.scale[index] = item.scale;
-  });
+  buffers.position.set(target.position);
+  buffers.rotation.set(target.rotation);
+  buffers.scale.set(target.scale);
 }
 
 interface FieldProps {
   section: SceneSection;
   activeLayer: SystemLayer | null;
   formation: VoxelFormationId;
+  motionAllowed: boolean;
 }
 
-const VoxelField = ({ section, activeLayer, formation }: FieldProps) => {
+const VoxelField = ({
+  section,
+  activeLayer,
+  formation,
+  motionAllowed,
+}: FieldProps) => {
   const { invalidate, gl } = useThree();
   const groupRef = useRef<Group>(null);
   const meshRef = useRef<InstancedMesh>(null);
@@ -158,7 +160,9 @@ const VoxelField = ({ section, activeLayer, formation }: FieldProps) => {
   const initialized = useRef(false);
   const matricesDirty = useRef(true);
   const activeFormation = useRef<VoxelFormationId>(formation);
-  const transition = useRef({ active: false, startedAt: 0 });
+  const transition = useRef({ active: false, startedAt: 0, maximumDistance: 1 });
+  const idleYaw = useRef(0);
+  const pulseClock = useRef(0);
   const orbit = useRef<{
     current: OrbitTarget;
     target: OrbitTarget;
@@ -179,15 +183,18 @@ const VoxelField = ({ section, activeLayer, formation }: FieldProps) => {
     const mesh = meshRef.current;
     if (!mesh) return;
     mesh.instanceMatrix.setUsage(DynamicDrawUsage);
+    const target = VOXEL_FORMATION_SPEC.formations[activeFormation.current];
     VOXEL_FORMATION_SPEC.cells.forEach((cell, index) => {
-      mesh.setColorAt(index, toneColor(cell.tone, palette.current));
+      const color = toneColor(voxelToneAt(target, index), palette.current).clone();
+      if (activeLayer === cell.layer) color.lerp(palette.current.signal, 0.2);
+      mesh.setColorAt(index, color);
     });
     if (mesh.instanceColor) {
       mesh.instanceColor.setUsage(DynamicDrawUsage);
       mesh.instanceColor.needsUpdate = true;
     }
     invalidate();
-  }, [invalidate]);
+  }, [activeLayer, invalidate]);
 
   useEffect(() => {
     if (typeof MutationObserver === "undefined") return;
@@ -195,8 +202,9 @@ const VoxelField = ({ section, activeLayer, formation }: FieldProps) => {
       const mesh = meshRef.current;
       palette.current = readPalette();
       if (!mesh) return;
+      const target = VOXEL_FORMATION_SPEC.formations[activeFormation.current];
       VOXEL_FORMATION_SPEC.cells.forEach((cell, index) => {
-        const color = toneColor(cell.tone, palette.current).clone();
+        const color = toneColor(voxelToneAt(target, index), palette.current).clone();
         if (activeLayer === cell.layer) color.lerp(palette.current.signal, 0.2);
         mesh.setColorAt(index, color);
       });
@@ -213,8 +221,9 @@ const VoxelField = ({ section, activeLayer, formation }: FieldProps) => {
   useEffect(() => {
     const mesh = meshRef.current;
     if (mesh) {
+      const target = VOXEL_FORMATION_SPEC.formations[formation];
       VOXEL_FORMATION_SPEC.cells.forEach((cell, index) => {
-        const color = toneColor(cell.tone, palette.current).clone();
+        const color = toneColor(voxelToneAt(target, index), palette.current).clone();
         if (activeLayer === cell.layer) color.lerp(palette.current.signal, 0.2);
         mesh.setColorAt(index, color);
       });
@@ -222,7 +231,7 @@ const VoxelField = ({ section, activeLayer, formation }: FieldProps) => {
     }
     matricesDirty.current = true;
     invalidate();
-  }, [activeLayer, invalidate]);
+  }, [activeLayer, formation, invalidate]);
 
   useEffect(() => {
     if (formation === activeFormation.current) return;
@@ -230,9 +239,22 @@ const VoxelField = ({ section, activeLayer, formation }: FieldProps) => {
     buffers.fromPosition.set(buffers.position);
     buffers.fromRotation.set(buffers.rotation);
     buffers.fromScale.set(buffers.scale);
+    let maximumDistance = 0;
+    for (let index = 0; index < VOXEL_COUNT; index += 1) {
+      const offset = index * 3;
+      maximumDistance = Math.max(
+        maximumDistance,
+        Math.hypot(
+          buffers.fromPosition[offset],
+          buffers.fromPosition[offset + 1],
+          buffers.fromPosition[offset + 2],
+        ),
+      );
+    }
     activeFormation.current = formation;
     transition.current.active = true;
     transition.current.startedAt = performance.now();
+    transition.current.maximumDistance = maximumDistance || 1;
     matricesDirty.current = true;
     invalidate();
   }, [buffers, formation, invalidate]);
@@ -336,7 +358,7 @@ const VoxelField = ({ section, activeLayer, formation }: FieldProps) => {
     if (!mesh || !group || document.hidden) return;
 
     if (!initialized.current) {
-      copyPoseToBuffers(
+      copyTargetToBuffers(
         VOXEL_FORMATION_SPEC.formations[activeFormation.current],
         buffers,
       );
@@ -346,51 +368,58 @@ const VoxelField = ({ section, activeLayer, formation }: FieldProps) => {
 
     if (transition.current.active) {
       const elapsed = performance.now() - transition.current.startedAt;
-      const linear = Math.min(1, elapsed / VOXEL_MORPH_DURATION_MS);
-      const progress = easeInOutExpo(linear);
       const target = VOXEL_FORMATION_SPEC.formations[activeFormation.current];
 
-      target.forEach((pose, index) => {
+      for (let index = 0; index < VOXEL_COUNT; index += 1) {
         const offset = index * 3;
+        const progress = voxelMorphProgress(
+          elapsed,
+          Math.hypot(
+            buffers.fromPosition[offset],
+            buffers.fromPosition[offset + 1],
+            buffers.fromPosition[offset + 2],
+          ),
+          transition.current.maximumDistance,
+        );
         buffers.position[offset] = interpolate(
           buffers.fromPosition[offset],
-          pose.position[0],
+          target.position[offset],
           progress,
         );
         buffers.position[offset + 1] = interpolate(
           buffers.fromPosition[offset + 1],
-          pose.position[1],
+          target.position[offset + 1],
           progress,
         );
         buffers.position[offset + 2] = interpolate(
           buffers.fromPosition[offset + 2],
-          pose.position[2],
+          target.position[offset + 2],
           progress,
         );
         buffers.rotation[offset] = interpolate(
           buffers.fromRotation[offset],
-          pose.rotation[0],
+          target.rotation[offset],
           progress,
         );
         buffers.rotation[offset + 1] = interpolate(
           buffers.fromRotation[offset + 1],
-          pose.rotation[1],
+          target.rotation[offset + 1],
           progress,
         );
         buffers.rotation[offset + 2] = interpolate(
           buffers.fromRotation[offset + 2],
-          pose.rotation[2],
+          target.rotation[offset + 2],
           progress,
         );
         buffers.scale[index] = interpolate(
           buffers.fromScale[index],
-          pose.scale,
+          target.scale[index],
           progress,
         );
-      });
+      }
 
       matricesDirty.current = true;
-      transition.current.active = linear < 1;
+      transition.current.active = elapsed < VOXEL_MORPH_DURATION_MS;
     }
 
     if (matricesDirty.current) {
@@ -415,6 +444,38 @@ const VoxelField = ({ section, activeLayer, formation }: FieldProps) => {
       matricesDirty.current = false;
     }
 
+    const liveMotion = motionAllowed && section === "hero";
+    if (liveMotion) {
+      idleYaw.current =
+        (idleYaw.current + delta * VOXEL_IDLE_YAW_RADIANS_PER_SECOND) %
+        (Math.PI * 2);
+    }
+
+    if (liveMotion && activeFormation.current === "architecture") {
+      pulseClock.current += delta;
+      const target = VOXEL_FORMATION_SPEC.formations.architecture;
+      VOXEL_FORMATION_SPEC.architecturePulseIndices.forEach(
+        (indices, pulseIndex) => {
+          const head = (pulseClock.current / (3.8 + pulseIndex * 0.7)) % 1;
+          indices.forEach((index, order) => {
+            const progress = order / Math.max(1, indices.length - 1);
+            const directDistance = Math.abs(progress - head);
+            const wrappedDistance = Math.min(directDistance, 1 - directDistance);
+            const strength = Math.max(0, 1 - wrappedDistance / 0.14) * 0.72;
+            const cell = VOXEL_FORMATION_SPEC.cells[index];
+            const color = toneColor(voxelToneAt(target, index), palette.current)
+              .clone();
+            if (activeLayer === cell.layer) {
+              color.lerp(palette.current.signal, 0.2);
+            }
+            color.lerp(palette.current.signal, strength);
+            mesh.setColorAt(index, color);
+          });
+        },
+      );
+      if (mesh.instanceColor) mesh.instanceColor.needsUpdate = true;
+    }
+
     const pointer = orbit.current;
     const returning = pointer.target.pitch === 0 && pointer.target.yaw === 0;
     const response = returning
@@ -425,16 +486,23 @@ const VoxelField = ({ section, activeLayer, formation }: FieldProps) => {
     pointer.current.yaw += (pointer.target.yaw - pointer.current.yaw) * ease;
 
     const identity = activeFormation.current === "identity";
+    const architecture = activeFormation.current === "architecture";
+    const basePitch = identity
+      ? VOXEL_IDENTITY_ORIENTATION.pitch
+      : architecture ? -0.11 : -0.16;
+    const baseYaw = identity
+      ? VOXEL_IDENTITY_ORIENTATION.yaw
+      : architecture ? 0.18 : 0.22;
     group.rotation.x =
-      (identity ? VOXEL_IDENTITY_ORIENTATION.pitch : -0.035) +
-      pointer.current.pitch;
+      basePitch + pointer.current.pitch;
     group.rotation.y =
-      (identity ? VOXEL_IDENTITY_ORIENTATION.yaw : 0) + pointer.current.yaw;
+      baseYaw + idleYaw.current + pointer.current.yaw;
     group.position.x = pointer.current.yaw * 0.26;
     group.position.y = -pointer.current.pitch * 0.18;
 
     if (
       transition.current.active ||
+      liveMotion ||
       !motionSettled(pointer.current, pointer.target)
     ) {
       invalidate();
@@ -458,6 +526,7 @@ interface Props {
   coarse: boolean;
   formation: VoxelFormationId;
   accessibleName: string;
+  motionAllowed: boolean;
   onFail: () => void;
 }
 
@@ -467,6 +536,7 @@ const LatticeScene = ({
   coarse,
   formation,
   accessibleName,
+  motionAllowed,
   onFail,
 }: Props) => {
   const failed = useRef(false);
@@ -478,7 +548,7 @@ const LatticeScene = ({
       frameloop="demand"
       dpr={coarse ? 1 : [1, 1.5]}
       gl={{ antialias: true, alpha: true, powerPreference: "low-power" }}
-      camera={{ fov: 40, position: [0, 0, 6.8] }}
+      camera={{ fov: 40, position: [0, 0, 7.4] }}
       style={{ pointerEvents: "none" }}
       onCreated={({ gl }: { gl: WebGLRenderer }) => {
         const canvas = gl.domElement;
@@ -503,6 +573,7 @@ const LatticeScene = ({
         section={section}
         activeLayer={activeLayer}
         formation={formation}
+        motionAllowed={motionAllowed}
       />
     </Canvas>
   );

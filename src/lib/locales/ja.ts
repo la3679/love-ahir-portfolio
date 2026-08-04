@@ -23,9 +23,10 @@ const ja: Translation = {
   "hero.resume": "履歴書",
   "hero.transformScene": "ボクセルシーンを変形",
   "hero.formation.identity": "アイデンティティ",
-  "hero.formation.cloud": "クラウド",
-  "hero.formation.helix": "ヘリックス",
+  "hero.formation.architecture": "アーキテクチャ",
+  "hero.formation.throughput": "スループット",
   "hero.monogramAlt": "Love Ahir モノグラム",
+  "hero.sceneDisclaimer": "形状表現のみ — ライブテレメトリではありません。",
 
   "hero.stage.label": "アーキテクチャ概要",
   "hero.stage.step.client": "採用担当者が履歴書をアップロードし、職務要件を設定します。",
@@ -88,22 +89,25 @@ const ja: Translation = {
   "capabilities.eyebrow": "できること",
   "capabilities.title": "実際に取り組んでいる領域",
   "capabilities.description":
-    "5 つの領域。いずれも公開済みのプロジェクトか、期間の明確な職務に裏づけられています（自己評価ではありません）。",
-  "capabilities.fullstack.title": "フルスタックのプロダクト開発",
-  "capabilities.fullstack.body":
-    "エンドツーエンドのプロダクト。自分で設計・運用するサービスの上に、型付きの React インターフェースを載せます。",
-  "capabilities.backend.title": "バックエンドと API",
-  "capabilities.backend.body":
-    "イベント駆動の Python / Java サービス、リレーショナルなデータモデル、そしてそれらを支えるデリバリーパイプライン。",
-  "capabilities.ai.title": "応用 AI と LLM 連携",
+    "6 つの領域。いずれも公開済みのプロジェクトか、期間の明確な職務に裏づけられています（自己評価ではありません）。",
+  "capabilities.languages.title": "言語とフレームワーク",
+  "capabilities.languages.body":
+    "JVM、Python、TypeScript、モバイル、3D Web の各スタックで本番サービスとインターフェースを構築しています。",
+  "capabilities.cloud.title": "クラウドと DevOps",
+  "capabilities.cloud.body":
+    "AWS と GCP でのクラウドデリバリーと可観測性を、再現可能な自動化で支えています。",
+  "capabilities.databases.title": "データベース",
+  "capabilities.databases.body":
+    "データの形に合わせて、リレーショナル、ドキュメント、グラフ、キャッシュ、メディア保存を選びます。",
+  "capabilities.ai.title": "データと AI",
   "capabilities.ai.body":
-    "本番環境での検索・エージェントのワークフロー、埋め込みによる意味的マッチング、価値のある場面での従来型 ML。",
-  "capabilities.data.title": "データ集約型アプリケーション",
-  "capabilities.data.body":
-    "地理空間インデックス、グラフデータ、数百万件規模でも正しく動き続けるパイプライン。",
-  "capabilities.quality.title": "テスト・信頼性・アーキテクチャ",
-  "capabilities.quality.body":
-    "自動化された品質ゲート、UI テスト自動化、変更に耐えるシステム境界。",
+    "本番環境のエージェントワークフローと検索に、意味的マッチングと従来型機械学習を組み合わせます。",
+  "capabilities.testing.title": "テストと QA",
+  "capabilities.testing.body":
+    "UI とサービスの自動品質ゲートによって、再現可能なリリースを保ちます。",
+  "capabilities.practices.title": "実践",
+  "capabilities.practices.body":
+    "イベント駆動アーキテクチャ、検索パターン、埋め込み、本番で計測するデリバリーパイプライン。",
   "capabilities.footnote":
     "上記の技術はいずれも、実際にそれを使ったプロジェクトまたは職務に由来します。",
 

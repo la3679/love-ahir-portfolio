@@ -519,12 +519,41 @@
     gap: 0.625rem;
   }
 
-  .stage-tech-rail__item > span {
-    width: 0.28rem;
-    height: 0.28rem;
+  /*
+    Vendor marks keep their supplied colours. The neutral tile stays pale in
+    both themes by switching between existing semantic surfaces, which keeps
+    official monochrome marks legible without filters or recolouring.
+  */
+  .technology-logo-tile {
+    display: grid;
+    height: 1.5rem;
     flex: 0 0 auto;
-    border-radius: 999px;
-    box-shadow: var(--glow-edge);
+    place-items: center;
+    overflow: hidden;
+    border: 1px solid hsl(var(--border) / 0.52);
+    border-radius: calc(var(--radius) * 0.45);
+    background: hsl(var(--card));
+  }
+
+  .dark .technology-logo-tile {
+    background: hsl(var(--stage));
+  }
+
+  .technology-logo-tile img {
+    display: block;
+    width: auto;
+    max-width: calc(100% - 0.3rem);
+    height: auto;
+    max-height: calc(100% - 0.3rem);
+    object-fit: contain;
+  }
+
+  .stage-tech-rail__logo {
+    width: 1.5rem;
+  }
+
+  .stage-tech-rail__logo--wide {
+    width: 2.25rem;
   }
 
   .observatory-stage:hover .stage-tech-rail__track,
@@ -618,31 +647,167 @@
   }
 
   /*
-    Restrained depth response for project entries (§31 "Project interactions").
+    Card pointer system (§31 "Project interactions").
 
-    Capped at ~1.2° and a 2px lift. The media query does the gating for us, so
-    there is no JS and no way for the behaviour to drift from the rules:
-    - `hover: hover` + `pointer: fine` excludes touch-only devices outright;
+    Two tiers, deliberately unequal. `.card` is the expensive tier and is
+    reserved for the large project cards in "Built, measured, shipped": a
+    pointer-tracked shine, a blurred signal glow, and a tilt capped at ±6°.
+    Everything smaller — `.technology-chip`, `.skill-card` — gets the cheap
+    tier: one transform and one colour change, no JS and no per-element state.
+    This replaces the earlier `.depth-hover` 1.2° treatment, whose CSS `:hover`
+    transform would have fought the inline transform the controller writes.
+
+    The tilt and the shine coordinates come from ONE delegated, rAF-throttled
+    `pointermove` listener on `document` (`src/lib/projectCardMotion.ts`) —
+    never a listener per card.
+
+    Gating is layered, so the expensive tier cannot leak onto a device that
+    should not have it:
+    - `hover: hover` + `pointer: fine` excludes touch-only devices;
     - `prefers-reduced-motion: no-preference` excludes reduced-motion users;
-    - `:focus-within` gives keyboard users the identical emphasis.
+    - the controller re-checks both in JS and detaches its listener otherwise;
+    - the glow additionally waits for `data-project-tilt-active`, which only
+      the controller sets, so it can never appear at stale coordinates.
 
-    Transform and border only — nothing here can obscure an outcome, and no
-    information is hidden until hover.
+    `:focus-within` gives keyboard users the same emphasis through border and
+    shadow — the parts that carry meaning — without any pointer-driven motion.
   */
-  .depth-hover {
-    transition: border-color var(--dur-quick) var(--ease-glide);
+  .card {
+    position: relative;
+    overflow: hidden;
+    transform: perspective(950px);
+    transition:
+      transform var(--dur-return) var(--ease-glide),
+      border-color var(--dur-quick) var(--ease-glide),
+      box-shadow var(--dur-quick) var(--ease-glide);
+  }
+
+  /*
+    While the pointer is actually tracking, the tilt follows at the pointer
+    duration; the longer `--dur-return` above is what makes releasing the card
+    glide back rather than snap.
+  */
+  .card[data-project-tilt-active="true"] {
+    transition:
+      transform var(--dur-pointer) linear,
+      border-color var(--dur-quick) var(--ease-glide),
+      box-shadow var(--dur-quick) var(--ease-glide);
+  }
+
+  .card__shine,
+  .card__glow {
+    position: absolute;
+    z-index: 0;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--dur-return) var(--ease-glide);
+  }
+
+  /*
+    Both decorative layers are absolutely positioned, so without this the card's
+    static content would paint *beneath* them and the glow would wash the body
+    copy. This is light behind the text, never an overlay on top of it.
+  */
+  .card > *:not(.card__shine):not(.card__glow) {
+    position: relative;
+    z-index: 1;
+  }
+
+  .card__shine {
+    inset: 0;
+    background: radial-gradient(
+      320px circle at var(--shine-x, 50%) var(--shine-y, 50%),
+      hsl(var(--signal) / 0.1),
+      transparent 60%
+    );
+  }
+
+  /*
+    Positioned by translate3d rather than left/top: the house rule is transform
+    and opacity only, and this element moves on every pointer frame. The px
+    offsets keep the 320×228 box centred on the pointer.
+  */
+  .card__glow {
+    left: 0;
+    top: 0;
+    width: 320px;
+    height: 228px;
+    filter: blur(40px);
+    transform: translate3d(
+      calc(var(--glow-x, 0px) - 160px),
+      calc(var(--glow-y, 0px) - 114px),
+      0
+    );
+    background: radial-gradient(
+      circle,
+      hsl(var(--signal) / 0.28),
+      transparent 65%
+    );
+  }
+
+  .card:focus-within {
+    border-color: hsl(var(--signal) / 0.4);
+    box-shadow: var(--shadow-card-hover);
+  }
+
+  .technology-chip,
+  .skill-card,
+  .skill-card__icon {
+    transition:
+      transform var(--dur-quick) var(--ease-glide),
+      color var(--dur-quick) var(--ease-glide),
+      background-color var(--dur-quick) var(--ease-glide),
+      box-shadow var(--dur-quick) var(--ease-glide);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .card:hover {
+      border-color: hsl(var(--signal) / 0.4);
+      box-shadow: var(--shadow-card-hover);
+    }
+
+    .technology-chip:hover {
+      color: hsl(var(--signal));
+      box-shadow: 0 8px 18px -10px hsl(var(--signal) / 0.5);
+    }
+
+    /*
+      Below md each capability row is a real card, so it can carry a shadow.
+      At md and up the rows merge into one bordered panel, where a shadow would
+      read as a floating rectangle — that layout gets a surface tint instead.
+    */
+    @media (max-width: 767.98px) {
+      .skill-card:hover {
+        box-shadow: var(--shadow-card-hover);
+      }
+    }
+
+    @media (min-width: 768px) {
+      .skill-card:hover {
+        background-color: hsl(var(--secondary) / 0.55);
+      }
+    }
   }
 
   @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
-    .depth-hover {
-      transition:
-        transform var(--dur-quick) var(--ease-glide),
-        border-color var(--dur-quick) var(--ease-glide);
+    .card:hover .card__shine {
+      opacity: 1;
     }
 
-    .depth-hover:hover,
-    .depth-hover:focus-within {
-      transform: perspective(900px) rotateX(1.2deg) translateY(-2px);
+    .card[data-project-tilt-active="true"] .card__glow {
+      opacity: 1;
+    }
+
+    .card[data-project-tilt-active="true"] {
+      will-change: transform;
+    }
+
+    .technology-chip:hover {
+      transform: translateY(-3px) scale(1.04);
+    }
+
+    .skill-card:hover .skill-card__icon {
+      transform: rotate(-6deg) scale(1.06);
     }
   }
 }
@@ -696,6 +861,24 @@
   .portrait-depth-caption {
     transform: none !important;
     transition: none !important;
+  }
+
+  /*
+    The pointer controller already refuses to attach here, so these are a
+    belt-and-braces floor: even a stale inline transform left over from a
+    mid-session preference change cannot tilt or light a card.
+  */
+  .card,
+  .technology-chip,
+  .skill-card__icon {
+    transform: none !important;
+    transition: none !important;
+    will-change: auto;
+  }
+
+  .card__shine,
+  .card__glow {
+    opacity: 0 !important;
   }
 }
 

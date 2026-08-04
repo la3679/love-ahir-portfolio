@@ -3,19 +3,15 @@ import { useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { profile } from "@/data/portfolio";
+import {
+  getTechnology,
+  stageTechnologyRails,
+  type TechnologyId,
+} from "@/data/technologyCatalog";
 import { riseDelay } from "@/lib/motion";
 import { usePointerDepth } from "@/lib/pointerMotion";
 import SystemsLattice from "./lattice/SystemsLattice";
 import { useLattice, useSceneSection } from "./lattice/latticeState";
-
-const TOP_STAGE_TECH = ["Java", "Spring Boot", "React", "PostgreSQL", "AWS"];
-const BOTTOM_STAGE_TECH = [
-  "Python",
-  "FastAPI",
-  "MongoDB",
-  "Docker",
-  "Three.js",
-];
 
 /**
  * Recruiter-first hero for the warm voxel observatory (§34).
@@ -119,8 +115,11 @@ const Hero = () => {
             {/* The SVG/WebGL artwork remains decorative; the adjacent transform
                 button is intentionally outside that aria-hidden subtree. */}
             <SystemsLattice />
-            <StageTechRail position="top" items={TOP_STAGE_TECH} />
-            <StageTechRail position="bottom" items={BOTTOM_STAGE_TECH} />
+            <StageTechRail position="top" items={stageTechnologyRails.top} />
+            <StageTechRail
+              position="bottom"
+              items={stageTechnologyRails.bottom}
+            />
           </div>
         </div>
       </div>
@@ -155,10 +154,12 @@ const StageTechRail = ({
   items,
 }: {
   position: "top" | "bottom";
-  items: readonly string[];
+  items: readonly TechnologyId[];
 }) => {
   // Exactly two copies are required for the track's -50% seamless loop.
-  const loop = [...items, ...items];
+  const loop = ([0, 1] as const).flatMap((copy) =>
+    items.map((technologyId) => ({ copy, technologyId })),
+  );
   const duration = position === "top" ? 38 : 44;
 
   return (
@@ -177,15 +178,33 @@ const StageTechRail = ({
           animationDuration: `${duration}s`,
         }}
       >
-        {loop.map((item, index) => (
-          <span key={`${item}-${index}`} className="stage-tech-rail__item">
+        {loop.map(({ copy, technologyId }) => {
+          const technology = getTechnology(technologyId);
+
+          return (
             <span
-              className={index % 2 === 0 ? "bg-primary" : "bg-signal"}
-              aria-hidden="true"
-            />
-            {item}
-          </span>
-        ))}
+              key={`${copy}-${technologyId}`}
+              className="stage-tech-rail__item"
+              data-technology={technologyId}
+            >
+              <span
+                className={`stage-tech-rail__logo technology-logo-tile ${
+                  technology.wide ? "stage-tech-rail__logo--wide" : ""
+                }`}
+              >
+                <img
+                  src={technology.icon}
+                  alt=""
+                  width={technology.wide ? 34 : 24}
+                  height={24}
+                  loading="lazy"
+                  decoding="async"
+                />
+              </span>
+              {technology.name}
+            </span>
+          );
+        })}
       </div>
     </div>
   );

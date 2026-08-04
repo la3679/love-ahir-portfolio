@@ -23,9 +23,10 @@ const gu: Translation = {
   "hero.resume": "રિઝ્યુમે",
   "hero.transformScene": "વોક્સેલ દૃશ્ય બદલો",
   "hero.formation.identity": "ઓળખ",
-  "hero.formation.cloud": "વાદળ",
-  "hero.formation.helix": "સર્પિલ",
+  "hero.formation.architecture": "આર્કિટેક્ચર",
+  "hero.formation.throughput": "થ્રુપુટ",
   "hero.monogramAlt": "Love Ahir મોનોગ્રામ",
+  "hero.sceneDisclaimer": "માત્ર આકાર — લાઇવ ટેલિમેટ્રી નથી.",
 
   "hero.stage.label": "આર્કિટેક્ચર સારાંશ",
   "hero.stage.step.client": "ભરતીકારો રિઝ્યુમે અપલોડ કરે છે અને ભૂમિકા નક્કી કરે છે.",
@@ -88,22 +89,25 @@ const gu: Translation = {
   "capabilities.eyebrow": "ક્ષમતાઓ",
   "capabilities.title": "હું ખરેખર શેના પર કામ કરું છું",
   "capabilities.description":
-    "પાંચ ક્ષેત્રો, દરેક પાછળ શિપ થયેલો પ્રોજેક્ટ કે તારીખ સહિતની ભૂમિકા છે — આ સ્વ-મૂલ્યાંકન નથી.",
-  "capabilities.fullstack.title": "ફુલ-સ્ટૅક પ્રોડક્ટ એન્જિનિયરિંગ",
-  "capabilities.fullstack.body":
-    "શરૂથી અંત સુધીના પ્રોડક્ટ: ટાઇપ્ડ React ઇન્ટરફેસ, એ જ સેવાઓ પર જે હું ડિઝાઇન અને સંચાલિત પણ કરું છું.",
-  "capabilities.backend.title": "બૅકએન્ડ સિસ્ટમ અને API",
-  "capabilities.backend.body":
-    "ઇવેન્ટ-ડ્રિવન Python અને Java સેવાઓ, રિલેશનલ ડેટા મોડેલ, અને તેમની આસપાસની ડિલિવરી પાઇપલાઇન.",
-  "capabilities.ai.title": "એપ્લાઇડ AI અને LLM ઇન્ટિગ્રેશન",
+    "છ ક્ષેત્રો, દરેક પાછળ શિપ થયેલો પ્રોજેક્ટ કે તારીખ સહિતની ભૂમિકા છે — આ સ્વ-મૂલ્યાંકન નથી.",
+  "capabilities.languages.title": "ભાષાઓ અને ફ્રેમવર્ક્સ",
+  "capabilities.languages.body":
+    "JVM, Python, TypeScript, મોબાઇલ અને 3D વેબ સ્ટૅકમાં પ્રોડક્શન સેવાઓ અને ઇન્ટરફેસ.",
+  "capabilities.cloud.title": "ક્લાઉડ અને DevOps",
+  "capabilities.cloud.body":
+    "AWS અને GCP પર ક્લાઉડ ડિલિવરી અને ઑબ્ઝર્વેબિલિટી, પુનરાવર્તિત ઑટોમેશનથી સમર્થિત.",
+  "capabilities.databases.title": "ડેટાબેસ",
+  "capabilities.databases.body":
+    "ડેટાના સ્વરૂપ મુજબ પસંદ કરેલી રિલેશનલ, ડૉક્યુમેન્ટ, ગ્રાફ, કૅશ અને મીડિયા-સ્ટોરેજ સિસ્ટમ.",
+  "capabilities.ai.title": "ડેટા અને AI",
   "capabilities.ai.body":
-    "પ્રોડક્શનમાં રિટ્રીવલ અને એજન્ટ વર્કફ્લો, એમ્બેડિંગ પર સિમેન્ટિક મૅચિંગ, અને જ્યાં યોગ્ય હોય ત્યાં પરંપરાગત ML.",
-  "capabilities.data.title": "ડેટા-સઘન એપ્લિકેશન",
-  "capabilities.data.body":
-    "ભૂ-અવકાશીય ઇન્ડેક્સિંગ, ગ્રાફ ડેટા, અને લાખો રેકોર્ડ પર પણ સાચી રહેતી પાઇપલાઇન.",
-  "capabilities.quality.title": "ટેસ્ટિંગ, વિશ્વસનીયતા અને આર્કિટેક્ચર",
-  "capabilities.quality.body":
-    "સ્વયંસંચાલિત ક્વોલિટી ગેટ, UI ટેસ્ટ ઓટોમેશન, અને પરિવર્તન સહી શકે તેવી સિસ્ટમ સીમાઓ.",
+    "પ્રોડક્શનમાં એજન્ટ વર્કફ્લો અને રિટ્રીવલ સાથે સિમેન્ટિક મૅચિંગ અને પરંપરાગત મશીન લર્નિંગ.",
+  "capabilities.testing.title": "ટેસ્ટિંગ અને QA",
+  "capabilities.testing.body":
+    "સ્વયંસંચાલિત UI અને સેવા-સ્તરના ક્વોલિટી ગેટ, જે રિલીઝને પુનરાવર્તિત રાખે છે.",
+  "capabilities.practices.title": "પ્રેક્ટિસીસ",
+  "capabilities.practices.body":
+    "ઇવેન્ટ-ડ્રિવન આર્કિટેક્ચર, રિટ્રીવલ પેટર્ન, એમ્બેડિંગ અને પ્રોડક્શનમાં માપેલી ડિલિવરી પાઇપલાઇન.",
   "capabilities.footnote":
     "ઉપર દર્શાવેલ દરેક ટેક્નોલોજી એવા પ્રોજેક્ટ કે ભૂમિકામાંથી આવે છે જ્યાં તે ખરેખર વપરાઈ હતી.",
 

@@ -23,9 +23,10 @@ const hi: Translation = {
   "hero.resume": "रिज़्यूमे",
   "hero.transformScene": "वॉक्सेल दृश्य बदलें",
   "hero.formation.identity": "पहचान",
-  "hero.formation.cloud": "बादल",
-  "hero.formation.helix": "कुंडली",
+  "hero.formation.architecture": "आर्किटेक्चर",
+  "hero.formation.throughput": "थ्रूपुट",
   "hero.monogramAlt": "Love Ahir मोनोग्राम",
+  "hero.sceneDisclaimer": "केवल आकृति — लाइव टेलीमेट्री नहीं।",
 
   "hero.stage.label": "आर्किटेक्चर सारांश",
   "hero.stage.step.client": "भर्तीकर्ता रिज़्यूमे अपलोड करते हैं और भूमिका तय करते हैं।",
@@ -88,22 +89,25 @@ const hi: Translation = {
   "capabilities.eyebrow": "क्षमताएँ",
   "capabilities.title": "मैं वास्तव में किस पर काम करता हूँ",
   "capabilities.description":
-    "पाँच क्षेत्र, हर एक के पीछे कोई शिप किया गया प्रोजेक्ट या तिथि-सहित भूमिका है — यह आत्म-मूल्यांकन नहीं है।",
-  "capabilities.fullstack.title": "फुल-स्टैक प्रोडक्ट इंजीनियरिंग",
-  "capabilities.fullstack.body":
-    "आद्योपांत प्रोडक्ट: टाइप्ड React इंटरफ़ेस, उन्हीं सेवाओं पर जिन्हें मैं डिज़ाइन और संचालित भी करता हूँ।",
-  "capabilities.backend.title": "बैकएंड सिस्टम और API",
-  "capabilities.backend.body":
-    "इवेंट-ड्रिवन Python और Java सेवाएँ, रिलेशनल डेटा मॉडल, और उनके आसपास की डिलीवरी पाइपलाइनें।",
-  "capabilities.ai.title": "एप्लाइड AI और LLM इंटीग्रेशन",
+    "छह क्षेत्र, हर एक के पीछे कोई शिप किया गया प्रोजेक्ट या तिथि-सहित भूमिका है — यह आत्म-मूल्यांकन नहीं है।",
+  "capabilities.languages.title": "भाषाएँ और फ़्रेमवर्क",
+  "capabilities.languages.body":
+    "JVM, Python, TypeScript, मोबाइल और 3D वेब स्टैक में प्रोडक्शन सेवाएँ और इंटरफ़ेस।",
+  "capabilities.cloud.title": "क्लाउड और DevOps",
+  "capabilities.cloud.body":
+    "AWS और GCP पर क्लाउड डिलीवरी व ऑब्ज़र्वेबिलिटी, दोहराने योग्य ऑटोमेशन द्वारा समर्थित।",
+  "capabilities.databases.title": "डेटाबेस",
+  "capabilities.databases.body":
+    "डेटा के स्वरूप के अनुसार चुने गए रिलेशनल, डॉक्यूमेंट, ग्राफ़, कैश और मीडिया-स्टोरेज सिस्टम।",
+  "capabilities.ai.title": "डेटा और AI",
   "capabilities.ai.body":
-    "प्रोडक्शन में रिट्रीवल और एजेंट वर्कफ़्लो, एम्बेडिंग पर सिमेंटिक मैचिंग, और जहाँ उपयोगी हो वहाँ पारंपरिक ML।",
-  "capabilities.data.title": "डेटा-गहन अनुप्रयोग",
-  "capabilities.data.body":
-    "भू-स्थानिक इंडेक्सिंग, ग्राफ़ डेटा, और ऐसी पाइपलाइनें जो लाखों रिकॉर्ड पर भी सही रहती हैं।",
-  "capabilities.quality.title": "परीक्षण, विश्वसनीयता और आर्किटेक्चर",
-  "capabilities.quality.body":
-    "स्वचालित क्वालिटी गेट, UI परीक्षण स्वचालन, और ऐसी सिस्टम सीमाएँ जो बदलाव झेल सकें।",
+    "प्रोडक्शन में एजेंट वर्कफ़्लो और रिट्रीवल, साथ में सिमेंटिक मैचिंग और पारंपरिक मशीन लर्निंग।",
+  "capabilities.testing.title": "टेस्टिंग और QA",
+  "capabilities.testing.body":
+    "स्वचालित UI और सेवा-स्तरीय क्वालिटी गेट, जो रिलीज़ को दोहराने योग्य रखते हैं।",
+  "capabilities.practices.title": "अभ्यास",
+  "capabilities.practices.body":
+    "इवेंट-ड्रिवन आर्किटेक्चर, रिट्रीवल पैटर्न, एम्बेडिंग और प्रोडक्शन में मापी गई डिलीवरी पाइपलाइनें।",
   "capabilities.footnote":
     "ऊपर सूचीबद्ध हर तकनीक किसी ऐसे प्रोजेक्ट या भूमिका से आती है जिसमें वह वास्तव में उपयोग हुई।",
 
