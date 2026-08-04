@@ -35,9 +35,10 @@ const enUS = {
   "hero.seeWork": "View work",
   "hero.resume": "Resume",
   "hero.transformScene": "Transform voxel scene",
-  "hero.formation.mask": "Mask",
+  "hero.formation.identity": "Identity",
   "hero.formation.cloud": "Cloud",
   "hero.formation.helix": "Helix",
+  "hero.monogramAlt": "Love Ahir monogram",
 
   // Hero — ivory engineering stage (an architecture diagram, never a mockup)
   "hero.stage.label": "Architecture summary",

@@ -26,13 +26,14 @@ import {
 import {
   VOXEL_COUNT,
   VOXEL_FORMATION_SPEC,
+  VOXEL_IDENTITY_ORIENTATION,
   type VoxelFormationId,
   type VoxelPose,
   type VoxelTone,
 } from "./voxelFormationSpec";
 
 /**
- * Optional WebGL enhancement for the warm voxel-mask stage.
+ * Optional WebGL enhancement for the warm LA-monogram stage.
  *
  * cx20's “Test of Three.js and Tween.js” is interaction inspiration only.
  * This renderer is independently authored: one InstancedMesh, original
@@ -41,42 +42,39 @@ import {
  */
 
 interface Palette {
-  mask: Color;
-  eye: Color;
-  web: Color;
+  front: Color;
+  side: Color;
   dust: Color;
   signal: Color;
 }
 
-function token(name: string, fallback: string): Color {
-  if (typeof window === "undefined") return new Color(fallback);
+function token(name: string): Color {
+  if (typeof window === "undefined") return new Color(1, 1, 1);
   const raw = getComputedStyle(document.documentElement)
     .getPropertyValue(name)
     .trim();
   const parts = raw.split(/\s+/);
-  if (parts.length < 3) return new Color(fallback);
+  if (parts.length < 3) return new Color(1, 1, 1);
   try {
     return new Color(`hsl(${parts[0]},${parts[1]},${parts[2]})`);
   } catch {
-    return new Color(fallback);
+    return new Color(1, 1, 1);
   }
 }
 
 function readPalette(): Palette {
   return {
-    mask: token("--voxel-mask", "#e5482f"),
-    eye: token("--voxel-eye", "#fff7e9"),
-    web: token("--voxel-web", "#241713"),
-    dust: token("--voxel-dust", "#c5a88c"),
-    signal: token("--signal", "#ff963d"),
+    front: token("--signal"),
+    side: token("--muted-foreground"),
+    dust: token("--voxel-dust"),
+    signal: token("--signal"),
   };
 }
 
 function toneColor(tone: VoxelTone, palette: Palette): Color {
-  if (tone === "eye") return palette.eye;
-  if (tone === "web") return palette.web;
+  if (tone === "side") return palette.side;
   if (tone === "dust") return palette.dust;
-  return palette.mask;
+  return palette.front;
 }
 
 function createVoxelGeometry(): RoundedBoxGeometry {
@@ -426,8 +424,12 @@ const VoxelField = ({ section, activeLayer, formation }: FieldProps) => {
     pointer.current.pitch += (pointer.target.pitch - pointer.current.pitch) * ease;
     pointer.current.yaw += (pointer.target.yaw - pointer.current.yaw) * ease;
 
-    group.rotation.x = -0.035 + pointer.current.pitch;
-    group.rotation.y = pointer.current.yaw;
+    const identity = activeFormation.current === "identity";
+    group.rotation.x =
+      (identity ? VOXEL_IDENTITY_ORIENTATION.pitch : -0.035) +
+      pointer.current.pitch;
+    group.rotation.y =
+      (identity ? VOXEL_IDENTITY_ORIENTATION.yaw : 0) + pointer.current.yaw;
     group.position.x = pointer.current.yaw * 0.26;
     group.position.y = -pointer.current.pitch * 0.18;
 
@@ -455,6 +457,7 @@ interface Props {
   activeLayer: SystemLayer | null;
   coarse: boolean;
   formation: VoxelFormationId;
+  accessibleName: string;
   onFail: () => void;
 }
 
@@ -463,12 +466,15 @@ const LatticeScene = ({
   activeLayer,
   coarse,
   formation,
+  accessibleName,
   onFail,
 }: Props) => {
   const failed = useRef(false);
 
   return (
     <Canvas
+      role="img"
+      aria-label={accessibleName}
       frameloop="demand"
       dpr={coarse ? 1 : [1, 1.5]}
       gl={{ antialias: true, alpha: true, powerPreference: "low-power" }}

@@ -22,9 +22,10 @@ const fr: Translation = {
   "hero.seeWork": "Voir mon travail",
   "hero.resume": "CV",
   "hero.transformScene": "Transformer la scène de voxels",
-  "hero.formation.mask": "Masque",
+  "hero.formation.identity": "Identité",
   "hero.formation.cloud": "Nuage",
   "hero.formation.helix": "Hélice",
+  "hero.monogramAlt": "Monogramme de Love Ahir",
 
   "hero.stage.label": "Résumé d'architecture",
   "hero.stage.step.client": "Les recruteurs déposent des CV et définissent le poste.",

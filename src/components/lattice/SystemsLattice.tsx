@@ -26,10 +26,10 @@ import {
 /**
  * Lazy enhancement boundary for the warm voxel stage.
  *
- * A complete SVG mask renders synchronously. WebGL is requested only after
- * first paint when every capability gate passes. The adjacent control is not
- * inside the decorative `aria-hidden` subtree, so it remains keyboard and
- * touch operable even when the static fallback is permanent.
+ * A complete SVG monogram renders synchronously. WebGL is requested only
+ * after first paint when every capability gate passes. The adjacent control
+ * remains keyboard and touch operable even when the static fallback is
+ * permanent.
  */
 const loadLatticeScene = () => import("./LatticeScene");
 const LatticeScene = lazy(loadLatticeScene);
@@ -48,11 +48,11 @@ const AUTO_MORPH_STEP_LIMIT = VOXEL_FORMATION_SEQUENCE.length;
 
 const FORMATION_LABEL_KEYS: Record<
   VoxelFormationId,
-  | "hero.formation.mask"
+  | "hero.formation.identity"
   | "hero.formation.cloud"
   | "hero.formation.helix"
 > = {
-  mask: "hero.formation.mask",
+  identity: "hero.formation.identity",
   cloud: "hero.formation.cloud",
   helix: "hero.formation.helix",
 };
@@ -184,12 +184,14 @@ const SystemsLattice = () => {
 
   const base = SECTION_OPACITY[section] ?? 0;
   const opacity = Math.min(1, emphasis ? base + 0.12 : base);
+  const accessibleName = t("hero.monogramAlt");
   const fallback = (
     <LatticeFallback
       section={section}
       activeLayer={activeLayer}
       coarse={coarse}
       formation={formation}
+      accessibleName={accessibleName}
     />
   );
   const formationIndex = VOXEL_FORMATION_SEQUENCE.indexOf(formation) + 1;
@@ -200,7 +202,6 @@ const SystemsLattice = () => {
   return (
     <Fragment>
       <div
-        aria-hidden="true"
         data-scene-section={section}
         data-voxel-formation={formation}
         className="systems-observatory pointer-events-none select-none"
@@ -214,6 +215,7 @@ const SystemsLattice = () => {
                 activeLayer={activeLayer}
                 coarse={coarse}
                 formation={formation}
+                accessibleName={accessibleName}
                 onFail={() => setEnhanced(false)}
               />
             </Suspense>

@@ -1,39 +1,53 @@
+import {
+  LA_GLYPH,
+  LA_GLYPH_COLUMNS,
+  LA_GLYPH_EXTRUSION_DEPTH,
+  LA_GLYPH_ROWS,
+  LA_GLYPH_VOXEL_COUNT,
+} from "@/scenes/glyphs/la";
 import { SYSTEM_LAYERS, type SystemLayer } from "./layers";
 
 /**
- * Dependency-free geometry for the dense warm voxel-mask scene.
+ * Dependency-free geometry for the warm voxel monogram scene.
  *
- * The resolved illustration combines an original tapered 22 x 28 occupancy
- * rule with a deterministic dust halo. No bitmap, image trace, model, copied
- * voxel matrix, or external source data is embedded here. WebGL and the
- * authored SVG consume the same IDs and poses, so they cannot drift apart.
+ * The resolved identity formation consumes an original 32 x 24 bitmap and
+ * extrudes every occupied cell through four Z layers. WebGL and the authored
+ * SVG consume the same stable IDs and poses, so the two renderers cannot drift
+ * into different silhouettes.
  */
 
 export const VOXEL_GRID = {
-  columns: 22,
-  rows: 28,
+  columns: LA_GLYPH_COLUMNS,
+  rows: LA_GLYPH_ROWS,
 } as const;
 
-export const VOXEL_CORE_COUNT = 432;
+export const VOXEL_CORE_COUNT =
+  LA_GLYPH_VOXEL_COUNT * LA_GLYPH_EXTRUSION_DEPTH;
 export const VOXEL_DUST_COUNT = 132;
 export const VOXEL_COUNT = VOXEL_CORE_COUNT + VOXEL_DUST_COUNT;
 
-export const VOXEL_FORMATION_IDS = ["mask", "cloud", "helix"] as const;
+export const VOXEL_FORMATION_IDS = ["identity", "cloud", "helix"] as const;
 export type VoxelFormationId = (typeof VOXEL_FORMATION_IDS)[number];
 
-export const DEFAULT_VOXEL_FORMATION: VoxelFormationId = "mask";
+export const DEFAULT_VOXEL_FORMATION: VoxelFormationId = "identity";
 export const VOXEL_FORMATION_SEQUENCE = VOXEL_FORMATION_IDS;
 
-export type VoxelTone = "mask" | "eye" | "web" | "dust";
+export const VOXEL_IDENTITY_ORIENTATION = {
+  pitch: (-4 * Math.PI) / 180,
+  yaw: (8 * Math.PI) / 180,
+} as const;
+
+export type VoxelTone = "front" | "side" | "dust";
 export type VoxelKind = "core" | "dust";
 export type VoxelVector = readonly [x: number, y: number, z: number];
 
 export interface VoxelCell {
   id: string;
   kind: VoxelKind;
-  /** Grid coordinates exist only for the 432-cell face core. */
+  /** Grid coordinates and depth exist only for the extruded monogram core. */
   row: number | null;
   column: number | null;
+  depth: number | null;
   layer: SystemLayer;
   tone: VoxelTone;
 }
@@ -47,122 +61,40 @@ export interface VoxelPose {
 export interface VoxelFormationSpec {
   cells: ReadonlyArray<VoxelCell>;
   formations: Readonly<Record<VoxelFormationId, ReadonlyArray<VoxelPose>>>;
-  /**
-   * The complete dense composition remains in the static renderer. Thinning
-   * the core damages the large paired eyes, while removing the smaller halo
-   * changes the dispersed silhouette the fallback is required to preserve.
-   */
+  /** The complete monogram and dust field remain in the static renderer. */
   staticIndices: ReadonlyArray<number>;
 }
-
-/** Exactly 432 occupied cells, centred within the 22-column source grid. */
-export const VOXEL_MASK_ROW_WIDTHS = [
-  6, 8, 10, 12, 14, 16, 18,
-  20, 20, 20, 20, 20, 20, 20, 20, 20,
-  18, 18, 18, 18, 16, 16, 14, 14, 12, 10, 8, 6,
-] as const;
 
 interface GridCoordinate {
   row: number;
   column: number;
 }
 
-const keyOf = (row: number, column: number) => `${row}:${column}`;
-
 function occupiedCoordinates(): GridCoordinate[] {
-  return VOXEL_MASK_ROW_WIDTHS.flatMap((width, row) => {
-    const start = (VOXEL_GRID.columns - width) / 2;
-    return Array.from({ length: width }, (_, offset) => ({
-      row,
-      column: start + offset,
-    }));
-  });
-}
-
-/**
- * Two mirrored swept eye interiors. The inequalities describe tapered shapes
- * in grid space; there is no stored pixel mask or traced reference image.
- */
-function isEye(row: number, column: number): boolean {
-  const x = column - (VOXEL_GRID.columns - 1) / 2;
-  const y = row - (VOXEL_GRID.rows - 1) / 2;
-  const distanceFromSeam = Math.abs(x);
-
-  if (distanceFromSeam < 1.5 || distanceFromSeam > 7.2) return false;
-
-  const inset = 7.2 - distanceFromSeam;
-  const upperEdge = -5.2 + inset * 0.42;
-  const lowerEdge = 0.5 + inset * 0.55;
-  return y >= upperEdge && y <= lowerEdge;
-}
-
-function angularDistance(angle: number, target: number): number {
-  const turn = Math.PI * 2;
-  const difference = Math.abs(angle - target) % turn;
-  return Math.min(difference, turn - difference);
-}
-
-/**
- * Low-detail web construction: a crisp eye frame, central seam, four diagonal
- * spoke families, and three loose rings. The mask remains the dominant tone.
- */
-function isWeb(
-  row: number,
-  column: number,
-  occupied: ReadonlySet<string>,
-  eyes: ReadonlySet<string>,
-): boolean {
-  const x = column - (VOXEL_GRID.columns - 1) / 2;
-  const y = (row - (VOXEL_GRID.rows - 1) / 2) * 0.78;
-
-  for (let rowOffset = -1; rowOffset <= 1; rowOffset += 1) {
-    for (let columnOffset = -1; columnOffset <= 1; columnOffset += 1) {
-      if (Math.abs(rowOffset) + Math.abs(columnOffset) !== 1) continue;
-      const neighbor = keyOf(row + rowOffset, column + columnOffset);
-      if (occupied.has(neighbor) && eyes.has(neighbor)) return true;
-    }
-  }
-
-  if (Math.abs(x) <= 0.51) return true;
-
-  const radius = Math.hypot(x, y);
-  const angle = Math.atan2(y, x);
-  const onSpoke = Array.from({ length: 4 }, (_, index) => index * Math.PI / 4)
-    .some((target) => angularDistance(angle, target) < 0.025);
-  const onRing = [4.1, 6.5, 8.6]
-    .some((ring) => Math.abs(radius - ring) < 0.05);
-
-  return onSpoke || onRing;
+  return LA_GLYPH.flatMap((line, row) =>
+    Array.from(line).flatMap((cell, column) =>
+      cell === "#" ? [{ row, column }] : [],
+    ),
+  );
 }
 
 function buildCoreCells(): VoxelCell[] {
-  const coordinates = occupiedCoordinates();
-  const occupied = new Set(
-    coordinates.map(({ row, column }) => keyOf(row, column)),
+  let index = 0;
+  return occupiedCoordinates().flatMap(({ row, column }) =>
+    Array.from({ length: LA_GLYPH_EXTRUSION_DEPTH }, (_, depth) => {
+      const cell: VoxelCell = {
+        id: `monogram-r${String(row).padStart(2, "0")}-c${String(column).padStart(2, "0")}-z${depth}`,
+        kind: "core",
+        row,
+        column,
+        depth,
+        layer: SYSTEM_LAYERS[index % SYSTEM_LAYERS.length],
+        tone: depth === 0 ? "front" : "side",
+      };
+      index += 1;
+      return cell;
+    }),
   );
-  const eyes = new Set(
-    coordinates
-      .filter(({ row, column }) => isEye(row, column))
-      .map(({ row, column }) => keyOf(row, column)),
-  );
-
-  return coordinates.map(({ row, column }, index) => {
-    const key = keyOf(row, column);
-    const tone: VoxelTone = eyes.has(key)
-      ? "eye"
-      : isWeb(row, column, occupied, eyes)
-        ? "web"
-        : "mask";
-
-    return {
-      id: `voxel-r${String(row).padStart(2, "0")}-c${String(column).padStart(2, "0")}`,
-      kind: "core",
-      row,
-      column,
-      layer: SYSTEM_LAYERS[index % SYSTEM_LAYERS.length],
-      tone,
-    };
-  });
 }
 
 function buildDustCells(offset: number): VoxelCell[] {
@@ -171,6 +103,7 @@ function buildDustCells(offset: number): VoxelCell[] {
     kind: "dust" as const,
     row: null,
     column: null,
+    depth: null,
     layer: SYSTEM_LAYERS[(offset + dustIndex) % SYSTEM_LAYERS.length],
     tone: "dust" as const,
   }));
@@ -189,39 +122,30 @@ function halton(index: number, base: number): number {
   return result;
 }
 
-function coreMaskPose(cell: VoxelCell, index: number): VoxelPose {
-  if (cell.row === null || cell.column === null) {
-    throw new Error(`Core voxel ${cell.id} is missing grid coordinates`);
+function coreIdentityPose(cell: VoxelCell): VoxelPose {
+  if (cell.row === null || cell.column === null || cell.depth === null) {
+    throw new Error(`Core voxel ${cell.id} is missing glyph coordinates`);
   }
 
-  const x = (cell.column - (VOXEL_GRID.columns - 1) / 2) * 0.17;
-  const y = ((VOXEL_GRID.rows - 1) / 2 - cell.row) * 0.14;
-  const normalizedRadius = Math.min(
-    1,
-    Math.hypot(x / 1.72, y / 1.96),
-  );
-  const z = 0.02 + (1 - normalizedRadius * normalizedRadius) * 0.34;
-  const toneScale = cell.tone === "web" ? 0.68 : cell.tone === "eye" ? 0.9 : 0.84;
+  const x = (cell.column - 15) * 0.16;
+  const y = (11.5 - cell.row) * 0.16;
+  const z = 0.28 - cell.depth * 0.14;
 
   return {
     position: [x, y, z],
-    rotation: [
-      -y * 0.024,
-      x * 0.038,
-      ((cell.row + cell.column) % 3 - 1) * 0.014,
-    ],
-    scale: toneScale + (index % 5) * 0.02,
+    rotation: [0, 0, 0],
+    scale: 0.82,
   };
 }
 
-/** Smaller cubes orbit the resolved silhouette in a deterministic loose halo. */
-function dustMaskPose(dustIndex: number): VoxelPose {
+/** Smaller cubes orbit the resolved monogram in a deterministic loose halo. */
+function dustIdentityPose(dustIndex: number): VoxelPose {
   const ordinal = dustIndex + 1;
   const goldenAngle = Math.PI * (3 - Math.sqrt(5));
   const angle = dustIndex * goldenAngle + (halton(ordinal, 3) - 0.5) * 0.24;
   const spread = 1.04 + Math.pow(halton(ordinal, 2), 1.45) * 0.78;
-  const x = Math.cos(angle) * 1.76 * spread + (halton(ordinal, 5) - 0.5) * 0.14;
-  const y = Math.sin(angle) * 2.08 * spread + (halton(ordinal, 7) - 0.5) * 0.14;
+  const x = Math.cos(angle) * 1.8 * spread + (halton(ordinal, 5) - 0.5) * 0.14;
+  const y = Math.sin(angle) * 1.9 * spread + (halton(ordinal, 7) - 0.5) * 0.14;
   const z = (halton(ordinal, 11) - 0.5) * 1.7;
 
   return {
@@ -235,11 +159,11 @@ function dustMaskPose(dustIndex: number): VoxelPose {
   };
 }
 
-function maskPoses(cells: ReadonlyArray<VoxelCell>): VoxelPose[] {
+function identityPoses(cells: ReadonlyArray<VoxelCell>): VoxelPose[] {
   let dustIndex = 0;
-  return cells.map((cell, index) => {
-    if (cell.kind === "core") return coreMaskPose(cell, index);
-    const pose = dustMaskPose(dustIndex);
+  return cells.map((cell) => {
+    if (cell.kind === "core") return coreIdentityPose(cell);
+    const pose = dustIdentityPose(dustIndex);
     dustIndex += 1;
     return pose;
   });
@@ -316,7 +240,7 @@ export function createVoxelFormationSpec(): VoxelFormationSpec {
   return {
     cells,
     formations: {
-      mask: maskPoses(cells),
+      identity: identityPoses(cells),
       cloud: cloudPoses(cells),
       helix: cells.map(helixPose),
     },

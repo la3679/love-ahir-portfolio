@@ -22,9 +22,10 @@ const de: Translation = {
   "hero.seeWork": "Meine Arbeit ansehen",
   "hero.resume": "Lebenslauf",
   "hero.transformScene": "Voxelszene umformen",
-  "hero.formation.mask": "Maske",
+  "hero.formation.identity": "Identität",
   "hero.formation.cloud": "Wolke",
   "hero.formation.helix": "Helix",
+  "hero.monogramAlt": "Love-Ahir-Monogramm",
 
   "hero.stage.label": "Architekturüberblick",
   "hero.stage.step.client":

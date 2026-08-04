@@ -4,21 +4,22 @@ import LatticeFallback from "./LatticeFallback";
 import { VOXEL_COUNT, VOXEL_FORMATION_SPEC } from "./voxelFormationSpec";
 
 describe("LatticeFallback", () => {
-  it("renders the complete authored mask on first paint", () => {
+  it("renders the complete authored LA monogram on first paint", () => {
     const { container } = render(<LatticeFallback />);
     const svg = container.querySelector("svg");
 
     expect(svg).toHaveAttribute("data-voxel-density", "desktop");
-    expect(svg).toHaveAttribute("data-voxel-formation", "mask");
+    expect(svg).toHaveAttribute("data-voxel-formation", "identity");
+    expect(svg).toHaveAccessibleName("Love Ahir monogram");
     expect(container.querySelectorAll("[data-voxel-id]")).toHaveLength(
       VOXEL_COUNT,
     );
-    expect(container.querySelectorAll('[data-voxel-tone="eye"]')).toHaveLength(
-      VOXEL_FORMATION_SPEC.cells.filter((cell) => cell.tone === "eye").length,
+    expect(container.querySelectorAll('[data-voxel-tone="front"]')).toHaveLength(
+      VOXEL_FORMATION_SPEC.cells.filter((cell) => cell.tone === "front").length,
     );
   });
 
-  it("retains the complete dense mask and halo on coarse devices", () => {
+  it("retains the complete extruded monogram and halo on coarse devices", () => {
     const { container } = render(<LatticeFallback coarse />);
     expect(container.querySelector("svg")).toHaveAttribute(
       "data-voxel-density",

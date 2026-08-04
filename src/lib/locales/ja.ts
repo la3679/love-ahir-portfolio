@@ -22,9 +22,10 @@ const ja: Translation = {
   "hero.seeWork": "実績を見る",
   "hero.resume": "履歴書",
   "hero.transformScene": "ボクセルシーンを変形",
-  "hero.formation.mask": "マスク",
+  "hero.formation.identity": "アイデンティティ",
   "hero.formation.cloud": "クラウド",
   "hero.formation.helix": "ヘリックス",
+  "hero.monogramAlt": "Love Ahir モノグラム",
 
   "hero.stage.label": "アーキテクチャ概要",
   "hero.stage.step.client": "採用担当者が履歴書をアップロードし、職務要件を設定します。",

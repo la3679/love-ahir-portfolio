@@ -15,7 +15,7 @@ import {
 /**
  * The spatial layer is an enhancement, never the interface. These tests lock
  * the three properties that keep that true: it never enters the tab order, it
- * is never exposed to assistive technology, and the WebGL chunk is only ever
+ * has one concise accessible identity, and the WebGL chunk is only ever
  * requested when every capability gate passes (IMPLEMENTATION.md §31.7).
  */
 
@@ -117,10 +117,12 @@ describe("SystemsLattice", () => {
     expect(container.querySelector("canvas")).toBeNull();
   });
 
-  it("keeps the whole layer out of the accessibility tree and the tab order", () => {
+  it("names the monogram without adding it to the tab order", () => {
     const { container } = renderLattice();
     const layer = container.firstElementChild as HTMLElement;
-    expect(layer).toHaveAttribute("aria-hidden", "true");
+    expect(
+      screen.getByRole("img", { name: "Love Ahir monogram" }),
+    ).toBeInTheDocument();
     expect(layer.className).toContain("pointer-events-none");
     // Nothing inside is focusable, so it can never receive a Tab stop.
     expect(
@@ -128,23 +130,25 @@ describe("SystemsLattice", () => {
     ).toHaveLength(0);
   });
 
-  it("keeps the artwork decorative but exposes one real transform control", () => {
+  it("exposes the named artwork and one real transform control", () => {
     const { container } = renderLattice();
     const button = screen.getByRole("button", {
       name: /transform voxel scene: cloud/i,
     });
-    const hiddenArtwork = container.firstElementChild as HTMLElement;
+    const artwork = container.firstElementChild as HTMLElement;
 
     expect(button).toBeInTheDocument();
-    expect(button).not.toBe(hiddenArtwork);
-    expect(hiddenArtwork).not.toContainElement(button);
+    expect(button).not.toBe(artwork);
+    expect(artwork).not.toContainElement(button);
     expect(button.className).toContain("min-h-11");
     expect(button.className).toContain("min-w-11");
-    expect(screen.getByRole("status")).toHaveTextContent("Mask");
-    expect(screen.queryAllByRole("img")).toHaveLength(0);
+    expect(screen.getByRole("status")).toHaveTextContent("Identity");
+    expect(
+      screen.getAllByRole("img", { name: "Love Ahir monogram" }),
+    ).toHaveLength(1);
   });
 
-  it("cycles the synchronous fallback through mask, cloud and helix", () => {
+  it("cycles the synchronous fallback through identity, cloud and helix", () => {
     const { container } = renderLattice();
     const button = screen.getByRole("button", { name: /transform voxel scene/i });
     const formation = () =>
@@ -152,7 +156,7 @@ describe("SystemsLattice", () => {
         "data-voxel-formation",
       );
 
-    expect(formation()).toBe("mask");
+    expect(formation()).toBe("identity");
     fireEvent.click(button);
     expect(formation()).toBe("cloud");
     expect(screen.getByRole("status")).toHaveTextContent("Cloud");
@@ -160,10 +164,10 @@ describe("SystemsLattice", () => {
     fireEvent.click(button);
     expect(formation()).toBe("helix");
     fireEvent.click(button);
-    expect(formation()).toBe("mask");
+    expect(formation()).toBe("identity");
   });
 
-  it("settles on the mask when reduced motion is enabled after mount", () => {
+  it("settles on identity when reduced motion is enabled after mount", () => {
     let reduced = false;
     const listeners = new Set<(event: MediaQueryListEvent) => void>();
     const query = {
@@ -198,9 +202,9 @@ describe("SystemsLattice", () => {
 
     expect(
       container.querySelector("[data-voxel-formation]"),
-    ).toHaveAttribute("data-voxel-formation", "mask");
+    ).toHaveAttribute("data-voxel-formation", "identity");
     expect(container.querySelector("canvas")).toBeNull();
-    expect(screen.getByRole("status")).toHaveTextContent("Mask");
+    expect(screen.getByRole("status")).toHaveTextContent("Identity");
   });
 
   it("never requests the 3D chunk when a gate rejects the device", async () => {

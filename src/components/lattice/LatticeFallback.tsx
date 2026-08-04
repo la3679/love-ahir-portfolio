@@ -12,10 +12,10 @@ import {
 /**
  * Complete SVG-first counterpart to the lazy voxel scene.
  *
- * The face is independently plotted by `voxelFormationSpec.ts`; no bitmap,
- * logo, texture or copied CodePen voxel array is embedded here. This remains
- * the finished experience for reduced motion, Save-Data, coarse pointers,
- * unavailable WebGL, import failure and context loss.
+ * The LA glyph is independently authored in `src/scenes/glyphs/la.ts`; no
+ * external bitmap, texture, model or copied voxel array is embedded here.
+ * This remains the finished experience for reduced motion, Save-Data, coarse
+ * pointers, unavailable WebGL, import failure and context loss.
  */
 
 interface Props {
@@ -23,6 +23,7 @@ interface Props {
   activeLayer?: SystemLayer | null;
   coarse?: boolean;
   formation?: VoxelFormationId;
+  accessibleName?: string;
 }
 
 const VIEWBOX = { width: 1200, height: 900 } as const;
@@ -38,10 +39,9 @@ function projectVoxelPoint([x, y, z]: VoxelVector): {
 }
 
 function toneFill(tone: VoxelTone): string {
-  if (tone === "eye") return "hsl(var(--voxel-eye))";
-  if (tone === "web") return "hsl(var(--voxel-web))";
+  if (tone === "side") return "hsl(var(--muted-foreground))";
   if (tone === "dust") return "hsl(var(--voxel-dust))";
-  return "hsl(var(--voxel-mask))";
+  return "hsl(var(--signal))";
 }
 
 const LatticeFallback = ({
@@ -49,8 +49,9 @@ const LatticeFallback = ({
   activeLayer = null,
   coarse = false,
   formation = DEFAULT_VOXEL_FORMATION,
+  accessibleName = "Love Ahir monogram",
 }: Props) => {
-  const glowId = `voxel-mask-glow-${useId().replace(/:/g, "")}`;
+  const glowId = `voxel-monogram-glow-${useId().replace(/:/g, "")}`;
   const calm = section === "calm" || section === "experience";
   const pose = VOXEL_FORMATION_SPEC.formations[formation];
 
@@ -69,6 +70,8 @@ const LatticeFallback = ({
       className="h-full w-full"
       style={{ opacity: calm ? 0.56 : 1 }}
       focusable="false"
+      role="img"
+      aria-label={accessibleName}
       data-voxel-density={coarse ? "coarse" : "desktop"}
       data-voxel-formation={formation}
       shapeRendering="geometricPrecision"
@@ -89,7 +92,7 @@ const LatticeFallback = ({
         fill={`url(#${glowId})`}
       />
 
-      <g data-voxel-composition="dense-fan-art-mask">
+      <g data-voxel-composition="la-monogram">
         {ordered.map((index) => {
           const cell = VOXEL_FORMATION_SPEC.cells[index];
           const voxelPose = pose[index];
@@ -117,7 +120,8 @@ const LatticeFallback = ({
                   : "hsl(var(--stage-foreground) / 0.2)"
               }
               strokeWidth={selected ? 2.4 : 0.75}
-              opacity={selected ? 1 : cell.tone === "web" ? 0.9 : 0.96}
+              opacity={selected ? 1 : cell.tone === "dust" ? 0.78 :
+                cell.tone === "side" ? 0.84 : 0.98}
               vectorEffect="non-scaling-stroke"
             />
           );

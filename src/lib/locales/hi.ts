@@ -22,9 +22,10 @@ const hi: Translation = {
   "hero.seeWork": "मेरा कार्य देखें",
   "hero.resume": "रिज़्यूमे",
   "hero.transformScene": "वॉक्सेल दृश्य बदलें",
-  "hero.formation.mask": "मुखौटा",
+  "hero.formation.identity": "पहचान",
   "hero.formation.cloud": "बादल",
   "hero.formation.helix": "कुंडली",
+  "hero.monogramAlt": "Love Ahir मोनोग्राम",
 
   "hero.stage.label": "आर्किटेक्चर सारांश",
   "hero.stage.step.client": "भर्तीकर्ता रिज़्यूमे अपलोड करते हैं और भूमिका तय करते हैं।",

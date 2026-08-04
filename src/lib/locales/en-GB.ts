@@ -25,9 +25,10 @@ const enGB: Translation = {
   "hero.seeWork": "View work",
   "hero.resume": "CV",
   "hero.transformScene": "Transform voxel scene",
-  "hero.formation.mask": "Mask",
+  "hero.formation.identity": "Identity",
   "hero.formation.cloud": "Cloud",
   "hero.formation.helix": "Helix",
+  "hero.monogramAlt": "Love Ahir monogram",
 
   "hero.stage.label": "Architecture summary",
   "hero.stage.step.client": "Recruiters upload CVs and define the role.",

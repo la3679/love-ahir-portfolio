@@ -22,9 +22,10 @@ const gu: Translation = {
   "hero.seeWork": "મારું કાર્ય જુઓ",
   "hero.resume": "રિઝ્યુમે",
   "hero.transformScene": "વોક્સેલ દૃશ્ય બદલો",
-  "hero.formation.mask": "માસ્ક",
+  "hero.formation.identity": "ઓળખ",
   "hero.formation.cloud": "વાદળ",
   "hero.formation.helix": "સર્પિલ",
+  "hero.monogramAlt": "Love Ahir મોનોગ્રામ",
 
   "hero.stage.label": "આર્કિટેક્ચર સારાંશ",
   "hero.stage.step.client": "ભરતીકારો રિઝ્યુમે અપલોડ કરે છે અને ભૂમિકા નક્કી કરે છે.",
