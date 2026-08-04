@@ -42,10 +42,7 @@
     --accent-foreground: 0 0% 100%;
     /* Mono metadata accent (replaces the retired --evidence token). */
     --signal: 24 95% 36%;
-    /* Independently plotted fan-art voxels: warm red mask, ivory eyes, dark web. */
-    --voxel-mask: 7 79% 47%;
-    --voxel-eye: 38 48% 96%;
-    --voxel-web: 22 28% 10%;
+    /* Loose voxels around the signal-coloured LA monogram. */
     --voxel-dust: 27 22% 54%;
     /* Decorative / large-mono only — never body copy. */
     --faint: 27 8% 52%;
@@ -84,9 +81,6 @@
     --accent: 28 100% 62%;
     --accent-foreground: 20 16% 4%;
     --signal: 28 100% 62%;
-    --voxel-mask: 8 88% 58%;
-    --voxel-eye: 38 48% 96%;
-    --voxel-web: 22 32% 8%;
     --voxel-dust: 30 28% 70%;
     --faint: 27 8% 44%;
     --stage: 38 31% 93%;
@@ -294,6 +288,97 @@
     @apply relative py-14 md:py-20;
   }
 
+  /* One fixed FX plane, mounted by Layout outside every transformed section. */
+  .fx {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .fx__constellation {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    opacity: 0.82;
+    -webkit-mask-image: radial-gradient(
+      ellipse 108% 86% at 54% 12%,
+      hsl(var(--foreground)) 0%,
+      hsl(var(--foreground) / 0.78) 50%,
+      hsl(var(--foreground) / 0.24) 78%,
+      transparent 100%
+    );
+    mask-image: radial-gradient(
+      ellipse 108% 86% at 54% 12%,
+      hsl(var(--foreground)) 0%,
+      hsl(var(--foreground) / 0.78) 50%,
+      hsl(var(--foreground) / 0.24) 78%,
+      transparent 100%
+    );
+  }
+
+  .orb {
+    position: absolute;
+    width: min(42rem, 62vw);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.62;
+    will-change: transform;
+    background: radial-gradient(
+      circle,
+      hsl(var(--signal) / 0.18),
+      transparent 70%
+    );
+    animation: orb-float 22s ease-in-out infinite alternate;
+  }
+
+  .orb--1 {
+    right: -14%;
+    top: -24%;
+  }
+
+  .orb--2 {
+    bottom: 8%;
+    left: -18%;
+    width: min(34rem, 56vw);
+    animation-duration: 27s;
+    animation-direction: alternate-reverse;
+  }
+
+  .orb--3 {
+    bottom: -30%;
+    right: 16%;
+    width: min(30rem, 48vw);
+    opacity: 0.42;
+    animation-duration: 31s;
+  }
+
+  .fx[data-paused="true"] .orb {
+    animation-play-state: paused;
+  }
+
+  @keyframes orb-float {
+    from {
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+    to {
+      transform: translate3d(6vw, -4vh, 0) scale(1.08);
+    }
+  }
+
+  main > section,
+  .app-shell > header,
+  .app-shell > footer,
+  .app-shell > section {
+    position: relative;
+    z-index: 1;
+  }
+
   /* The scene is a physical child of the hero stage. SVG, canvas, grid, clip,
      border radius and pointer coordinates therefore share one box. */
   .systems-observatory {
@@ -330,7 +415,7 @@
       transform 620ms cubic-bezier(0.16, 1.16, 0.3, 1),
       box-shadow 320ms var(--ease-out);
     background:
-      radial-gradient(circle at 54% 44%, hsl(var(--voxel-mask) / 0.14), transparent 48%),
+      radial-gradient(circle at 54% 44%, hsl(var(--signal) / 0.14), transparent 48%),
       linear-gradient(145deg, hsl(var(--card) / 0.96), hsl(var(--background) / 0.9));
     box-shadow:
       inset 0 0 0 1px hsl(var(--foreground) / 0.018),
@@ -590,6 +675,12 @@
 
   .rise-in {
     animation: none;
+  }
+
+  .orb {
+    animation: none !important;
+    transform: none !important;
+    will-change: auto;
   }
 
   .stage-tech-rail__track {

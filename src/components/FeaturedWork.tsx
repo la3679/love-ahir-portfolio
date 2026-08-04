@@ -92,7 +92,7 @@ const WorkEntry = ({ study, index }: { study: CaseStudy; index: number }) => {
   return (
     <motion.li
       variants={riseUp}
-      className="depth-hover flex h-full snap-start flex-col rounded-xl border border-border bg-card/60 p-5 shadow-card transition-colors focus-within:border-border-bright md:p-6"
+      className="depth-hover flex h-full snap-start flex-col rounded-xl border border-border bg-card/80 p-5 shadow-card backdrop-blur-sm transition-colors focus-within:border-border-bright md:p-6"
     >
       {study.media.length > 0 && <MediaFrame media={study.media[0]} className="mb-6" />}
 

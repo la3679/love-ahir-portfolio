@@ -63,13 +63,13 @@ const Capabilities = () => {
 
         <motion.ul
           {...revealGroup}
-          className="mt-10 grid snap-x snap-mandatory grid-flow-col auto-cols-[min(82vw,20rem)] gap-3 overflow-x-auto overscroll-x-contain pb-4 md:block md:overflow-hidden md:rounded-2xl md:border md:border-border md:bg-card/40 md:pb-0"
+          className="mt-10 grid snap-x snap-mandatory grid-flow-col auto-cols-[min(82vw,20rem)] gap-3 overflow-x-auto overscroll-x-contain pb-4 md:block md:overflow-hidden md:rounded-2xl md:border md:border-border md:bg-card/80 md:pb-0 md:backdrop-blur-sm"
         >
           {CAPABILITIES.map(({ id, Icon, tech }) => (
             <motion.li
               key={id}
               variants={riseUp}
-              className="grid snap-start grid-cols-[2.5rem_minmax(0,1fr)] gap-3 rounded-xl border border-border bg-card/40 p-4 md:grid-cols-[2.5rem_12rem_minmax(0,1fr)] md:items-start md:gap-5 md:rounded-none md:border-x-0 md:border-t-0 md:bg-transparent md:p-5 md:last:border-b-0 lg:grid-cols-[2.5rem_12rem_minmax(0,1fr)_minmax(15rem,0.8fr)]"
+              className="grid snap-start grid-cols-[2.5rem_minmax(0,1fr)] gap-3 rounded-xl border border-border bg-card/80 p-4 backdrop-blur-sm md:grid-cols-[2.5rem_12rem_minmax(0,1fr)] md:items-start md:gap-5 md:rounded-none md:border-x-0 md:border-t-0 md:bg-transparent md:p-5 md:backdrop-blur-none md:last:border-b-0 lg:grid-cols-[2.5rem_12rem_minmax(0,1fr)_minmax(15rem,0.8fr)]"
             >
               <span className="grid h-10 w-10 place-items-center rounded-full border border-signal/25 bg-signal/5">
                 <Icon className="h-4 w-4 text-signal" aria-hidden="true" />

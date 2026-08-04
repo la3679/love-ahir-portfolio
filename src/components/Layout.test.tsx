@@ -68,6 +68,17 @@ const headerLink = (href: string) => {
 };
 
 describe("hash deep linking", () => {
+  it("mounts exactly one global FX layer as a direct sibling of main", () => {
+    const { container } = renderAt("/");
+    const layer = container.querySelector("[data-fx-layer]");
+    const main = container.querySelector("main");
+
+    expect(layer).toBeInTheDocument();
+    expect(container.querySelectorAll("[data-fx-layer]")).toHaveLength(1);
+    expect(layer?.parentElement).toBe(main?.parentElement);
+    expect(layer?.parentElement).toHaveClass("relative", "min-h-screen");
+  });
+
   it("handles a hash present on the initial render", async () => {
     // The old `firstRender` early return skipped this entirely: a direct hit
     // on /about#experience left scrollY at 0 with focus on <body>.

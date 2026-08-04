@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 import { profile } from "@/data/portfolio";
 import { riseDelay } from "@/lib/motion";
 import { usePointerDepth } from "@/lib/pointerMotion";
-import HeroAmbient from "./ambient/HeroAmbient";
 import SystemsLattice from "./lattice/SystemsLattice";
 import { useLattice, useSceneSection } from "./lattice/latticeState";
 
@@ -23,8 +22,8 @@ const BOTTOM_STAGE_TECH = [
  *
  * Copy owns the left plane and the spatial system is physically mounted inside
  * the right-hand stage. SVG first paint and the lazy WebGL enhancement now
- * share one clipped coordinate system. A separate, quiet 2D particle layer
- * gives the surrounding hero depth without moving or obscuring any content.
+ * share one clipped coordinate system. The global FX layer is mounted once by
+ * Layout, outside this isolated hero stacking context.
  */
 const Hero = () => {
   const { t } = useTranslation();
@@ -43,8 +42,6 @@ const Hero = () => {
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 -z-[1] bg-[radial-gradient(55%_65%_at_84%_36%,hsl(var(--primary)/0.08),transparent_72%)]"
       />
-
-      <HeroAmbient excludeRef={stageRef} />
 
       <div className="container relative z-10 grid items-center gap-10 pb-10 lg:grid-cols-[minmax(20rem,0.84fr)_minmax(30rem,1.16fr)] lg:gap-10 lg:pb-16 xl:gap-14">
         <div className="relative z-10 max-w-3xl">

@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import Navigation from "./Navigation";
 import Contact from "./Contact";
 import Footer from "./Footer";
+import FxLayer from "./FxLayer";
 import { injectJsonLd, personJsonLd } from "./Seo";
 
 /**
@@ -119,13 +120,14 @@ const Layout = () => {
   }, [pathname, hash]);
 
   return (
-    <div className="relative min-h-screen">
+    <div className="app-shell relative min-h-screen">
+      <FxLayer />
       <a href="#main" className="skip-link">
         {t("nav.skipToContent")}
       </a>
       <Navigation />
       {/* tabIndex=-1 lets route changes focus the main region programmatically */}
-      <main id="main" ref={mainRef} tabIndex={-1} className="outline-none">
+      <main id="main" ref={mainRef} tabIndex={-1} className="relative z-[1] outline-none">
         <Outlet />
       </main>
       <Contact />

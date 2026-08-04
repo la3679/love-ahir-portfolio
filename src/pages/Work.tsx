@@ -43,7 +43,7 @@ const Work = () => {
           </h2>
           <motion.ol
             {...revealGroup}
-            className="mt-4"
+            className="mt-4 overflow-hidden rounded-xl border border-border bg-card/80 px-3 shadow-card backdrop-blur-sm md:px-0"
           >
             {caseStudies.map((cs, i) => (
               <motion.li key={cs.slug} variants={riseUp} className="hairline-t">
@@ -77,7 +77,7 @@ const Work = () => {
           </h2>
           <motion.ol
             {...revealGroup}
-            className="mt-4"
+            className="mt-4 overflow-hidden rounded-xl border border-border bg-card/80 px-3 shadow-card backdrop-blur-sm md:px-0"
             start={caseStudies.length + 1}
           >
             {archive.map((p, i) => (
