@@ -10,7 +10,27 @@ export const VOXEL_MORPH_ACTIVE_MS = 1500;
 export const VOXEL_MORPH_STAGGER_MS = 180;
 export const VOXEL_MORPH_DURATION_MS =
   VOXEL_MORPH_ACTIVE_MS + VOXEL_MORPH_STAGGER_MS;
-export const VOXEL_IDLE_YAW_RADIANS_PER_SECOND = 0.05;
+/**
+ * Bounded idle drift around each formation's rest pose.
+ *
+ * The rest pose — ~8° yaw and -4° pitch for the monogram — is what makes the
+ * object read as extruded rather than as a flat glyph. Idle motion used to
+ * accumulate yaw without bound at 0.05 rad/s, so the scene completed a full
+ * revolution roughly every two minutes and periodically presented edge-on as
+ * an unreadable vertical slab.
+ *
+ * The drift is now an oscillation about the rest pose instead of a rotation
+ * away from it: wide enough to stay alive, never wide enough to lose the
+ * extrusion. The two axes use different periods so the combined motion does
+ * not visibly repeat and the object is never momentarily still on both axes
+ * at once.
+ */
+export const VOXEL_IDLE_DRIFT = {
+  yawRadians: (11 * Math.PI) / 180,
+  pitchRadians: (3 * Math.PI) / 180,
+  yawPeriodSeconds: 19,
+  pitchPeriodSeconds: 27,
+} as const;
 
 export const VOXEL_ORBIT = {
   hoverPitchRadians: (3.5 * Math.PI) / 180,
@@ -67,6 +87,25 @@ export function dampingFactor(response: number, deltaSeconds: number): number {
 export interface OrbitTarget {
   pitch: number;
   yaw: number;
+}
+
+/**
+ * Idle offset from the rest pose at `elapsedSeconds`. Bounded by construction:
+ * both components are a sine scaled by the amplitudes above, so no elapsed
+ * time — however large, and however long the tab was left open — can rotate
+ * the object past `VOXEL_IDLE_DRIFT`.
+ */
+export function voxelIdleDrift(elapsedSeconds: number): OrbitTarget {
+  const phase = (period: number) => (elapsedSeconds / period) * Math.PI * 2;
+
+  return {
+    pitch:
+      Math.sin(phase(VOXEL_IDLE_DRIFT.pitchPeriodSeconds)) *
+      VOXEL_IDLE_DRIFT.pitchRadians,
+    yaw:
+      Math.sin(phase(VOXEL_IDLE_DRIFT.yawPeriodSeconds)) *
+      VOXEL_IDLE_DRIFT.yawRadians,
+  };
 }
 
 /**

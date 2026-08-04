@@ -15,12 +15,12 @@ import type { SystemLayer } from "./layers";
 import type { SceneSection } from "./latticeState";
 import {
   VOXEL_MORPH_DURATION_MS,
-  VOXEL_IDLE_YAW_RADIANS_PER_SECOND,
   VOXEL_POINTER_RESPONSE,
   dampingFactor,
   interpolate,
   mapVoxelOrbit,
   motionSettled,
+  voxelIdleDrift,
   voxelMorphProgress,
   type OrbitTarget,
 } from "./sceneMotion";
@@ -162,7 +162,7 @@ const VoxelField = ({
   const contextLost = useRef(false);
   const activeFormation = useRef<VoxelFormationId>(formation);
   const transition = useRef({ active: false, startedAt: 0, maximumDistance: 1 });
-  const idleYaw = useRef(0);
+  const idleClock = useRef(0);
   const pulseClock = useRef(0);
   const orbit = useRef<{
     current: OrbitTarget;
@@ -483,11 +483,10 @@ const VoxelField = ({
     }
 
     const liveMotion = motionAllowed && section === "hero";
-    if (liveMotion) {
-      idleYaw.current =
-        (idleYaw.current + delta * VOXEL_IDLE_YAW_RADIANS_PER_SECOND) %
-        (Math.PI * 2);
-    }
+    // The clock only advances while the scene is live, so pausing holds the
+    // current drift rather than snapping the object back to its rest pose.
+    if (liveMotion) idleClock.current += delta;
+    const idleDrift = voxelIdleDrift(idleClock.current);
 
     if (liveMotion && activeFormation.current === "architecture") {
       pulseClock.current += delta;
@@ -531,10 +530,14 @@ const VoxelField = ({
     const baseYaw = identity
       ? VOXEL_IDENTITY_ORIENTATION.yaw
       : architecture ? 0.18 : 0.22;
-    group.rotation.x =
-      basePitch + pointer.current.pitch;
-    group.rotation.y =
-      baseYaw + idleYaw.current + pointer.current.yaw;
+    /*
+      Every formation orbits its own rest pose by the same bounded drift. The
+      monogram needs it to stay readable as an extruded LA; architecture and
+      throughput need it for the same reason — a full revolution turns the
+      layered diagram edge-on and destroys the left-to-right pulse reading.
+    */
+    group.rotation.x = basePitch + idleDrift.pitch + pointer.current.pitch;
+    group.rotation.y = baseYaw + idleDrift.yaw + pointer.current.yaw;
     group.position.x = pointer.current.yaw * 0.26;
     group.position.y = -pointer.current.pitch * 0.18;
 
