@@ -15,14 +15,35 @@ import {
   VOXEL_GRID,
   VOXEL_IDENTITY_ORIENTATION,
   createVoxelFormationSpec,
-  type VoxelPose,
+  type VoxelFormationTarget,
 } from "./voxelFormationSpec";
 
-const everyNumber = (pose: VoxelPose) => [
-  ...pose.position,
-  ...pose.rotation,
-  pose.scale,
-];
+/*
+  Formation targets are struct-of-arrays typed buffers, not an array of pose
+  objects: `position` and `rotation` hold three floats per voxel and `scale`
+  holds one. These helpers keep the intent of each assertion readable without
+  rebuilding that layout into objects on every access.
+*/
+const positionAt = (target: VoxelFormationTarget, index: number) =>
+  [
+    target.position[index * 3],
+    target.position[index * 3 + 1],
+    target.position[index * 3 + 2],
+  ] as const;
+
+const positions = (target: VoxelFormationTarget) =>
+  Array.from({ length: VOXEL_COUNT }, (_, index) => positionAt(target, index));
+
+const axisSpan = (target: VoxelFormationTarget, axis: 0 | 1 | 2) => {
+  const values = positions(target).map((position) => position[axis]);
+  return Math.max(...values) - Math.min(...values);
+};
+
+const centroid = (target: VoxelFormationTarget) =>
+  ([0, 1, 2] as const).map((axis) => {
+    const values = positions(target).map((position) => position[axis]);
+    return values.reduce((sum, value) => sum + value, 0) / values.length;
+  });
 
 describe("voxel LA-monogram formation specification", () => {
   it("extrudes the 32 x 24 glyph through four layers and preserves the pool", () => {
@@ -31,8 +52,9 @@ describe("voxel LA-monogram formation specification", () => {
       LA_GLYPH_VOXEL_COUNT * LA_GLYPH_EXTRUSION_DEPTH,
     );
     expect(VOXEL_CORE_COUNT).toBe(432);
-    expect(VOXEL_DUST_COUNT).toBe(132);
-    expect(VOXEL_COUNT).toBe(564);
+    expect(VOXEL_DUST_COUNT).toBe(968);
+    expect(VOXEL_COUNT).toBe(1400);
+    expect(VOXEL_CORE_COUNT + VOXEL_DUST_COUNT).toBe(VOXEL_COUNT);
 
     const core = VOXEL_FORMATION_SPEC.cells.filter((cell) => cell.kind === "core");
     const dust = VOXEL_FORMATION_SPEC.cells.filter((cell) => cell.kind === "dust");
@@ -47,14 +69,19 @@ describe("voxel LA-monogram formation specification", () => {
     expect(createVoxelFormationSpec()).toEqual(VOXEL_FORMATION_SPEC);
   });
 
-  it("keeps identical cube ordering through identity, cloud and helix", () => {
+  it("keeps identical cube ordering through all three formations", () => {
     expect(DEFAULT_VOXEL_FORMATION).toBe("identity");
-    expect(VOXEL_FORMATION_IDS).toEqual(["identity", "cloud", "helix"]);
+    expect(VOXEL_FORMATION_IDS).toEqual([
+      "identity",
+      "architecture",
+      "throughput",
+    ]);
 
     for (const formation of VOXEL_FORMATION_IDS) {
-      expect(VOXEL_FORMATION_SPEC.formations[formation]).toHaveLength(
-        VOXEL_COUNT,
-      );
+      const target = VOXEL_FORMATION_SPEC.formations[formation];
+      expect(target.position).toHaveLength(VOXEL_COUNT * 3);
+      expect(target.rotation).toHaveLength(VOXEL_COUNT * 3);
+      expect(target.scale).toHaveLength(VOXEL_COUNT);
     }
   });
 
@@ -85,16 +112,17 @@ describe("voxel LA-monogram formation specification", () => {
     const identity = VOXEL_FORMATION_SPEC.formations.identity;
     const firstCell = VOXEL_FORMATION_SPEC.cells[0];
     const stack = VOXEL_FORMATION_SPEC.cells
-      .map((cell, index) => ({ cell, pose: identity[index] }))
-      .filter(({ cell }) =>
-        cell.row === firstCell.row && cell.column === firstCell.column,
+      .map((cell, index) => ({ cell, position: positionAt(identity, index) }))
+      .filter(
+        ({ cell }) =>
+          cell.row === firstCell.row && cell.column === firstCell.column,
       );
 
     expect(stack.map(({ cell }) => cell.depth)).toEqual([0, 1, 2, 3]);
-    expect(stack[0].pose.position[2] - stack[3].pose.position[2]).toBeCloseTo(
-      0.42,
-      10,
-    );
+    // Positions live in a Float32Array, so 10-decimal tolerance is unreachable.
+    expect(stack[0].position[2] - stack[3].position[2]).toBeCloseTo(0.42, 6);
+
+    // The rest pose the bounded idle drift oscillates around (see sceneMotion).
     expect((VOXEL_IDENTITY_ORIENTATION.yaw * 180) / Math.PI).toBeCloseTo(8, 10);
     expect((VOXEL_IDENTITY_ORIENTATION.pitch * 180) / Math.PI).toBeCloseTo(-4, 10);
   });
@@ -103,61 +131,48 @@ describe("voxel LA-monogram formation specification", () => {
     for (const layer of SYSTEM_LAYERS) {
       expect(
         VOXEL_FORMATION_SPEC.cells.filter((cell) => cell.layer === layer),
-      ).toHaveLength(141);
+      ).toHaveLength(VOXEL_COUNT / SYSTEM_LAYERS.length);
     }
   });
 
   it("emits finite positions, rotations and positive scales for every pose", () => {
     for (const formation of VOXEL_FORMATION_IDS) {
-      for (const pose of VOXEL_FORMATION_SPEC.formations[formation]) {
-        expect(everyNumber(pose).every(Number.isFinite)).toBe(true);
-        expect(pose.scale).toBeGreaterThan(0);
-      }
+      const target = VOXEL_FORMATION_SPEC.formations[formation];
+      expect([...target.position].every(Number.isFinite)).toBe(true);
+      expect([...target.rotation].every(Number.isFinite)).toBe(true);
+      expect([...target.scale].every((scale) => Number.isFinite(scale) && scale > 0)).toBe(true);
     }
   });
 
   it("surrounds the identity with visibly smaller dispersed halo cubes", () => {
     const identity = VOXEL_FORMATION_SPEC.formations.identity;
-    const coreScales = identity.slice(0, VOXEL_CORE_COUNT).map((pose) => pose.scale);
-    const dustPoses = identity.slice(VOXEL_CORE_COUNT);
-    const dustScales = dustPoses.map((pose) => pose.scale);
+    const coreScales = [...identity.scale].slice(0, VOXEL_CORE_COUNT);
+    const dustScales = [...identity.scale].slice(VOXEL_CORE_COUNT);
+    const dustDepth = positions(identity)
+      .slice(VOXEL_CORE_COUNT)
+      .map(([, , z]) => Math.abs(z));
 
     expect(Math.max(...dustScales)).toBeLessThan(Math.min(...coreScales));
-    expect(
-      Math.max(...dustPoses.map(({ position }) => Math.abs(position[2]))),
-    ).toBeGreaterThan(0.75);
+    expect(Math.max(...dustDepth)).toBeGreaterThan(0.75);
   });
 
-  it("centres a volumetric cloud that spans all three axes", () => {
-    const positions = VOXEL_FORMATION_SPEC.formations.cloud.map(
-      (pose) => pose.position,
-    );
-    const centroid = [0, 1, 2].map(
-      (axis) =>
-        positions.reduce((sum, position) => sum + position[axis], 0) /
-        positions.length,
-    );
-    centroid.forEach((value) => expect(value).toBeCloseTo(0, 10));
+  /*
+    Deliberately shape-agnostic. Asserting the exact silhouette of architecture
+    and throughput would pin down geometry this test cannot independently
+    justify; what must hold for any usable formation is that it stays centred
+    on the origin and occupies real volume rather than collapsing to a plane or
+    a line.
+  */
+  it("centres every formation and gives it real volume on all three axes", () => {
+    for (const formation of VOXEL_FORMATION_IDS) {
+      const target = VOXEL_FORMATION_SPEC.formations[formation];
 
-    const span = [0, 1, 2].map((axis) => {
-      const values = positions.map((position) => position[axis]);
-      return Math.max(...values) - Math.min(...values);
-    });
-    expect(span[0]).toBeGreaterThan(4.7);
-    expect(span[1]).toBeGreaterThan(3.7);
-    expect(span[2]).toBeGreaterThan(2.8);
-  });
-
-  it("retains the existing four three-turn helix strands", () => {
-    for (let strand = 0; strand < SYSTEM_LAYERS.length; strand += 1) {
-      const positions = VOXEL_FORMATION_SPEC.formations.helix
-        .filter((_, index) => index % SYSTEM_LAYERS.length === strand)
-        .map((pose) => pose.position);
-      expect(positions).toHaveLength(141);
-
-      for (let index = 1; index < positions.length; index += 1) {
-        expect(positions[index][1]).toBeLessThan(positions[index - 1][1]);
+      for (const value of centroid(target)) {
+        expect(Math.abs(value)).toBeLessThan(0.5);
       }
+      expect(axisSpan(target, 0)).toBeGreaterThan(1);
+      expect(axisSpan(target, 1)).toBeGreaterThan(1);
+      expect(axisSpan(target, 2)).toBeGreaterThan(0.5);
     }
   });
 

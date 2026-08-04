@@ -31,16 +31,16 @@ describe("LatticeFallback", () => {
   });
 
   it("can show each deterministic formation without animation", () => {
-    const { container, rerender } = render(<LatticeFallback formation="cloud" />);
+    const { container, rerender } = render(<LatticeFallback formation="architecture" />);
     expect(container.querySelector("svg")).toHaveAttribute(
       "data-voxel-formation",
-      "cloud",
+      "architecture",
     );
 
-    rerender(<LatticeFallback formation="helix" />);
+    rerender(<LatticeFallback formation="throughput" />);
     expect(container.querySelector("svg")).toHaveAttribute(
       "data-voxel-formation",
-      "helix",
+      "throughput",
     );
     expect(container.querySelectorAll("[data-voxel-id]")).toHaveLength(
       VOXEL_COUNT,
@@ -48,20 +48,31 @@ describe("LatticeFallback", () => {
   });
 
   it("uses size and stroke weight as non-colour active-layer cues", () => {
-    const { container } = render(<LatticeFallback activeLayer="data" />);
-    const selected = container.querySelector(
-      '[data-voxel-layer="data"]',
-    );
-    const resting = container.querySelector(
-      '[data-voxel-layer="interface"]',
-    );
+    /*
+      Compare one voxel against itself, selected and resting. Voxels carry very
+      different base scales — a dust voxel is a fraction of a core one — so
+      comparing the first voxel of two different layers measures the scale
+      spread rather than the selection cue.
+    */
+    const { container, rerender } = render(<LatticeFallback activeLayer="data" />);
+    const probe = container.querySelector('[data-voxel-layer="data"]');
+    const id = probe?.getAttribute("data-voxel-id");
+    expect(id).toBeTruthy();
 
-    expect(Number(selected?.getAttribute("width"))).toBeGreaterThan(
-      Number(resting?.getAttribute("width")),
-    );
-    expect(Number(selected?.getAttribute("stroke-width"))).toBeGreaterThan(
-      Number(resting?.getAttribute("stroke-width")),
-    );
+    const selected = {
+      width: Number(probe?.getAttribute("width")),
+      stroke: Number(probe?.getAttribute("stroke-width")),
+    };
+
+    rerender(<LatticeFallback activeLayer={null} />);
+    const same = container.querySelector(`[data-voxel-id="${id}"]`);
+    const resting = {
+      width: Number(same?.getAttribute("width")),
+      stroke: Number(same?.getAttribute("stroke-width")),
+    };
+
+    expect(selected.width).toBeGreaterThan(resting.width);
+    expect(selected.stroke).toBeGreaterThan(resting.stroke);
   });
 
   it("contains no external image, texture or hidden text", () => {

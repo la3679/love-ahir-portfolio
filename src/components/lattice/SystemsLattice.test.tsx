@@ -132,8 +132,9 @@ describe("SystemsLattice", () => {
 
   it("exposes the named artwork and one real transform control", () => {
     const { container } = renderLattice();
+    // The control names the formation currently on screen, not the next one.
     const button = screen.getByRole("button", {
-      name: /transform voxel scene: cloud/i,
+      name: /transform voxel scene: identity/i,
     });
     const artwork = container.firstElementChild as HTMLElement;
 
@@ -148,7 +149,7 @@ describe("SystemsLattice", () => {
     ).toHaveLength(1);
   });
 
-  it("cycles the synchronous fallback through identity, cloud and helix", () => {
+  it("cycles the synchronous fallback through identity, architecture and throughput", () => {
     const { container } = renderLattice();
     const button = screen.getByRole("button", { name: /transform voxel scene/i });
     const formation = () =>
@@ -158,11 +159,11 @@ describe("SystemsLattice", () => {
 
     expect(formation()).toBe("identity");
     fireEvent.click(button);
-    expect(formation()).toBe("cloud");
-    expect(screen.getByRole("status")).toHaveTextContent("Cloud");
-    expect(button).toHaveAccessibleName(/transform voxel scene: helix/i);
+    expect(formation()).toBe("architecture");
+    expect(screen.getByRole("status")).toHaveTextContent("Architecture");
+    expect(button).toHaveAccessibleName(/transform voxel scene: architecture/i);
     fireEvent.click(button);
-    expect(formation()).toBe("helix");
+    expect(formation()).toBe("throughput");
     fireEvent.click(button);
     expect(formation()).toBe("identity");
   });
@@ -191,7 +192,7 @@ describe("SystemsLattice", () => {
     fireEvent.click(button);
     expect(
       container.querySelector("[data-voxel-formation]"),
-    ).toHaveAttribute("data-voxel-formation", "cloud");
+    ).toHaveAttribute("data-voxel-formation", "architecture");
 
     act(() => {
       reduced = true;
