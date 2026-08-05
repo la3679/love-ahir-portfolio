@@ -49,6 +49,14 @@
     */
     --particle: hsl(var(--foreground) / 0.55);
     --particle-line: hsl(var(--signal) / 0.3);
+    /*
+      Voxel Drift Field. HSL triples, not complete colours: the renderer
+      composes them once per theme and applies alpha with globalAlpha, so the
+      frame loop builds no strings. Mostly graphite with a rust minority —
+      a mostly-accent field would overbear the warm paper canvas.
+    */
+    --voxel-graphite: 24 20% 10%;
+    --voxel-accent: 24 95% 36%;
     /* Loose voxels around the signal-coloured LA monogram. */
     --voxel-dust: 27 22% 54%;
     /* Decorative / large-mono only — never body copy. */
@@ -91,6 +99,8 @@
     /* Warm white rather than --foreground: the nodes must survive the canvas. */
     --particle: hsl(0 0% 100% / 0.7);
     --particle-line: hsl(var(--signal) / 0.28);
+    --voxel-graphite: 40 12% 82%;
+    --voxel-accent: 24 95% 56%;
     --voxel-dust: 30 28% 70%;
     --faint: 27 8% 44%;
     --stage: 38 31% 93%;
@@ -326,6 +336,22 @@
   /* The static reduced-motion frame reads as texture, not as a paused loop. */
   .fx[data-fx-static="true"] .fx__canvas {
     opacity: 0.5;
+  }
+
+  /*
+    Voxel Drift Field — additive. Cubes are solid three-face forms rather than
+    1px dots and hairlines, so the same opacity that suited the constellation
+    would push them forward of the copy. Everything else about the canvas
+    (position, sizing, pointer transparency) is inherited from `.fx__canvas`,
+    which is deliberately left untouched so `FX_MODE = "constellation"` needs
+    no CSS edit at all.
+  */
+  .fx__canvas--voxel {
+    opacity: 0.72;
+  }
+
+  .fx[data-fx-static="true"] .fx__canvas--voxel {
+    opacity: 0.42;
   }
 
   /* Plane 2 — soft colour mass. Oversized so the blur never shows an edge. */
