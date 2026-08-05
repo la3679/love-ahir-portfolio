@@ -16,7 +16,11 @@ const MediaFrame = ({ media, className = "", eager = false }: MediaFrameProps) =
 
   return (
     <figure className={className}>
-      <div className="overflow-hidden rounded-md border border-border bg-secondary">
+      <div
+        data-tilt
+        data-tilt-max="6"
+        className="overflow-hidden rounded-md border border-border bg-secondary"
+      >
         {isVideo ? (
           <video
             src={media.src}

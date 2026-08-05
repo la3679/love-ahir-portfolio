@@ -65,6 +65,8 @@ const Capabilities = () => {
               <motion.li
                 key={id}
                 variants={riseUp}
+                data-tilt
+                data-tilt-max="5"
                 className="skill-card grid snap-start grid-cols-[2.5rem_minmax(0,1fr)] gap-3 rounded-xl border border-border bg-card/80 p-4 backdrop-blur-sm md:grid-cols-[2.5rem_12rem_minmax(0,1fr)] md:items-start md:gap-5 md:rounded-none md:border-x-0 md:border-t-0 md:bg-transparent md:p-5 md:backdrop-blur-none md:last:border-b-0 lg:grid-cols-[2.5rem_12rem_minmax(0,1fr)_minmax(15rem,0.8fr)]"
               >
                 <span className="skill-card__icon grid h-10 w-10 place-items-center rounded-full border border-signal/25 bg-signal/5">

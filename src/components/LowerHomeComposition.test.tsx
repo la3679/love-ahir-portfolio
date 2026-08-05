@@ -91,10 +91,12 @@ describe("recruiter-focused lower-home composition", () => {
       const heading = screen.getByRole("heading", { level: 3, name: study.project });
       const card = heading.closest("li");
       expect(card).not.toBeNull();
-      // `card` + `data-project-tilt` are what opt this entry into the tilt and
-      // glow tier; the delegated controller finds cards by that attribute.
+      // `card` + `data-tilt` are what opt this entry into the tilt and glow
+      // tier; the delegated controller finds surfaces by that attribute, and
+      // `data-tilt-max` sets this tier's depth.
       expect(card).toHaveClass("card", "rounded-xl", "border");
-      expect(card).toHaveAttribute("data-project-tilt");
+      expect(card).toHaveAttribute("data-tilt");
+      expect(card).toHaveAttribute("data-tilt-max", "7");
       expect(card!.querySelector(".card__shine")).not.toBeNull();
       expect(card!.querySelector(".card__glow")).not.toBeNull();
       expect(card).toHaveTextContent(study.metrics[0].value);

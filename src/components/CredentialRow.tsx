@@ -35,7 +35,7 @@ const CredentialRow = ({ credential }: { credential: Credential }) => {
   const language = i18n.resolvedLanguage ?? i18n.language;
 
   return (
-    <li className="hairline-t">
+    <li data-tilt data-tilt-max="4" data-tilt-strength="soft" className="hairline-t">
       <a
         href={credential.url}
         target="_blank"

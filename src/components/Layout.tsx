@@ -6,6 +6,7 @@ import Contact from "./Contact";
 import Footer from "./Footer";
 import FxLayer from "./FxLayer";
 import { injectJsonLd, personJsonLd } from "./Seo";
+import { useAmbientParallax, useTilt } from "@/lib/useAmbientParallax";
 
 /**
  * Frames to keep looking for a hash target before giving up.
@@ -34,6 +35,12 @@ const Layout = () => {
   const { pathname, hash } = useLocation();
   const mainRef = useRef<HTMLElement>(null);
   const firstRender = useRef(true);
+
+  // Both controllers are delegated and mounted exactly once, here, for every
+  // route: `[data-parallax]`/`[data-scroll-depth]`/`[data-cursor-aura]` and
+  // `[data-tilt]` anywhere in the tree are picked up without a ref or a prop.
+  useAmbientParallax();
+  useTilt();
 
   useEffect(() => injectJsonLd("seo-person-jsonld", personJsonLd), []);
 
@@ -122,6 +129,9 @@ const Layout = () => {
   return (
     <div className="app-shell relative min-h-screen">
       <FxLayer />
+      {/* Above the FX planes, below every content layer. Invisible until the
+          reader's first pointer move, and absent entirely for reduced motion. */}
+      <div className="fx-aura" data-cursor-aura="true" aria-hidden="true" />
       <a href="#main" className="skip-link">
         {t("nav.skipToContent")}
       </a>

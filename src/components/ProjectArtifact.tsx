@@ -59,6 +59,8 @@ const ProjectArtifact = () => {
 
   return (
     <figure
+      data-tilt
+      data-tilt-max="6"
       className="stage-surface relative overflow-hidden rounded-stage border border-border p-5 shadow-stage sm:p-8"
       aria-labelledby={headingId}
     >

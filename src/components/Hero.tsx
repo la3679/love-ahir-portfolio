@@ -1,5 +1,4 @@
 import { ArrowRight, FileDown, Github, Linkedin, Mail } from "lucide-react";
-import { useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { profile } from "@/data/portfolio";
@@ -9,7 +8,6 @@ import {
   type TechnologyId,
 } from "@/data/technologyCatalog";
 import { riseDelay } from "@/lib/motion";
-import { usePointerDepth } from "@/lib/pointerMotion";
 import SystemsLattice from "./lattice/SystemsLattice";
 import { useLattice, useSceneSection } from "./lattice/latticeState";
 
@@ -25,8 +23,6 @@ const Hero = () => {
   const { t } = useTranslation();
   const { section: activeSceneSection } = useLattice();
   const sectionRef = useSceneSection("hero");
-  const stageRef = useRef<HTMLDivElement>(null);
-  usePointerDepth(stageRef, "stage", { allowCoarseDrag: true });
 
   return (
     <section
@@ -103,23 +99,29 @@ const Hero = () => {
           </div>
         </div>
 
+        {/* Two nested transforms, deliberately on separate elements: the outer
+            box takes the viewport-wide pointer parallax and the inner stage
+            takes its own tilt, so neither controller overwrites the other. */}
         <div className="rise-in relative" style={riseDelay(2)}>
-          <div
-            ref={stageRef}
-            data-depth-surface="stage"
-            data-stage-rails-active={
-              activeSceneSection === "hero" ? "true" : "false"
-            }
-            className="observatory-stage relative min-h-[22rem] overflow-hidden rounded-[var(--radius-stage)] border border-border-bright/70 sm:min-h-[28rem] lg:min-h-[34rem] xl:min-h-[38rem]"
-          >
-            {/* The SVG/WebGL artwork remains decorative; the adjacent transform
-                button is intentionally outside that aria-hidden subtree. */}
-            <SystemsLattice />
-            <StageTechRail position="top" items={stageTechnologyRails.top} />
-            <StageTechRail
-              position="bottom"
-              items={stageTechnologyRails.bottom}
-            />
+          <div data-parallax="true">
+            <div
+              data-tilt
+              data-tilt-max="9"
+              data-stage-rails-active={
+                activeSceneSection === "hero" ? "true" : "false"
+              }
+              className="observatory-stage relative min-h-[22rem] overflow-hidden rounded-[var(--radius-stage)] border border-border-bright/70 sm:min-h-[28rem] lg:min-h-[34rem] xl:min-h-[38rem]"
+            >
+              {/* The SVG/WebGL artwork remains decorative; the adjacent
+                  transform button is intentionally outside that aria-hidden
+                  subtree. */}
+              <SystemsLattice />
+              <StageTechRail position="top" items={stageTechnologyRails.top} />
+              <StageTechRail
+                position="bottom"
+                items={stageTechnologyRails.bottom}
+              />
+            </div>
           </div>
         </div>
       </div>

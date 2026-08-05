@@ -7,7 +7,6 @@ import MediaFrame from "./MediaFrame";
 import ProjectArtifact from "./ProjectArtifact";
 import { featuredCaseStudies, type CaseStudy } from "@/data/caseStudies";
 import { riseUp, useReveal, useRevealGroup } from "@/lib/motion";
-import { useProjectCardMotion } from "@/lib/projectCardMotion";
 import { useSceneSection } from "./lattice/latticeState";
 
 /**
@@ -34,11 +33,6 @@ const FeaturedWork = () => {
   const reveal = useReveal();
   const revealGroup = useRevealGroup();
   const sectionRef = useSceneSection("projects");
-
-  // One controller for every card below, mounted in their common owner. The
-  // large project cards are the only cards on the site that carry the tilt and
-  // glow tier, so this is the only place the hook is used.
-  useProjectCardMotion();
 
   // Pokédex leads and takes the large systems-artifact treatment; the other
   // three render as the established ruled editorial entries, numbered from 02
@@ -98,7 +92,8 @@ const WorkEntry = ({ study, index }: { study: CaseStudy; index: number }) => {
   return (
     <motion.li
       variants={riseUp}
-      data-project-tilt
+      data-tilt
+      data-tilt-max="7"
       className="card flex h-full snap-start flex-col rounded-xl border border-border bg-card/80 p-5 shadow-card backdrop-blur-sm md:p-6"
     >
       {/* Decorative light only — index.css keeps both layers behind the copy. */}

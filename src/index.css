@@ -42,6 +42,13 @@
     --accent-foreground: 0 0% 100%;
     /* Mono metadata accent (replaces the retired --evidence token). */
     --signal: 24 95% 36%;
+    /*
+      FX constellation. These are complete colours rather than HSL triples:
+      the canvas reads them with getComputedStyle and assigns them straight to
+      fillStyle/strokeStyle, which cannot resolve a bare triple.
+    */
+    --particle: hsl(var(--foreground) / 0.55);
+    --particle-line: hsl(var(--signal) / 0.3);
     /* Loose voxels around the signal-coloured LA monogram. */
     --voxel-dust: 27 22% 54%;
     /* Decorative / large-mono only — never body copy. */
@@ -81,6 +88,9 @@
     --accent: 28 100% 62%;
     --accent-foreground: 20 16% 4%;
     --signal: 28 100% 62%;
+    /* Warm white rather than --foreground: the nodes must survive the canvas. */
+    --particle: hsl(0 0% 100% / 0.7);
+    --particle-line: hsl(var(--signal) / 0.28);
     --voxel-dust: 30 28% 70%;
     --faint: 27 8% 44%;
     --stage: 38 31% 93%;
@@ -298,35 +308,90 @@
     user-select: none;
   }
 
-  .fx__constellation {
+  /*
+    Plane 1 — the live constellation. Drawn in CSS pixels behind a DPR
+    transform (src/components/FxLayer.tsx); the element itself is never
+    scaled, so `width/height: 100%` and the backing store stay in step.
+  */
+  .fx__canvas {
     position: absolute;
     inset: 0;
     display: block;
     width: 100%;
     height: 100%;
-    opacity: 0.82;
+    opacity: 0.9;
+    pointer-events: none;
+  }
+
+  /* The static reduced-motion frame reads as texture, not as a paused loop. */
+  .fx[data-fx-static="true"] .fx__canvas {
+    opacity: 0.5;
+  }
+
+  /* Plane 2 — soft colour mass. Oversized so the blur never shows an edge. */
+  .fx__mesh {
+    position: absolute;
+    inset: -20%;
+    opacity: 0.8;
+    filter: blur(40px);
+    will-change: transform;
+    background:
+      radial-gradient(
+        38% 42% at 18% 14%,
+        hsl(var(--signal) / 0.16),
+        transparent 70%
+      ),
+      radial-gradient(
+        34% 38% at 84% 12%,
+        hsl(var(--primary) / 0.13),
+        transparent 72%
+      ),
+      radial-gradient(
+        46% 34% at 50% 96%,
+        hsl(var(--accent) / 0.1),
+        transparent 74%
+      );
+  }
+
+  /*
+    Plane 3 — the engineered grid. Masked so it is legible under the hero and
+    dissolves completely before it reaches long-form copy further down.
+  */
+  .fx__grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(hsl(var(--foreground) / 0.06) 1px, transparent 1px),
+      linear-gradient(90deg, hsl(var(--foreground) / 0.06) 1px, transparent 1px);
+    background-size: 58px 58px;
     -webkit-mask-image: radial-gradient(
-      ellipse 108% 86% at 54% 12%,
-      hsl(var(--foreground)) 0%,
-      hsl(var(--foreground) / 0.78) 50%,
-      hsl(var(--foreground) / 0.24) 78%,
-      transparent 100%
+      120% 90% at 50% 0%,
+      #000 30%,
+      transparent 80%
     );
-    mask-image: radial-gradient(
-      ellipse 108% 86% at 54% 12%,
-      hsl(var(--foreground)) 0%,
-      hsl(var(--foreground) / 0.78) 50%,
-      hsl(var(--foreground) / 0.24) 78%,
-      transparent 100%
-    );
+    mask-image: radial-gradient(120% 90% at 50% 0%, #000 30%, transparent 80%);
+  }
+
+  .dark .fx__grid {
+    background-image:
+      linear-gradient(hsl(var(--foreground) / 0.07) 1px, transparent 1px),
+      linear-gradient(90deg, hsl(var(--foreground) / 0.07) 1px, transparent 1px);
+  }
+
+  /* Plane 4 — the orbs, grouped so scroll depth moves them as one body. */
+  .fx__orbs {
+    position: absolute;
+    inset: 0;
+    will-change: transform;
   }
 
   .orb {
     position: absolute;
-    width: min(42rem, 62vw);
+    width: 46vw;
     aspect-ratio: 1;
     border-radius: 50%;
-    filter: blur(80px);
+    /* 60px reads as directional light; the old 80px read as undifferentiated fog. */
+    filter: blur(60px);
     opacity: 0.62;
     will-change: transform;
     background: radial-gradient(
@@ -342,33 +407,91 @@
     top: -24%;
   }
 
+  /*
+    Negative delays start each orb part-way through its own cycle, so the three
+    never crest together and the group never pulses as one shape.
+  */
   .orb--2 {
     bottom: 8%;
     left: -18%;
-    width: min(34rem, 56vw);
+    width: 40vw;
+    background: radial-gradient(
+      circle,
+      hsl(var(--primary) / 0.16),
+      transparent 70%
+    );
     animation-duration: 27s;
+    animation-delay: -7s;
     animation-direction: alternate-reverse;
   }
 
   .orb--3 {
     bottom: -30%;
     right: 16%;
-    width: min(30rem, 48vw);
+    width: 38vw;
     opacity: 0.42;
     animation-duration: 31s;
+    animation-delay: -13s;
   }
 
   .fx[data-paused="true"] .orb {
     animation-play-state: paused;
   }
 
+  /* Scale as well as translate: a drifting shape that never changes size
+     reads as a sliding sticker rather than as light. */
   @keyframes orb-float {
-    from {
+    0% {
       transform: translate3d(0, 0, 0) scale(1);
     }
-    to {
-      transform: translate3d(6vw, -4vh, 0) scale(1.08);
+    50% {
+      transform: translate3d(4vw, -3vh, 0) scale(1.08);
     }
+    100% {
+      transform: translate3d(-3vw, 2vh, 0) scale(0.96);
+    }
+  }
+
+  /*
+    Plane 5 — a turbulence wash. Gradients this wide band visibly on 8-bit
+    panels; a few percent of noise breaks the bands up. The data URI is an
+    inline SVG filter, so it costs no request and no decode.
+  */
+  .fx__noise {
+    position: absolute;
+    inset: 0;
+    opacity: 0.035;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /*
+    The cursor aura. Fixed and centred on the pointer by a negative margin, so
+    the follow loop only ever writes a transform. It sits above the FX planes
+    and below every content layer.
+  */
+  .fx-aura {
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 0;
+    width: 520px;
+    height: 520px;
+    margin: -260px 0 0 -260px;
+    border-radius: 50%;
+    opacity: 0;
+    pointer-events: none;
+    will-change: transform;
+    transition: opacity 0.4s var(--ease-out);
+    background: radial-gradient(
+      circle,
+      hsl(var(--signal) / 0.12),
+      transparent 62%
+    );
+  }
+
+  .fx-aura[data-aura-visible="true"] {
+    opacity: 1;
   }
 
   main > section,
@@ -393,26 +516,14 @@
     transition: opacity 420ms var(--ease-glide);
   }
 
+  /* Transform, perspective and transition all come from `[data-tilt]`; this
+     rule owns only the stage's own surface. */
   .observatory-stage {
-    --depth-rx: 0deg;
-    --depth-ry: 0deg;
-    --depth-rz: 0deg;
-    --depth-x: 0px;
-    --depth-y: 0px;
-    --depth-scale: 1;
     isolation: isolate;
-    transform:
-      perspective(1100px)
-      translate3d(var(--depth-x), var(--depth-y), 0)
-      rotateX(var(--depth-rx))
-      rotateY(var(--depth-ry))
-      rotateZ(var(--depth-rz))
-      scale(var(--depth-scale));
-    transform-style: preserve-3d;
     transform-origin: 50% 48%;
     touch-action: pan-y;
     transition:
-      transform 620ms cubic-bezier(0.16, 1.16, 0.3, 1),
+      transform var(--dur-return) var(--ease-glide),
       box-shadow 320ms var(--ease-out);
     background:
       radial-gradient(circle at 54% 44%, hsl(var(--signal) / 0.14), transparent 48%),
@@ -422,9 +533,9 @@
       var(--shadow-card);
   }
 
-  .observatory-stage[data-depth-active="true"] {
+  .observatory-stage.is-tilting {
     transition:
-      transform 90ms ease-out,
+      transform 80ms ease-out,
       box-shadow 220ms ease-out;
     box-shadow:
       inset 0 0 0 1px hsl(var(--foreground) / 0.025),
@@ -574,100 +685,101 @@
       radial-gradient(circle at 12% 45%, hsl(var(--primary) / 0.055), transparent 24rem);
   }
 
+  /*
+    The portrait is the clearest case for nested layers: the backing plate, the
+    photo and the caption each sit at their own Z depth and counter-move
+    against the tilt, so the group reads as a physical stack rather than as one
+    rotating image. Depths are supplied per element by `--tilt-layer-depth`.
+  */
   .portrait-depth-scene {
-    --depth-rx: 0deg;
-    --depth-ry: 0deg;
-    --depth-rz: 0deg;
-    --depth-x: 0px;
-    --depth-y: 0px;
-    --depth-scale: 1;
-    --depth-inner-x: 0px;
-    --depth-inner-y: 0px;
-    --depth-back-x: 0px;
-    --depth-back-y: 0px;
-    --depth-caption-x: 0px;
-    --depth-caption-y: 0px;
+    /* Kept alongside the tilt root's own `perspective()`: this one projects
+       the layer children, that one projects the scene itself. */
     perspective: 900px;
-    transform-style: preserve-3d;
-  }
-
-  .portrait-depth-frame,
-  .portrait-depth-back,
-  .portrait-depth-photo,
-  .portrait-depth-caption {
-    transform-style: preserve-3d;
-    transition: transform 560ms cubic-bezier(0.16, 1.18, 0.3, 1);
-  }
-
-  .portrait-depth-frame {
-    transform:
-      translate3d(var(--depth-x), var(--depth-y), 18px)
-      rotateX(var(--depth-rx))
-      rotateY(var(--depth-ry))
-      rotateZ(var(--depth-rz))
-      scale(var(--depth-scale));
     transform-origin: 50% 45%;
   }
 
+  /* The frame carries no depth of its own; it exists so the photo and caption
+     share one 3D context with the backing plate. */
+  .portrait-depth-frame {
+    transform-style: preserve-3d;
+  }
+
   .portrait-depth-back {
-    transform: translate3d(var(--depth-back-x), var(--depth-back-y), -18px);
+    --tilt-layer-depth: -18;
   }
 
   .portrait-depth-photo {
-    transform: translate3d(var(--depth-inner-x), var(--depth-inner-y), 24px) scale(1);
+    --tilt-layer-depth: 24;
   }
 
   .portrait-depth-caption {
-    transform: translate3d(
-      var(--depth-caption-x),
-      var(--depth-caption-y),
-      30px
-    );
-  }
-
-  .portrait-depth-scene[data-depth-active="true"] .portrait-depth-frame,
-  .portrait-depth-scene[data-depth-active="true"] .portrait-depth-back,
-  .portrait-depth-scene[data-depth-active="true"] .portrait-depth-photo,
-  .portrait-depth-scene[data-depth-active="true"] .portrait-depth-caption {
-    transition-duration: 80ms;
-    transition-timing-function: ease-out;
-  }
-
-  .portrait-depth-scene[data-depth-active="true"] .portrait-depth-photo {
-    transform: translate3d(var(--depth-inner-x), var(--depth-inner-y), 24px) scale(1.025);
-  }
-
-  @media (hover: hover) and (pointer: fine) {
-    .observatory-stage,
-    .portrait-depth-frame,
-    .portrait-depth-photo,
-    .portrait-depth-back {
-      will-change: transform;
-    }
+    --tilt-layer-depth: 30;
   }
 
   /*
-    Card pointer system (§31 "Project interactions").
+    The delegated tilt system.
 
-    Two tiers, deliberately unequal. `.card` is the expensive tier and is
-    reserved for the large project cards in "Built, measured, shipped": a
-    pointer-tracked shine, a blurred signal glow, and a tilt capped at ±6°.
-    Everything smaller — `.technology-chip`, `.skill-card` — gets the cheap
-    tier: one transform and one colour change, no JS and no per-element state.
-    This replaces the earlier `.depth-hover` 1.2° treatment, whose CSS `:hover`
-    transform would have fought the inline transform the controller writes.
+    Any element can opt in with `data-tilt`; `data-tilt-max` sets its depth in
+    degrees (9 hero stage, 6–7 project cards, 5 capability rows, 4 stat tiles)
+    and `data-tilt-strength="soft"` selects the gentler lift and scale. One
+    rAF-batched controller (`useTilt` in src/lib/useAmbientParallax.ts), fed by
+    the single application-wide pointer listener in src/lib/pointerBus.ts,
+    writes `--tilt-*` and `--shine-*`; it never attaches a listener per card.
 
-    The tilt and the shine coordinates come from ONE delegated, rAF-throttled
-    `pointermove` listener on `document` (`src/lib/projectCardMotion.ts`) —
-    never a listener per card.
+    `--tilt-x` / `--tilt-y` are unitless on purpose. The rotation multiplies
+    them by 1deg here, and `[data-tilt-layer]` multiplies the same two numbers
+    by 1px for its intra-card offset — a value carrying `deg` could not do both.
 
-    Gating is layered, so the expensive tier cannot leak onto a device that
-    should not have it:
-    - `hover: hover` + `pointer: fine` excludes touch-only devices;
-    - `prefers-reduced-motion: no-preference` excludes reduced-motion users;
-    - the controller re-checks both in JS and detaches its listener otherwise;
-    - the glow additionally waits for `data-project-tilt-active`, which only
-      the controller sets, so it can never appear at stale coordinates.
+    Gating is layered, so the effect cannot leak onto a device that should not
+    have it: `hover: hover` + `pointer: fine` excludes touch-only devices,
+    `prefers-reduced-motion: no-preference` excludes reduced-motion users, and
+    the controller re-checks both live and detaches its subscription otherwise.
+  */
+  [data-tilt] {
+    transform:
+      perspective(950px)
+      rotateX(calc(var(--tilt-x, 0) * 1deg))
+      rotateY(calc(var(--tilt-y, 0) * 1deg))
+      translate3d(0, var(--tilt-z, 0), 0)
+      scale(var(--tilt-scale, 1));
+    transform-style: preserve-3d;
+    transition: transform var(--dur-return) var(--ease-glide);
+  }
+
+  /*
+    While the pointer is actually tracking, the tilt follows at 80ms; the
+    longer `--dur-return` above is what makes releasing it glide back rather
+    than snap.
+  */
+  [data-tilt].is-tilting {
+    transition: transform 80ms ease-out;
+  }
+
+  /* Nested layers separate on the Z axis and counter-move, which is what makes
+     a card read as having real depth rather than as a tilting picture. */
+  [data-tilt-layer] {
+    transform:
+      translateZ(calc(var(--tilt-layer-depth, 0) * 1px))
+      translate(
+        calc(var(--tilt-y, 0) * -1.2px),
+        calc(var(--tilt-x, 0) * 1.2px)
+      );
+    transform-style: preserve-3d;
+    transition: transform var(--dur-return) var(--ease-glide);
+  }
+
+  [data-tilt].is-tilting [data-tilt-layer] {
+    transition: transform 80ms ease-out;
+  }
+
+  /*
+    Card surface treatment.
+
+    `.card` is the expensive tier and is reserved for the large project cards:
+    a pointer-tracked shine and a blurred signal glow on top of the shared
+    tilt. Everything smaller — `.technology-chip`, `.skill-card` — gets the
+    cheap tier: one transform and one colour change, no JS and no per-element
+    state.
 
     `:focus-within` gives keyboard users the same emphasis through border and
     shadow — the parts that carry meaning — without any pointer-driven motion.
@@ -675,21 +787,15 @@
   .card {
     position: relative;
     overflow: hidden;
-    transform: perspective(950px);
     transition:
       transform var(--dur-return) var(--ease-glide),
       border-color var(--dur-quick) var(--ease-glide),
       box-shadow var(--dur-quick) var(--ease-glide);
   }
 
-  /*
-    While the pointer is actually tracking, the tilt follows at the pointer
-    duration; the longer `--dur-return` above is what makes releasing the card
-    glide back rather than snap.
-  */
-  .card[data-project-tilt-active="true"] {
+  .card.is-tilting {
     transition:
-      transform var(--dur-pointer) linear,
+      transform 80ms ease-out,
       border-color var(--dur-quick) var(--ease-glide),
       box-shadow var(--dur-quick) var(--ease-glide);
   }
@@ -716,7 +822,7 @@
   .card__shine {
     inset: 0;
     background: radial-gradient(
-      320px circle at var(--shine-x, 50%) var(--shine-y, 50%),
+      420px circle at var(--shine-x, 50%) var(--shine-y, 50%),
       hsl(var(--signal) / 0.1),
       transparent 60%
     );
@@ -794,11 +900,11 @@
       opacity: 1;
     }
 
-    .card[data-project-tilt-active="true"] .card__glow {
+    .card.is-tilting .card__glow {
       opacity: 1;
     }
 
-    .card[data-project-tilt-active="true"] {
+    [data-tilt].is-tilting {
       will-change: transform;
     }
 
@@ -854,20 +960,28 @@
     will-change: auto;
   }
 
-  .observatory-stage,
-  .portrait-depth-frame,
-  .portrait-depth-back,
-  .portrait-depth-photo,
-  .portrait-depth-caption {
+  /*
+    The FX planes keep their static composition — the canvas still paints one
+    frame — but nothing translates, follows the pointer or drifts.
+  */
+  .fx__mesh,
+  .fx__orbs {
     transform: none !important;
-    transition: none !important;
+    will-change: auto;
+  }
+
+  .fx-aura {
+    display: none;
   }
 
   /*
-    The pointer controller already refuses to attach here, so these are a
+    The pointer controllers already refuse to attach here, so these are a
     belt-and-braces floor: even a stale inline transform left over from a
-    mid-session preference change cannot tilt or light a card.
+    mid-session preference change cannot tilt, translate or light anything.
   */
+  [data-tilt],
+  [data-tilt-layer],
+  [data-parallax],
   .card,
   .technology-chip,
   .skill-card__icon {

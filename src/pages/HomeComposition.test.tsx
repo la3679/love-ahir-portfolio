@@ -113,9 +113,11 @@ describe("About section", () => {
     // The photo is not a control — it performs no action, so it is not a link.
     expect(img.closest("a")).toBeNull();
     expect(img.closest("button")).toBeNull();
-    expect(img.closest("[data-depth-surface='portrait']")).not.toHaveAttribute(
-      "tabindex",
-    );
+    // The portrait opts into the shared tilt system, which is decorative only:
+    // it must not make the surrounding scene focusable.
+    const scene = img.closest(".portrait-depth-scene");
+    expect(scene).toHaveAttribute("data-tilt");
+    expect(scene).not.toHaveAttribute("tabindex");
   });
 
   it("carries the current role read from the canonical experience record", () => {

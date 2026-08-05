@@ -1,12 +1,10 @@
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
-import { useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import portrait from "@/assets/profile-photo.jpg";
 import { education, experiences, profile } from "@/data/portfolio";
 import { useReveal } from "@/lib/motion";
-import { usePointerDepth } from "@/lib/pointerMotion";
 import { useSceneSection } from "./lattice/latticeState";
 
 /**
@@ -18,8 +16,6 @@ const AboutSection = () => {
   const { t } = useTranslation();
   const reveal = useReveal();
   const sectionRef = useSceneSection("about");
-  const portraitRef = useRef<HTMLDivElement>(null);
-  usePointerDepth(portraitRef, "portrait");
 
   const current = experiences.find((role) => role.current) ?? experiences[0];
   const masters = education[0];
@@ -51,12 +47,13 @@ const AboutSection = () => {
 
           <div className="mx-auto w-full max-w-[16rem] sm:max-w-[22rem] lg:col-start-1 lg:row-span-2 lg:row-start-1 lg:mx-0 lg:max-w-[26rem]">
             <div
-              ref={portraitRef}
-              data-depth-surface="portrait"
+              data-tilt
+              data-tilt-max="6"
               className="portrait-depth-scene relative pb-5 pl-5"
             >
               <span
                 aria-hidden="true"
+                data-tilt-layer
                 className="portrait-depth-back absolute bottom-0 left-0 h-[78%] w-[82%] rounded-2xl border border-primary/25 bg-primary/5"
               />
               <span
@@ -66,7 +63,10 @@ const AboutSection = () => {
               <div
                 className="portrait-depth-frame relative rounded-2xl border border-border-bright bg-card p-3 shadow-card"
               >
-                <div className="portrait-depth-photo overflow-hidden rounded-xl">
+                <div
+                  data-tilt-layer
+                  className="portrait-depth-photo overflow-hidden rounded-xl"
+                >
                   <img
                     src={portrait}
                     alt={t("home.about.photoAlt")}
@@ -78,7 +78,10 @@ const AboutSection = () => {
                     style={{ aspectRatio: "3 / 4" }}
                   />
                 </div>
-                <p className="portrait-depth-caption mt-3 px-1 font-mono text-xs text-muted-foreground">
+                <p
+                  data-tilt-layer
+                  className="portrait-depth-caption mt-3 px-1 font-mono text-xs text-muted-foreground"
+                >
                   {profile.shortName} · {profile.location}
                 </p>
               </div>

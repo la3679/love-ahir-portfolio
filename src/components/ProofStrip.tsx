@@ -37,10 +37,16 @@ const ProofStrip = () => {
   return (
     <section ref={sectionRef} className="relative z-10 pb-6 lg:-mt-8 lg:pb-8">
       <ul className="container grid grid-cols-2 overflow-hidden border-y border-border bg-background/90 shadow-card backdrop-blur-sm lg:grid-cols-4 lg:divide-x lg:rounded-2xl lg:border">
+        {/* `rise-in` stays on the <li> and the tilt goes on the link: a CSS
+            animation with `fill-mode: both` outranks the transform the tilt
+            controller writes, so the two cannot share one element. */}
         {items.map((item, i) => (
           <li key={item.labelKey} className="rise-in" style={{ animationDelay: `${i * 60}ms` }}>
             <Link
               to={item.to}
+              data-tilt
+              data-tilt-max="4"
+              data-tilt-strength="soft"
               /* Hover and keyboard focus produce the same restrained response
                  in the shared scene. It carries no meaning about which metric
                  was engaged — no metric is ever associated with a project. */
