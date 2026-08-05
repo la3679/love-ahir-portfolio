@@ -59,8 +59,11 @@ const About = () => {
               <img
                 src={profilePhoto}
                 alt={profile.name}
-                width={1200}
-                height={1600}
+                /* Match the 4/5 CSS box: these attributes reserve space before
+                   the stylesheet applies, and the previous 3/4 pair reserved
+                   the wrong shape. */
+                width={800}
+                height={1000}
                 className="aspect-[4/5] w-full object-cover"
               />
             </div>

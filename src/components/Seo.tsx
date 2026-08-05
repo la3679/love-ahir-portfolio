@@ -103,6 +103,10 @@ export const personJsonLd = {
   name: "Love Jayesh Ahir",
   alternateName: "Love Ahir",
   url: SITE_URL,
+  // The 512px headshot icon, which is a real photograph of Love rather than
+  // the monogram. Search engines use Person.image for knowledge panels, and
+  // it was previously absent entirely.
+  image: `${SITE_URL}/icon-512.png`,
   jobTitle: "Software Engineer",
   description:
     "Software engineer with 4+ years building production backend, full-stack, and applied AI systems across financial services and enterprise platforms.",

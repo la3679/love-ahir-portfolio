@@ -11,9 +11,23 @@ package.json; run this by hand when the mark changes:
 
     python scripts/generate-brand-assets.py
 
+The icon family is deliberately SPLIT between two sources:
+
+  * The LA monogram drives the small icons -- favicon.svg, favicon.ico and
+    favicon-32.png. A photograph at 16x16 is roughly eight pixels of head and
+    reads as noise; the mark was designed to survive that size.
+  * The headshot drives the large icons -- apple-touch-icon.png and the three
+    manifest icons. These are the "add to home screen" / pinned-tile / install
+    surfaces, where a face is far more recognisable than a monogram.
+
+The social cards (preview.png, twitter_preview.png) stay on the brand
+composition by explicit decision.
+
 Outputs into public/: favicon.svg, favicon.ico, favicon-32.png,
 apple-touch-icon.png, icon-192.png, icon-512.png, icon-maskable-512.png,
-preview.png, twitter_preview.png.
+preview.png, twitter_preview.png. Also writes the optimised web portrait to
+src/assets/profile-photo.jpg, derived from the profile-photo.png master, so
+the shipped image is reproducible rather than a hand-exported one-off.
 """
 
 import json
@@ -25,6 +39,25 @@ from PIL import Image, ImageDraw, ImageFont
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 GEOMETRY_PATH = os.path.join(ROOT, "src", "lib", "brandMark.json")
 PUBLIC = os.path.join(ROOT, "public")
+ASSETS = os.path.join(ROOT, "src", "assets")
+# The full-resolution studio headshot. Treated as a read-only master.
+PHOTO_MASTER = os.path.join(ASSETS, "profile-photo.png")
+# The optimised copy the site actually ships and imports.
+PHOTO_WEB = os.path.join(ASSETS, "profile-photo.jpg")
+PHOTO_WEB_SIZE = 800
+PHOTO_WEB_QUALITY = 82
+
+# Where the head sits in the master, as fractions of the frame. Measured from
+# the image, not guessed: cropping on the geometric centre would cut the
+# forehead and leave a band of empty backdrop under the chin.
+FACE_CENTRE_X = 0.50
+FACE_CENTRE_Y = 0.38
+# Head-and-shoulders crop for the square icons. Tuned by eye against the
+# rendered 180px result: 0.62 left the hair touching the top edge.
+FACE_CROP = 0.70
+# A wider crop for the maskable icon: the launcher may clip to a circle at 80%
+# of the canvas, so the face has to sit comfortably inside that inscribed area.
+FACE_CROP_MASKABLE = 0.86
 
 # Warm cinematic tokens, kept in sync with src/index.css .dark
 EMBER = (255, 107, 26, 255)          # --primary  21 100% 55%
@@ -90,6 +123,48 @@ def render_icon(size, padding_ratio=0.16, tile=True, variant=None, radius_ratio=
     draw_mark(draw, variant, scale, offset, EMBER)
 
     return img.resize((size, size), Image.LANCZOS)
+
+
+def crop_face(crop_ratio):
+    """Square, face-centred crop of the headshot master.
+
+    Clamped to the frame so a generous crop ratio can never run off the edge
+    and produce a black border.
+    """
+    photo = Image.open(PHOTO_MASTER).convert("RGB")
+    width, height = photo.size
+    side = int(min(width, height) * crop_ratio)
+
+    left = int(width * FACE_CENTRE_X - side / 2)
+    top = int(height * FACE_CENTRE_Y - side / 2)
+    left = max(0, min(left, width - side))
+    top = max(0, min(top, height - side))
+
+    return photo.crop((left, top, left + side, top + side))
+
+
+def render_photo_icon(size, crop_ratio=FACE_CROP):
+    """A square photographic icon.
+
+    Deliberately edge-to-edge with no rounding: iOS and Android apply their own
+    mask, and baking one in produces a rounded square inside a rounded square.
+
+    Kept in RGB rather than RGBA. A photograph has nothing to be transparent
+    about, and carrying a fully opaque alpha channel inflated icon-512 by
+    roughly a third for no visible benefit.
+    """
+    return crop_face(crop_ratio).resize((size, size), Image.LANCZOS)
+
+
+def build_web_portrait():
+    """The optimised portrait the React components import.
+
+    The master is a 1.8 MB PNG. Shipping that for a below-the-fold portrait
+    costs more than the entire JS bundle, so the site gets a resampled JPEG.
+    """
+    photo = Image.open(PHOTO_MASTER).convert("RGB")
+    photo = photo.resize((PHOTO_WEB_SIZE, PHOTO_WEB_SIZE), Image.LANCZOS)
+    photo.save(PHOTO_WEB, format="JPEG", quality=PHOTO_WEB_QUALITY, optimize=True, progressive=True)
 
 
 def build_svg():
@@ -215,7 +290,7 @@ def main():
     svg_path = os.path.join(PUBLIC, "favicon.svg")
     with open(svg_path, "w", encoding="utf-8") as fh:
         fh.write(build_svg())
-    written.append(("favicon.svg", "96x96 vector", kb(svg_path)))
+    written.append(("favicon.svg", "96x96 vector", kb(svg_path), "monogram"))
 
     # Pillow's ICO writer skips any requested size larger than the image it is
     # called on (`if size[0] > width: continue`). Saving from the 16px frame
@@ -234,29 +309,48 @@ def main():
         append_images=[ico_frames[s] for s in ico_sizes if s != largest],
     )
     verify_ico(ico_path, ico_sizes)
-    written.append(("favicon.ico", "16+32+48 multi-res", kb(ico_path)))
+    written.append(("favicon.ico", "16+32+48 multi-res", kb(ico_path), "monogram"))
 
+    # Small sizes stay on the monogram: a face is unreadable here.
     for name, size, pad in [
         ("favicon-32.png", 32, 0.16),
-        ("apple-touch-icon.png", 180, 0.18),
-        ("icon-192.png", 192, 0.16),
-        ("icon-512.png", 512, 0.16),
-        ("icon-maskable-512.png", 512, 0.30),
     ]:
         path = os.path.join(PUBLIC, name)
         render_icon(size, padding_ratio=pad).save(path, optimize=True)
-        written.append((name, f"{size}x{size}", kb(path)))
+        written.append((name, f"{size}x{size}", kb(path), "monogram"))
+
+    # Large sizes carry the headshot: these are the home-screen, pinned-tile
+    # and install surfaces, where a face is the more recognisable mark.
+    for name, size, crop in [
+        ("apple-touch-icon.png", 180, FACE_CROP),
+        ("icon-192.png", 192, FACE_CROP),
+        ("icon-512.png", 512, FACE_CROP),
+        ("icon-maskable-512.png", 512, FACE_CROP_MASKABLE),
+    ]:
+        path = os.path.join(PUBLIC, name)
+        render_photo_icon(size, crop_ratio=crop).save(path, optimize=True)
+        written.append((name, f"{size}x{size}", kb(path), "photo"))
+
+    build_web_portrait()
+    written.append(
+        (
+            "../src/assets/profile-photo.jpg",
+            f"{PHOTO_WEB_SIZE}x{PHOTO_WEB_SIZE}",
+            kb(PHOTO_WEB),
+            "photo",
+        )
+    )
 
     social = render_social()
     for name in ["preview.png", "twitter_preview.png"]:
         path = os.path.join(PUBLIC, name)
         social.save(path, optimize=True, compress_level=9)
-        written.append((name, "1200x630", kb(path)))
+        written.append((name, "1200x630", kb(path), "brand card"))
 
-    print(f"{'asset':<26}{'dimensions':<20}{'KB':>8}")
-    print("-" * 54)
-    for name, dims, size in written:
-        print(f"{name:<26}{dims:<20}{size:>8}")
+    print(f"{'asset':<30}{'dimensions':<20}{'KB':>8}  source")
+    print("-" * 70)
+    for name, dims, size, source in written:
+        print(f"{name:<30}{dims:<20}{size:>8}  {source}")
 
 
 if __name__ == "__main__":
