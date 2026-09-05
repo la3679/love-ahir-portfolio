@@ -49,7 +49,7 @@ const hi: Translation = {
   "home.work.description":
     "पूरी कहानी के साथ प्रोजेक्ट — संदर्भ, निर्णय और परिणाम। बाक़ी सूची में हैं।",
   "home.work.viewCase": "केस स्टडी पढ़ें",
-  "home.work.viewAll": "सभी 16 प्रोजेक्ट",
+  "home.work.viewAll": "सभी {{count}} प्रोजेक्ट",
   "home.work.built": "निर्माण",
   "home.work.stack": "स्टैक",
   "home.work.outcome": "परिणाम",
@@ -76,10 +76,10 @@ const hi: Translation = {
 
   "artifact.label": "प्रमुख प्रोजेक्ट · सिस्टम आर्किटेक्चर",
   "artifact.stagesLabel": "आर्किटेक्चर देखें",
-  "artifact.stage.interface": "खोज, साइटिंग मानचित्र और बैटल स्क्रीन।",
-  "artifact.stage.services": "क्वेरी और संग्रहित मीडिया देने वाले REST एंडपॉइंट।",
-  "artifact.stage.data": "भू-स्थानिक साइटिंग रिकॉर्ड पर 2dsphere इंडेक्स।",
-  "artifact.stage.systems": "GridFS मीडिया संग्रहण और टर्न-आधारित बैटल लॉजिक।",
+  "artifact.stage.interface": "अपवाद कतारें, साक्ष्य और समीक्षा नियंत्रण।",
+  "artifact.stage.services": "समीक्षा के लिए स्पष्ट विराम वाली टाइप की गई जाँच।",
+  "artifact.stage.data": "वर्कफ़्लो की स्थिति और खोजने योग्य साक्ष्य।",
+  "artifact.stage.systems": "समीक्षक की अनुमति और केवल जोड़े जाने वाला ऑडिट रिकॉर्ड।",
   "artifact.outcomeLabel": "सत्यापित परिणाम",
   "artifact.disclaimer":
     "मेरे बनाए एक प्रोजेक्ट का अमूर्त सिस्टम आरेख — यह प्रोडक्ट स्क्रीनशॉट नहीं है, और न ही डेटा का लाइव दृश्य।",
@@ -215,8 +215,7 @@ const hi: Translation = {
 
   "work.eyebrow": "सूची",
   "work.title": "सम्पूर्ण कार्य",
-  "work.description":
-    "उत्पाद, शोध और डेटा में सोलह प्रोजेक्ट — जिनमें से छह पूर्ण केस स्टडी के रूप में लिखे गए हैं।",
+  "work.description": "उत्पाद, शोध और डेटा के {{count}} प्रोजेक्ट — {{studies}} विस्तृत केस स्टडी।",
   "work.featuredHeading": "केस स्टडीज़",
   "work.archiveHeading": "अन्य प्रोजेक्ट",
   "work.caseStudy": "केस स्टडी",
@@ -225,6 +224,12 @@ const hi: Translation = {
   "category.Mobile App": "मोबाइल ऐप",
   "category.Machine Learning": "मशीन लर्निंग",
   "category.Data Analysis": "डेटा विश्लेषण",
+  "case.tradeops-copilot.summary": "प्राप्त साक्ष्य और अनिवार्य मानवीय समीक्षा के साथ सिंथेटिक ट्रेड अपवादों की जाँच करें।",
+  "case.sentinelflow.summary": "विश्वसनीय इवेंट डिलीवरी, जोखिम स्कोर और विश्लेषक की जाँच के माध्यम से सिंथेटिक लेनदेन देखें।",
+  "case.navisight.summary": "मानचित्रों, विश्लेषण और साक्ष्य दिखाने वाले कोपायलट से जहाज़ों की ऐतिहासिक गतिविधि देखें।",
+  "case.webops-commander.summary": "ब्राउज़र टूल से सिम्युलेटेड घटना की जाँच करें और रिकवरी लागू होने से पहले उसे मंज़ूरी दें।",
+  "category.Game Development": "गेम डेवलपमेंट",
+  "category.Automation": "ऑटोमेशन",
   "category.Publication": "प्रकाशन",
 
   "case.eyebrow": "केस स्टडी",

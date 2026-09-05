@@ -59,6 +59,78 @@ export interface CaseStudy {
  */
 const caseStudyDefinitions: CaseStudy[] = [
   {
+    slug: "tradeops-copilot",
+    title: "Investigating trade exceptions with evidence and a human review gate.",
+    project: "TradeOps Copilot",
+    category: "Web App",
+    role: "Developer",
+    stack: ["React", "TypeScript", "FastAPI", "LangGraph", "FAISS", "PostgreSQL"],
+    links: {"repo": "https://github.com/la3679/tradeops-insight"},
+    evidence: "Synthetic records · 13-node LangGraph · FAISS retrieval · reviewer authorization",
+    metrics: [{"value": "13 nodes", "label": "in an interruptible investigation and review workflow"}, {"value": "2,400", "label": "deterministic synthetic trades in the demo dataset"}],
+    summaryKey: "case.tradeops-copilot.summary",
+    context: ["TradeOps Copilot is an independent educational project that models fixed-income trade-exception investigations using synthetic records. It has no financial-institution connection and cannot execute trades."],
+    problem: ["An AI-generated proposal needs traceable evidence, explicit authorization, and a safe response to missing or contradictory information. A fluent answer alone cannot authorize a state change."],
+    approach: ["A FastAPI backend separates domain rules from adapters and orchestration. A typed LangGraph routes reconciliation, FAISS evidence retrieval, proposal validation, and escalation before interrupting for human review.", "Reviewer authorization, expected versions, and idempotency keys guard the allowed synthetic-state changes. PostgreSQL checkpoints support resumption, while audit records and OpenTelemetry expose workflow activity."],
+    shipped: ["A React investigation workspace brings together the exception queue, evidence, review controls, evaluations, and audit history. The default model provider and embeddings are deterministic so the demo runs without paid credentials."],
+    retro: ["The deterministic demo makes behavior reproducible; it does not demonstrate production model quality or operational adoption. Real integrations would require separate validation, data governance, and deployment controls."],
+    media: [],
+  },
+  {
+    slug: "sentinelflow",
+    title: "Reliable event processing from a synthetic transaction to an analyst verdict.",
+    project: "SentinelFlow",
+    category: "Web App",
+    role: "Developer",
+    stack: ["Java", "Spring Boot", "Kafka", "PostgreSQL", "FastAPI", "React"],
+    links: {"repo": "https://github.com/la3679/sentinelflow"},
+    evidence: "Synthetic transactions · transactional outbox · Kafka · explainable scoring",
+    metrics: [{"value": "At-least-once", "label": "event delivery paired with consumer deduplication"}],
+    summaryKey: "case.sentinelflow.summary",
+    context: ["SentinelFlow is an independent educational transaction-risk platform built entirely on generated synthetic data. It demonstrates ingestion, scoring, alerts, and analyst investigation without making real financial decisions."],
+    problem: ["A database update and a Kafka publish can fail independently. Retries introduce duplicates, and a risk score needs enough context for an analyst to understand the resulting alert."],
+    approach: ["Spring Boot writes domain state and an outbox record together. A relay publishes due events with retries; consumers deduplicate by event identity so redelivery does not repeat business effects.", "A Python scoring service combines model output and transparent rules. PostgreSQL persists operational state, and a React console exposes risk bands, reasons, assignments, case transitions, and reporting."],
+    shipped: ["The repository includes the API, scoring service, analyst interface, synthetic-data generation, automated tests, and operational instrumentation. The investigation UI connects the transaction, scoring reasons, and permitted case actions."],
+    retro: ["Synthetic evaluation is reproducible but cannot establish effectiveness on real fraud. At-least-once delivery still requires careful idempotency at every downstream side effect; the outbox is not a universal exactly-once guarantee."],
+    media: [],
+  },
+  {
+    slug: "navisight",
+    title: "Making 5.9 million historical vessel observations explorable and traceable.",
+    project: "NaviSight",
+    category: "Web App",
+    role: "Developer",
+    stack: ["Next.js", "TypeScript", "FastAPI", "MongoDB", "MapLibre", "Three.js"],
+    links: {"repo": "https://github.com/la3679/navisight"},
+    evidence: "Historical AIS · MongoDB 2dsphere · map replay · bounded copilot tools",
+    metrics: [{"value": "5,928,519", "label": "historical AIS observations stored in the documented import"}, {"value": "16,294", "label": "distinct vessels in the imported day"}],
+    summaryKey: "case.navisight.summary",
+    context: ["NaviSight explores a public historical AIS archive distributed by NOAA / MarineCadastre. Its documented import covers January 8, 2025; the application is a portfolio project, not a live navigation system."],
+    problem: ["Millions of observations need different access paths for map viewports, vessel tracks, and aggregate analytics. Natural-language answers also need to expose the data behind their claims."],
+    approach: ["A streaming ingestion pipeline fingerprints observations for idempotent loading and reconciles the import with an independent profiling pass. MongoDB separates position history, vessel identity, latest archived positions, and precomputed rollups.", "FastAPI serves geospatial queries and analytics to Next.js, MapLibre, and Three.js views. The optional copilot uses a bounded loop over typed, allowlisted tools that share the API service layer and record arguments, results, and timings."],
+    shipped: ["The documented import contains 5,928,519 observations from 16,294 vessels. The interface provides map replay, vessel tracks, analytics, a representative 3D hull, and answers with visible tool evidence."],
+    retro: ["The archive covers one historical day and contains missing fields. Port queries require a separately supplied gazetteer, and the copilot is optional and disabled by default. These limits remain visible instead of being presented as live coverage."],
+    media: [],
+  },
+  {
+    slug: "webops-commander",
+    title: "Giving browser agents incident tools while keeping rollback under human control.",
+    project: "WebOps Commander",
+    category: "Web App",
+    role: "Developer",
+    stack: ["Next.js", "React", "TypeScript", "WebMCP", "Zustand", "Zod"],
+    links: {"repo": "https://github.com/la3679/webops-commander"},
+    evidence: "WebMCP registration · typed schemas · approval dialog · shared audit timeline",
+    metrics: [{"value": "Human approval", "label": "required before the simulated rollback can execute"}],
+    summaryKey: "case.webops-commander.summary",
+    context: ["WebOps Commander is a WebMCP hackathon project that models incident investigation and recovery entirely in the browser. Services, telemetry, and business-impact figures are synthetic."],
+    problem: ["An agent needs structured tools to inspect an incident, but access to those tools must not let it bypass the operator who approves a recovery action."],
+    approach: ["Next.js and React render a deterministic simulation backed by shared Zustand state. WebMCP registration exposes typed tools whose Zod schemas and handlers validate requests against the same state used by the UI.", "A rollback request opens a visible human approval dialog. Execution checks the approved action and simulation state, while the audit timeline records the recovery flow. Unsupported browsers receive an explicitly labelled developer tester."],
+    shipped: ["A complete simulated request-to-recovery workflow with tool registration, guard checks, approval controls, telemetry views, and unit and browser tests. Agents and people inspect the same browser-owned incident state."],
+    retro: ["The simulation covers one incident and a fixed recovery path. State resets on refresh; real operations would require authenticated users, durable audit storage, and real service adapters. Native discovery depends on browser WebMCP support."],
+    media: [],
+  },
+  {
     slug: "privacy-policies-vs-logs",
     title: "Do apps do what their privacy policies say? Across 86 million log entries: mostly no.",
     project: "Privacy Policies vs. the Logs",
@@ -263,6 +335,10 @@ const caseStudyDefinitions: CaseStudy[] = [
  * and prev/next navigation, so all three stay coherent.
  */
 const displayOrder = [
+  "tradeops-copilot",
+  "sentinelflow",
+  "navisight",
+  "webops-commander",
   "resumatch-ai",
   "vidking-ai-streaming",
   "pokedex-mongodb",
@@ -286,20 +362,12 @@ export const caseStudies: CaseStudy[] = [
  * than a slice, so reordering the list never silently changes the feature
  * set — and the publication is never the lead card.
  */
-/**
- * Homepage featured order (IMPLEMENTATION.md §31.3).
- *
- * Pokédex leads: it is the lead visual and interactive project, and receives
- * the large systems-artifact treatment. ResuMatch remains a normal featured
- * card and keeps its full case study and project-index entry — its data is
- * unchanged. The publication is deliberately absent from the featured four and
- * still appears on /work.
- */
+/** Homepage curation is independent of the complete project catalog. */
 export const featuredSlugs = [
-  "pokedex-mongodb",
-  "resumatch-ai",
-  "vidking-ai-streaming",
-  "aura-grid",
+  "tradeops-copilot",
+  "sentinelflow",
+  "navisight",
+  "webops-commander",
 ] as const;
 
 /** The featured case studies, in featuredSlugs order. */

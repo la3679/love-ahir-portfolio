@@ -9,7 +9,7 @@ import { projects } from "@/data/portfolio";
 import { riseUp, useRevealGroup } from "@/lib/motion";
 
 /**
- * Numbered index of everything: the six case studies first (internal
+ * Numbered index of everything: the case studies first (internal
  * links), then the remaining projects as compact archive rows that link
  * to their repositories. Curation over filtering.
  */
@@ -23,7 +23,7 @@ const Work = () => {
     <>
       <Seo
         title={t("work.title")}
-        description="Sixteen projects across product, research, and data — six written up as full case studies with context, decisions, and outcomes."
+        description={`${projects.length} projects across product, research, and data — ${caseStudies.length} detailed case studies with context, decisions, and outcomes.`}
         path="/work"
       />
       <div className="container pt-32">
@@ -33,7 +33,7 @@ const Work = () => {
             {t("work.title")}
           </h1>
           <p className="mt-4 max-w-2xl text-base leading-relaxed text-muted-foreground md:text-lg">
-            {t("work.description")}
+            {t("work.description", { count: projects.length, studies: caseStudies.length })}
           </p>
         </header>
 
@@ -94,6 +94,9 @@ const Work = () => {
                   <span>
                     <span className="font-medium text-foreground transition-colors group-hover:text-accent">
                       {p.title}
+                    </span>
+                    <span className="mt-1 block max-w-3xl text-sm leading-relaxed text-muted-foreground" lang="en">
+                      {p.blurb}
                     </span>
                     {p.outcome && (
                       <span className="meta-line mt-1 block md:mt-0.5">{p.outcome}</span>

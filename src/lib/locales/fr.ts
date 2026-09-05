@@ -52,7 +52,7 @@ const fr: Translation = {
   "home.work.description":
     "Des projets racontés en entier — contexte, décisions et résultats. Le reste vit dans l'index.",
   "home.work.viewCase": "Lire l'étude de cas",
-  "home.work.viewAll": "Les 16 projets",
+  "home.work.viewAll": "Les {{count}} projets",
   "home.work.built": "Réalisation",
   "home.work.stack": "Stack",
   "home.work.outcome": "Résultat",
@@ -79,10 +79,10 @@ const fr: Translation = {
 
   "artifact.label": "Projet principal · architecture système",
   "artifact.stagesLabel": "Explorer l'architecture",
-  "artifact.stage.interface": "La recherche, la carte des observations et les vues de combat.",
-  "artifact.stage.services": "Points d'accès REST servant les requêtes et les médias stockés.",
-  "artifact.stage.data": "Index 2dsphere sur des enregistrements géospatiaux d'observations.",
-  "artifact.stage.systems": "Stockage des médias via GridFS et logique de combat au tour par tour.",
+  "artifact.stage.interface": "Files d’exceptions, preuves et contrôles de revue.",
+  "artifact.stage.services": "Investigations typées avec interruption explicite pour revue.",
+  "artifact.stage.data": "État du workflow et preuves consultables.",
+  "artifact.stage.systems": "Autorisation du réviseur et journal d’audit en ajout uniquement.",
   "artifact.outcomeLabel": "Résultat vérifié",
   "artifact.disclaimer":
     "Un schéma système abstrait d'un projet que j'ai construit — ni une capture du produit, ni une vue en direct des données.",
@@ -218,8 +218,7 @@ const fr: Translation = {
 
   "work.eyebrow": "Index",
   "work.title": "Tout le travail",
-  "work.description":
-    "Seize projets entre produit, recherche et données — six rédigés en études de cas complètes.",
+  "work.description": "{{count}} projets entre produit, recherche et données — {{studies}} études de cas détaillées.",
   "work.featuredHeading": "Études de cas",
   "work.archiveHeading": "Autres projets",
   "work.caseStudy": "Étude de cas",
@@ -228,6 +227,12 @@ const fr: Translation = {
   "category.Mobile App": "Application Mobile",
   "category.Machine Learning": "Apprentissage Automatique",
   "category.Data Analysis": "Analyse de Données",
+  "case.tradeops-copilot.summary": "Examinez des exceptions de transactions synthétiques avec des preuves et une revue humaine obligatoire.",
+  "case.sentinelflow.summary": "Suivez des transactions synthétiques via des événements fiables, des scores de risque et des investigations.",
+  "case.navisight.summary": "Explorez les mouvements historiques des navires avec des cartes, des analyses et un copilote aux preuves visibles.",
+  "case.webops-commander.summary": "Examinez un incident simulé avec les outils du navigateur et approuvez la récupération avant son exécution.",
+  "category.Game Development": "Développement de jeux",
+  "category.Automation": "Automatisation",
   "category.Publication": "Publication",
 
   "case.eyebrow": "Étude de cas",

@@ -45,8 +45,8 @@ Netlify SPA routing is handled by `public/_redirects`.
 - `src/data/portfolio.ts` — canonical profile, education, experience, projects,
   skills, expertise, and credentials. Experience records hold structural facts
   and point to locale keys, so home and `/about` share one dataset.
-- `src/data/caseStudies.ts` — six typed long-form case studies. Explicit
-  `featuredSlugs` curation leads with Pokédex; body copy remains English-only
+- `src/data/caseStudies.ts` — ten typed long-form case studies. Explicit
+  `featuredSlugs` curation leads with TradeOps Copilot; body copy remains English-only
   by design and retains `lang="en"` outside English locales.
 - `src/lib/locales/` — eight locale dictionaries structurally locked to the
   `en-US` key set. `src/lib/i18n.ts` wires i18next and synchronizes `<html lang>`.

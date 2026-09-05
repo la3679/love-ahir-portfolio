@@ -52,7 +52,7 @@ const es: Translation = {
   "home.work.description":
     "Proyectos con la historia completa: contexto, decisiones y resultados. El resto vive en el índice.",
   "home.work.viewCase": "Leer el caso de estudio",
-  "home.work.viewAll": "Los 16 proyectos",
+  "home.work.viewAll": "Los {{count}} proyectos",
   "home.work.built": "Construido",
   "home.work.stack": "Stack",
   "home.work.outcome": "Resultado",
@@ -79,10 +79,10 @@ const es: Translation = {
 
   "artifact.label": "Proyecto principal · arquitectura de sistemas",
   "artifact.stagesLabel": "Explora la arquitectura",
-  "artifact.stage.interface": "Búsqueda, el mapa de avistamientos y las vistas de combate.",
-  "artifact.stage.services": "Endpoints REST que sirven consultas y archivos almacenados.",
-  "artifact.stage.data": "Índices 2dsphere sobre registros geoespaciales de avistamientos.",
-  "artifact.stage.systems": "Almacenamiento multimedia con GridFS y lógica de combate por turnos.",
+  "artifact.stage.interface": "Colas de excepciones, evidencias y controles de revisión.",
+  "artifact.stage.services": "Investigaciones tipadas con una pausa explícita para revisión.",
+  "artifact.stage.data": "Estado del flujo y evidencias consultables.",
+  "artifact.stage.systems": "Autorización del revisor y registro de auditoría inmutable.",
   "artifact.outcomeLabel": "Resultado verificado",
   "artifact.disclaimer":
     "Un diagrama abstracto de sistemas de un proyecto que construí — no es una captura del producto ni una vista en vivo de los datos.",
@@ -218,8 +218,7 @@ const es: Translation = {
 
   "work.eyebrow": "Índice",
   "work.title": "Todo el trabajo",
-  "work.description":
-    "Dieciséis proyectos entre producto, investigación y datos — seis documentados como casos de estudio completos.",
+  "work.description": "{{count}} proyectos de producto, investigación y datos — {{studies}} casos de estudio detallados.",
   "work.featuredHeading": "Casos de estudio",
   "work.archiveHeading": "Más proyectos",
   "work.caseStudy": "Caso de estudio",
@@ -228,6 +227,12 @@ const es: Translation = {
   "category.Mobile App": "Aplicación Móvil",
   "category.Machine Learning": "Aprendizaje Automático",
   "category.Data Analysis": "Análisis de Datos",
+  "case.tradeops-copilot.summary": "Investiga excepciones de operaciones sintéticas con evidencias recuperadas y revisión humana obligatoria.",
+  "case.sentinelflow.summary": "Sigue transacciones sintéticas a través de eventos fiables, puntuación de riesgo e investigación.",
+  "case.navisight.summary": "Explora movimientos históricos de buques con mapas, análisis y un copiloto con evidencias visibles.",
+  "case.webops-commander.summary": "Investiga un incidente simulado con herramientas del navegador y aprueba la recuperación antes de ejecutarla.",
+  "category.Game Development": "Desarrollo de juegos",
+  "category.Automation": "Automatización",
   "category.Publication": "Publicación",
 
   "case.eyebrow": "Caso de estudio",

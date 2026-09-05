@@ -52,7 +52,7 @@ const de: Translation = {
   "home.work.description":
     "Projekte mit der ganzen Geschichte — Kontext, Entscheidungen und Ergebnisse. Der Rest lebt im Index.",
   "home.work.viewCase": "Fallstudie lesen",
-  "home.work.viewAll": "Alle 16 Projekte",
+  "home.work.viewAll": "Alle {{count}} Projekte",
   "home.work.built": "Umsetzung",
   "home.work.stack": "Stack",
   "home.work.outcome": "Ergebnis",
@@ -79,10 +79,10 @@ const de: Translation = {
 
   "artifact.label": "Leitprojekt · Systemarchitektur",
   "artifact.stagesLabel": "Architektur erkunden",
-  "artifact.stage.interface": "Suche, die Sichtungskarte und die Kampfansichten.",
-  "artifact.stage.services": "REST-Endpunkte für Abfragen und gespeicherte Medien.",
-  "artifact.stage.data": "2dsphere-Indizes über geospatiale Sichtungsdatensätze.",
-  "artifact.stage.systems": "GridFS-Medienspeicher und rundenbasierte Kampflogik.",
+  "artifact.stage.interface": "Ausnahmewarteschlangen, Belege und Prüfsteuerung.",
+  "artifact.stage.services": "Typisierte Untersuchungen mit ausdrücklicher Prüfunterbrechung.",
+  "artifact.stage.data": "Workflow-Zustand und durchsuchbare Belege.",
+  "artifact.stage.systems": "Prüferberechtigung und nur ergänzbares Audit-Protokoll.",
   "artifact.outcomeLabel": "Verifiziertes Ergebnis",
   "artifact.disclaimer":
     "Ein abstraktes Systemdiagramm eines Projekts, das ich gebaut habe — kein Produkt-Screenshot und keine Live-Ansicht der Daten.",
@@ -218,8 +218,7 @@ const de: Translation = {
 
   "work.eyebrow": "Index",
   "work.title": "Alle Arbeiten",
-  "work.description":
-    "Sechzehn Projekte aus Produkt, Forschung und Daten — sechs davon als vollständige Fallstudien aufbereitet.",
+  "work.description": "{{count}} Projekte aus Produktentwicklung, Forschung und Datenanalyse — {{studies}} ausführliche Fallstudien.",
   "work.featuredHeading": "Fallstudien",
   "work.archiveHeading": "Weitere Projekte",
   "work.caseStudy": "Fallstudie",
@@ -228,6 +227,12 @@ const de: Translation = {
   "category.Mobile App": "Mobile App",
   "category.Machine Learning": "Maschinelles Lernen",
   "category.Data Analysis": "Datenanalyse",
+  "case.tradeops-copilot.summary": "Untersuchen Sie synthetische Handelsausnahmen mit abgerufenen Belegen und verpflichtender menschlicher Prüfung.",
+  "case.sentinelflow.summary": "Verfolgen Sie synthetische Transaktionen über zuverlässige Ereignisse, Risikobewertung und Untersuchung.",
+  "case.navisight.summary": "Erkunden Sie historische Schiffsbewegungen mit Karten, Analysen und einem Copilot mit sichtbaren Belegen.",
+  "case.webops-commander.summary": "Untersuchen Sie einen simulierten Vorfall mit Browser-Tools und genehmigen Sie die Wiederherstellung vor der Ausführung.",
+  "category.Game Development": "Spieleentwicklung",
+  "category.Automation": "Automatisierung",
   "category.Publication": "Publikation",
 
   "case.eyebrow": "Fallstudie",
