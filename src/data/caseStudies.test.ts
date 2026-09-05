@@ -11,8 +11,8 @@ import enUS from "@/lib/locales/en-US";
 import { resources, supportedLngs } from "@/lib/locales";
 
 describe("caseStudies data integrity", () => {
-  it("contains six case studies with unique slugs", () => {
-    expect(caseStudies).toHaveLength(6);
+  it("contains ten case studies with unique slugs", () => {
+    expect(caseStudies).toHaveLength(10);
     const slugs = caseStudies.map((c) => c.slug);
     expect(new Set(slugs).size).toBe(slugs.length);
   });
@@ -50,7 +50,7 @@ describe("caseStudies data integrity", () => {
   });
 
   it("leads with engineering work and closes with the publication", () => {
-    expect(caseStudies[0].slug).toBe("resumatch-ai");
+    expect(caseStudies[0].slug).toBe("tradeops-copilot");
     expect(caseStudies[caseStudies.length - 1].slug).toBe("privacy-policies-vs-logs");
   });
 

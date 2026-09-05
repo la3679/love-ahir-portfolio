@@ -5,36 +5,19 @@ import { Link } from "react-router-dom";
 import SectionHeading from "./SectionHeading";
 import MediaFrame from "./MediaFrame";
 import ProjectArtifact from "./ProjectArtifact";
+import { projects } from "@/data/portfolio";
 import { featuredCaseStudies, type CaseStudy } from "@/data/caseStudies";
 import { riseUp, useReveal, useRevealGroup } from "@/lib/motion";
 import { useSceneSection } from "./lattice/latticeState";
 
-/**
- * Home featured work — replaces SelectedWork.
- *
- * Four explicitly curated case studies (`featuredSlugs`), Pokédex leading
- * and the publication deliberately absent; `/work` still carries all six case
- * studies and the full set of 16 projects.
- *
- * Each entry answers the four things a hiring manager asks — what problem,
- * how it was built, on what, and what came out — using only fields that
- * already exist in the verified case-study record. Direction A treatment:
- * ruled editorial entries with no card fill or heavy chrome, not a generic
- * card grid.
- *
- * Media renders only when a case actually has an asset. All six `media`
- * arrays are empty today, so nothing renders — no placeholder thumbnails and
- * no fabricated screenshots. Repository actions render only where a verified
- * URL exists; no case currently claims a live deployment, so no live link is
- * shown.
- */
+/** Four curated engineering case studies; the Work page retains the full catalog. */
 const FeaturedWork = () => {
   const { t } = useTranslation();
   const reveal = useReveal();
   const revealGroup = useRevealGroup();
   const sectionRef = useSceneSection("projects");
 
-  // Pokédex leads and takes the large systems-artifact treatment; the other
+  // TradeOps leads with an interactive architecture summary; the other
   // three render as the established ruled editorial entries, numbered from 02
   // so the section still reads as one ordered list of four.
   const [lead, ...rest] = featuredCaseStudies;
@@ -73,7 +56,7 @@ const FeaturedWork = () => {
             to="/work"
             className="link-underline group inline-flex min-h-11 items-center gap-2 rounded-sm text-sm font-medium text-foreground"
           >
-            {t("home.work.viewAll")}
+            {t("home.work.viewAll", { count: projects.length })}
             <ArrowRight
               className="h-4 w-4 transition-transform group-hover:translate-x-0.5"
               aria-hidden="true"

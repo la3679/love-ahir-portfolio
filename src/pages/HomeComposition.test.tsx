@@ -130,18 +130,18 @@ describe("About section", () => {
   });
 });
 
-describe("Pokédex lead project", () => {
-  const pokedex = getCaseStudy("pokedex-mongodb")!;
+describe("TradeOps lead project", () => {
+  const tradeops = getCaseStudy("tradeops-copilot")!;
 
   it("is the first featured project", () => {
-    expect(featuredSlugs[0]).toBe("pokedex-mongodb");
+    expect(featuredSlugs[0]).toBe("tradeops-copilot");
   });
 
   it("renders the lead systems artifact with its verified stack", () => {
     renderHome();
     const figure = screen.getByRole("figure");
-    expect(figure).toHaveTextContent(pokedex.project);
-    for (const tech of pokedex.stack) {
+    expect(figure).toHaveTextContent(tradeops.project);
+    for (const tech of tradeops.stack) {
       expect(figure).toHaveTextContent(tech);
     }
   });
@@ -154,9 +154,9 @@ describe("Pokédex lead project", () => {
 
     const labels = stages.map((b) => b.textContent ?? "");
     expect(labels[0]).toContain("React interface");
-    expect(labels[1]).toContain("Flask API");
-    expect(labels[2]).toContain("MongoDB 2dsphere");
-    expect(labels[3]).toContain("GridFS");
+    expect(labels[1]).toContain("FastAPI + LangGraph");
+    expect(labels[2]).toContain("PostgreSQL + FAISS");
+    expect(labels[3]).toContain("Human review");
 
     // Every target meets the 44px floor via a min-height utility class.
     stages.forEach((b) => expect(b.className).toMatch(/min-h-\[44px\]/));
@@ -199,14 +199,14 @@ describe("Pokédex lead project", () => {
     renderHome();
     const figure = screen.getByRole("figure");
     expect(within(figure).getAllByRole("button")).toHaveLength(4);
-    expect(figure).toHaveTextContent("296k+");
+    expect(figure).toHaveTextContent("13 nodes");
   });
 
-  it("publishes the verified 296k+ outcome", () => {
+  it("publishes the verified 13 nodes outcome", () => {
     renderHome();
     const figure = screen.getByRole("figure");
-    expect(figure).toHaveTextContent("296k+");
-    expect(figure).toHaveTextContent(pokedex.metrics[0].label);
+    expect(figure).toHaveTextContent("13 nodes");
+    expect(figure).toHaveTextContent(tradeops.metrics[0].label);
   });
 
   it("states plainly that the visual is a diagram, not a screenshot", () => {
@@ -217,11 +217,12 @@ describe("Pokédex lead project", () => {
     expect(figure.querySelector("img")).toBeNull();
   });
 
-  it("never describes Pokédex as an AI or machine-learning project", () => {
+  it("identifies the synthetic demo and human review requirement", () => {
     renderHome();
     const figure = screen.getByRole("figure");
     const text = figure.textContent ?? "";
-    expect(text).not.toMatch(/\bAI\b|machine learning|\bML\b|LLM|Gemini|multiplayer/i);
+    expect(text).toMatch(/synthetic/i);
+    expect(text).toMatch(/human review/i);
   });
 
   it("links to the case study and the verified repository", () => {
@@ -229,12 +230,11 @@ describe("Pokédex lead project", () => {
     const figure = screen.getByRole("figure");
     expect(
       within(figure).getByRole("link", { name: new RegExp(i18n.t("artifact.cta"), "i") }),
-    ).toHaveAttribute("href", "/work/pokedex-mongodb");
-    expect(pokedex.links.repo).toBeTruthy();
+    ).toHaveAttribute("href", "/work/tradeops-copilot");
+    expect(tradeops.links.repo).toBeTruthy();
   });
 
-  it("keeps ResuMatch featured rather than deleting or weakening it", () => {
-    expect(featuredSlugs).toContain("resumatch-ai");
+  it("keeps ResuMatch available as a complete case study", () => {
     expect(getCaseStudy("resumatch-ai")).toBeDefined();
   });
 });

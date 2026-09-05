@@ -65,7 +65,7 @@ const enUS = {
   "home.work.description":
     "Projects with the full story — context, decisions, and outcomes. The rest live in the index.",
   "home.work.viewCase": "Read the case study",
-  "home.work.viewAll": "All 16 projects",
+  "home.work.viewAll": "All {{count}} projects",
   "home.work.built": "Built",
   "home.work.stack": "Stack",
   "home.work.outcome": "Outcome",
@@ -93,14 +93,14 @@ const enUS = {
   "home.about.basedLabel": "Based",
   "home.about.studiedLabel": "Studied",
 
-  // Home — lead-project systems artifact (Pokédex MongoDB Platform).
+  // Home — lead-project systems artifact (TradeOps Copilot).
   // An abstract architecture diagram, never a product screenshot.
   "artifact.label": "Lead project · systems architecture",
   "artifact.stagesLabel": "Explore the architecture",
-  "artifact.stage.interface": "Search, the sightings map, and the battle views.",
-  "artifact.stage.services": "REST endpoints serving queries and stored media.",
-  "artifact.stage.data": "2dsphere indexes over geospatial sighting records.",
-  "artifact.stage.systems": "GridFS media storage and turn-based battle logic.",
+  "artifact.stage.interface": "Exception queues, evidence, and review controls.",
+  "artifact.stage.services": "Typed investigations with an explicit review interrupt.",
+  "artifact.stage.data": "Workflow state and searchable evidence.",
+  "artifact.stage.systems": "Reviewer authorization and an append-only audit trail.",
   "artifact.outcomeLabel": "Verified outcome",
   "artifact.disclaimer":
     "An abstract systems diagram of a project I built — not a product screenshot, and not a live view of the data.",
@@ -247,8 +247,7 @@ const enUS = {
   // Work index
   "work.eyebrow": "Index",
   "work.title": "All work",
-  "work.description":
-    "Sixteen projects across product, research, and data — six written up as full case studies.",
+  "work.description": "{{count}} projects across product, research, and data — {{studies}} detailed case studies.",
   "work.featuredHeading": "Case studies",
   "work.archiveHeading": "More projects",
   "work.caseStudy": "Case study",
@@ -257,6 +256,12 @@ const enUS = {
   "category.Mobile App": "Mobile App",
   "category.Machine Learning": "Machine Learning",
   "category.Data Analysis": "Data Analysis",
+  "case.tradeops-copilot.summary": "Investigate synthetic trade exceptions with retrieved evidence and mandatory human review.",
+  "case.sentinelflow.summary": "Trace synthetic transactions through reliable event delivery, risk scoring, and analyst investigation.",
+  "case.navisight.summary": "Explore historical vessel movements through maps, analytics, and a copilot with visible evidence.",
+  "case.webops-commander.summary": "Investigate a simulated incident through browser-native tools and approve recovery before execution.",
+  "category.Game Development": "Game Development",
+  "category.Automation": "Automation",
   "category.Publication": "Publication",
 
   // Case-study template

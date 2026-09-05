@@ -49,7 +49,7 @@ const gu: Translation = {
   "home.work.description":
     "સંપૂર્ણ કહાની સાથેના પ્રોજેક્ટ — સંદર્ભ, નિર્ણયો અને પરિણામો. બાકીના સૂચિમાં છે.",
   "home.work.viewCase": "કેસ સ્ટડી વાંચો",
-  "home.work.viewAll": "બધા 16 પ્રોજેક્ટ",
+  "home.work.viewAll": "બધા {{count}} પ્રોજેક્ટ",
   "home.work.built": "નિર્માણ",
   "home.work.stack": "સ્ટેક",
   "home.work.outcome": "પરિણામ",
@@ -76,10 +76,10 @@ const gu: Translation = {
 
   "artifact.label": "મુખ્ય પ્રોજેક્ટ · સિસ્ટમ આર્કિટેક્ચર",
   "artifact.stagesLabel": "આર્કિટેક્ચર જુઓ",
-  "artifact.stage.interface": "શોધ, સાઇટિંગ નકશો અને બૅટલ સ્ક્રીન.",
-  "artifact.stage.services": "ક્વેરી અને સંગ્રહિત મીડિયા આપતા REST એન્ડપોઇન્ટ.",
-  "artifact.stage.data": "ભૂ-અવકાશીય સાઇટિંગ રેકોર્ડ પર 2dsphere ઇન્ડેક્સ.",
-  "artifact.stage.systems": "GridFS મીડિયા સંગ્રહ અને ટર્ન-આધારિત બૅટલ લોજિક.",
+  "artifact.stage.interface": "અપવાદ કતારો, પુરાવા અને સમીક્ષા નિયંત્રણો.",
+  "artifact.stage.services": "સમીક્ષા માટે સ્પષ્ટ વિરામ ધરાવતી ટાઇપ કરેલી તપાસ.",
+  "artifact.stage.data": "વર્કફ્લોની સ્થિતિ અને શોધી શકાય તેવા પુરાવા.",
+  "artifact.stage.systems": "સમીક્ષકની મંજૂરી અને માત્ર ઉમેરાતો ઑડિટ રેકોર્ડ.",
   "artifact.outcomeLabel": "ચકાસાયેલ પરિણામ",
   "artifact.disclaimer":
     "મેં બનાવેલા પ્રોજેક્ટનો અમૂર્ત સિસ્ટમ ડાયાગ્રામ — આ પ્રોડક્ટ સ્ક્રીનશોટ નથી, અને ડેટાનું લાઇવ દૃશ્ય પણ નથી.",
@@ -215,8 +215,7 @@ const gu: Translation = {
 
   "work.eyebrow": "સૂચિ",
   "work.title": "સમગ્ર કાર્ય",
-  "work.description":
-    "પ્રોડક્ટ, સંશોધન અને ડેટામાં સોળ પ્રોજેક્ટ — જેમાંથી છ સંપૂર્ણ કેસ સ્ટડી તરીકે લખાયેલા છે.",
+  "work.description": "ઉત્પાદન, સંશોધન અને ડેટાના {{count}} પ્રોજેક્ટ — {{studies}} વિગતવાર કેસ સ્ટડી.",
   "work.featuredHeading": "કેસ સ્ટડીઝ",
   "work.archiveHeading": "વધુ પ્રોજેક્ટ",
   "work.caseStudy": "કેસ સ્ટડી",
@@ -225,6 +224,12 @@ const gu: Translation = {
   "category.Mobile App": "મોબાઇલ એપ",
   "category.Machine Learning": "મશીન લર્નિંગ",
   "category.Data Analysis": "ડેટા વિશ્લેષણ",
+  "case.tradeops-copilot.summary": "મેળવેલા પુરાવા અને ફરજિયાત માનવીય સમીક્ષા સાથે કૃત્રિમ ટ્રેડ અપવાદોની તપાસ કરો.",
+  "case.sentinelflow.summary": "વિશ્વસનીય ઇવેન્ટ ડિલિવરી, જોખમ સ્કોર અને વિશ્લેષકની તપાસ દ્વારા કૃત્રિમ વ્યવહારો જુઓ.",
+  "case.navisight.summary": "નકશા, વિશ્લેષણ અને પુરાવા દર્શાવતા કોપાઇલટથી જહાજોની ઐતિહાસિક ગતિવિધિ જુઓ.",
+  "case.webops-commander.summary": "બ્રાઉઝર ટૂલથી સિમ્યુલેટેડ ઘટનાની તપાસ કરો અને રિકવરી અમલ પહેલાં મંજૂર કરો.",
+  "category.Game Development": "ગેમ ડેવલપમેન્ટ",
+  "category.Automation": "ઑટોમેશન",
   "category.Publication": "પ્રકાશન",
 
   "case.eyebrow": "કેસ સ્ટડી",

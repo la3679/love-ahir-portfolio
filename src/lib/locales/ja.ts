@@ -49,7 +49,7 @@ const ja: Translation = {
   "home.work.description":
     "背景・意思決定・成果まで、物語のすべてを記したプロジェクト。残りはインデックスにあります。",
   "home.work.viewCase": "ケーススタディを読む",
-  "home.work.viewAll": "全16プロジェクト",
+  "home.work.viewAll": "全{{count}}プロジェクト",
   "home.work.built": "構築",
   "home.work.stack": "技術スタック",
   "home.work.outcome": "成果",
@@ -76,10 +76,10 @@ const ja: Translation = {
 
   "artifact.label": "主要プロジェクト · システム構成",
   "artifact.stagesLabel": "アーキテクチャを見る",
-  "artifact.stage.interface": "検索、目撃マップ、バトル画面。",
-  "artifact.stage.services": "クエリと保存メディアを提供する REST エンドポイント。",
-  "artifact.stage.data": "地理空間の目撃レコードに対する 2dsphere インデックス。",
-  "artifact.stage.systems": "GridFS によるメディア保存とターン制バトルのロジック。",
+  "artifact.stage.interface": "例外キュー、証拠、レビュー操作。",
+  "artifact.stage.services": "レビュー時に明示的に停止する型付き調査。",
+  "artifact.stage.data": "ワークフローの状態と検索可能な証拠。",
+  "artifact.stage.systems": "レビュアーの認可と追記専用の監査ログ。",
   "artifact.outcomeLabel": "検証済みの成果",
   "artifact.disclaimer":
     "私が構築したプロジェクトの抽象的なシステム図です。製品のスクリーンショットでも、データのライブ表示でもありません。",
@@ -215,8 +215,7 @@ const ja: Translation = {
 
   "work.eyebrow": "インデックス",
   "work.title": "すべての実績",
-  "work.description":
-    "プロダクト・研究・データにわたる16のプロジェクト。うち6件は完全なケーススタディとしてまとめています。",
+  "work.description": "プロダクト・研究・データにわたる{{count}}件のプロジェクトと、{{studies}}件の詳細なケーススタディ。",
   "work.featuredHeading": "ケーススタディ",
   "work.archiveHeading": "その他のプロジェクト",
   "work.caseStudy": "ケーススタディ",
@@ -225,6 +224,12 @@ const ja: Translation = {
   "category.Mobile App": "モバイルアプリ",
   "category.Machine Learning": "機械学習",
   "category.Data Analysis": "データ分析",
+  "case.tradeops-copilot.summary": "取得した証拠と必須の人間によるレビューを使い、合成取引データの例外を調査します。",
+  "case.sentinelflow.summary": "信頼性のあるイベント配信、リスクスコア、アナリストの調査を通じて合成取引を追跡します。",
+  "case.navisight.summary": "地図、分析、証拠を表示するコパイロットで船舶の過去の動きを探索します。",
+  "case.webops-commander.summary": "ブラウザのツールで模擬インシデントを調査し、復旧の実行前に人間が承認します。",
+  "category.Game Development": "ゲーム開発",
+  "category.Automation": "自動化",
   "category.Publication": "論文",
 
   "case.eyebrow": "ケーススタディ",

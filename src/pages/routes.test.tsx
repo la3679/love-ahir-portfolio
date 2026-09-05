@@ -33,7 +33,7 @@ import CaseStudy from "./CaseStudy";
 import Research from "./Research";
 import About from "./About";
 import NotFound from "./NotFound";
-import { caseStudies, featuredSlugs } from "@/data/caseStudies";
+import { getCaseStudy, caseStudies, featuredSlugs } from "@/data/caseStudies";
 import { experiences } from "@/data/portfolio";
 
 beforeEach(async () => {
@@ -64,14 +64,14 @@ describe("route smoke tests", () => {
     );
   });
 
-  it("renders the work index with all sixteen entries", () => {
+  it("renders the work index with all twenty-six entries", () => {
     renderAt("/work");
     expect(
       screen.getByRole("heading", { level: 1, name: i18n.t("work.title") }),
     ).toBeInTheDocument();
-    // 6 internal case links + 10 archive rows
-    expect(screen.getAllByText(i18n.t("work.caseStudy")).length).toBeGreaterThanOrEqual(6);
-    expect(screen.getAllByText(i18n.t("work.external")).length).toBe(10);
+    // 10 internal case links + 16 archive rows
+    expect(screen.getAllByText(i18n.t("work.caseStudy")).length).toBeGreaterThanOrEqual(10);
+    expect(screen.getAllByText(i18n.t("work.external")).length).toBe(16);
   });
 
   it("renders every case study at its slug", () => {
@@ -158,10 +158,10 @@ describe("route smoke tests", () => {
     );
   });
 
-  it("features engineering case studies first, led by Pokédex, publication excluded", () => {
+  it("features engineering case studies first, led by TradeOps, publication excluded", () => {
     renderAt("/");
     // Each entry links to its case study more than once (title + action), and
-    // the lead artifact links to Pokédex above them, so compare the distinct
+    // the lead artifact links to TradeOps above them, so compare the distinct
     // destinations in document order rather than raw link order.
     const seen = new Set<string>();
     const destinations = screen
@@ -171,10 +171,9 @@ describe("route smoke tests", () => {
       .filter((href) => (seen.has(href) ? false : seen.add(href)));
 
     expect(destinations).toEqual(featuredSlugs.map((slug) => `/work/${slug}`));
-    // §31.3: Pokédex is the lead project and the lead artifact.
-    expect(destinations[0]).toBe("/work/pokedex-mongodb");
-    // ResuMatch is not deleted or weakened — it stays a featured project.
-    expect(destinations).toContain("/work/resumatch-ai");
+    // The architecture panel and curated list must agree on the lead.
+    expect(destinations[0]).toBe("/work/tradeops-copilot");
+    expect(getCaseStudy("resumatch-ai")).toBeDefined();
     expect(destinations).not.toContain("/work/privacy-policies-vs-logs");
   });
 

@@ -5,33 +5,9 @@ import { ArrowUpRight, Github } from "lucide-react";
 import { getCaseStudy } from "@/data/caseStudies";
 import { useLattice, type SystemLayer } from "./lattice/latticeState";
 
-const SLUG = "pokedex-mongodb";
+const SLUG = "tradeops-copilot";
 
-/**
- * The lead-project systems artifact (IMPLEMENTATION.md §31.3).
- *
- * This keeps the editorial character of the ivory architecture-summary stage
- * that Love approved at Gate 2 — the `stage-surface` panel, numbered mono
- * stages, ruled divider and permanent disclaimer — and changes only its
- * subject, from ResuMatch to the Pokédex MongoDB Platform.
- *
- * Every fact is copied from the verified record in `caseStudies.ts` /
- * `portfolio.ts`: the four stages, the stack, and the 296k+ outcome. Pokédex is
- * a full-stack data project and is never described as an AI project. No AI, ML,
- * real-time multiplayer, deployment, user count, performance figure or external
- * integration is claimed for it.
- *
- * Intellectual property: nothing here references Pokémon characters, sprites,
- * silhouettes, Poké Balls, logos, cards, artwork or environments. The visual
- * identity is entirely abstract geometry and the portfolio's own tokens.
- *
- * Accessibility: the four stages are real `<button>`s in a toolbar with
- * `aria-pressed`, each at least 44px tall, reachable and operable by keyboard,
- * and distinguished by border weight and a filled marker as well as by colour.
- * They select a layer in the shared background visualization, but the component
- * is completely usable — and completely legible — when that visualization never
- * loads at all.
- */
+/** Interactive architecture summary for the curated lead project. */
 
 interface Stage {
   layer: SystemLayer;
@@ -42,9 +18,9 @@ interface Stage {
 
 const STAGES: Stage[] = [
   { layer: "interface", name: "React interface", detailKey: "artifact.stage.interface" },
-  { layer: "services", name: "Flask API", detailKey: "artifact.stage.services" },
-  { layer: "data", name: "MongoDB 2dsphere", detailKey: "artifact.stage.data" },
-  { layer: "systems", name: "GridFS + battle systems", detailKey: "artifact.stage.systems" },
+  { layer: "services", name: "FastAPI + LangGraph", detailKey: "artifact.stage.services" },
+  { layer: "data", name: "PostgreSQL + FAISS", detailKey: "artifact.stage.data" },
+  { layer: "systems", name: "Human review + audit", detailKey: "artifact.stage.systems" },
 ];
 
 const ProjectArtifact = () => {

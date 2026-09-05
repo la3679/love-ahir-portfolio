@@ -17,7 +17,9 @@ export type ProjectCategory =
   | "Mobile App"
   | "Machine Learning"
   | "Data Analysis"
-  | "Publication";
+  | "Publication"
+  | "Game Development"
+  | "Automation";
 
 export interface Profile {
   name: string;
@@ -296,6 +298,92 @@ export function experiencesInGroup(
 }
 
 export const projects: Project[] = [
+  {
+    title: "TradeOps Copilot",
+    category: "Web App",
+    blurb: "An investigation console for synthetic trade exceptions, combining evidence retrieval, a 13-node LangGraph workflow, human review, and an append-only audit trail.",
+    stack: ["React", "TypeScript", "FastAPI", "LangGraph", "FAISS", "PostgreSQL"],
+    link: "https://github.com/la3679/tradeops-insight",
+    featured: true,
+    slug: "tradeops-copilot",
+    outcome: "13-node workflow with mandatory human review",
+  },
+  {
+    title: "SentinelFlow",
+    category: "Web App",
+    blurb: "A transaction-risk operations platform on synthetic data, with a transactional outbox, idempotent Kafka consumers, explainable scoring, and an analyst investigation console.",
+    stack: ["Java", "Spring Boot", "Kafka", "PostgreSQL", "FastAPI", "React"],
+    link: "https://github.com/la3679/sentinelflow",
+    featured: true,
+    slug: "sentinelflow",
+    outcome: "At-least-once delivery with idempotent consumers",
+  },
+  {
+    title: "NaviSight",
+    category: "Web App",
+    blurb: "Explore 5.9M historical AIS vessel observations through a geospatial map, replay, analytics, a 3D inspector, and an optional copilot with a visible evidence trail.",
+    stack: ["Next.js", "TypeScript", "FastAPI", "MongoDB", "MapLibre", "Three.js"],
+    link: "https://github.com/la3679/navisight",
+    featured: true,
+    slug: "navisight",
+    outcome: "5,928,519 historical observations from 16,294 vessels",
+  },
+  {
+    title: "WebOps Commander",
+    category: "Web App",
+    blurb: "A browser-native incident simulation that exposes typed WebMCP tools, requires visible human approval for rollback, and records the recovery in a shared audit timeline.",
+    stack: ["Next.js", "React", "TypeScript", "WebMCP", "Zustand", "Zod"],
+    link: "https://github.com/la3679/webops-commander",
+    featured: true,
+    slug: "webops-commander",
+    outcome: "Human-approved recovery in a deterministic simulation",
+  },
+  {
+    title: "Integration Operations Hub",
+    category: "Web App",
+    blurb: "An Angular operations dashboard coordinating employee-record synchronization through Express, FastAPI, and ASP.NET Core, with retries, circuit breaking, and partial-success reporting.",
+    stack: ["Angular", "RxJS", "Node.js", "FastAPI", "C# / .NET", "PostgreSQL"],
+    link: "https://github.com/la3679/integration-operations-hub",
+    outcome: "Traceable synchronization across three backend runtimes",
+  },
+  {
+    title: "Yu-Gi-Oh Duel Arena — Rules Engine",
+    category: "Game Development",
+    blurb: "An in-progress, headless Godot rules engine with deterministic action validation, chain resolution, reusable card mechanics, and regression tests. Card coverage is still growing; a playable UI is future work.",
+    stack: ["Godot", "GDScript", "Python", "Automated Testing"],
+    link: "https://github.com/la3679/yu-gi-oh-duel-arena-godot",
+    outcome: "Deterministic rules and card interactions; in development",
+  },
+  {
+    title: "College Recommendation",
+    category: "Web App",
+    blurb: "A Java student-record and college-recommendation application with college and dataset management, location filters, and a workflow for submitting and reviewing recommendation results.",
+    stack: ["Java", "Spring Boot", "Spring Security", "Hibernate", "MySQL", "JSP"],
+    link: "https://github.com/la3679/College-Recommendation",
+  },
+  {
+    title: "Automated Weather Reports",
+    category: "Automation",
+    blurb: "A Python script that fetches current weather from OpenWeatherMap for selected cities and turns temperature and humidity readings into shareable PNG and PDF reports.",
+    stack: ["Python", "Requests", "Pillow", "OpenWeatherMap"],
+    link: "https://github.com/la3679/Automate-Weather-Forecast",
+    outcome: "Weather API data transformed into PNG and PDF reports",
+  },
+  {
+    title: "Data Analytics Projects",
+    category: "Data Analysis",
+    blurb: "A collection of SQL analyses, Python notebooks, and Power BI reports exploring Amazon sales and Danny’s Diner, with source data and exported findings.",
+    stack: ["SQL", "Python", "Jupyter", "Power BI"],
+    link: "https://github.com/la3679/Data-Analytics-Projects",
+  },
+  {
+    title: "Credora AI — Credit Risk Simulator",
+    category: "Web App",
+    blurb: "An educational credit-risk simulator with deterministic scoring, borrower scenarios, AI explanations, and queued PDF reports. A separate Next.js, Express, MongoDB, and BullMQ application from FinAI-Core.",
+    stack: ["Next.js", "Express", "TypeScript", "MongoDB", "Redis", "BullMQ"],
+    link: "https://github.com/la3679/AI-Credit-Risk-Analyzer-Loan-Approval-Simulator",
+    outcome: "Deterministic scores with AI explanations kept separate",
+  },
   {
     title: "Privacy Policies vs. the Logs",
     category: "Publication",
@@ -600,6 +688,8 @@ export const projectCategories: (ProjectCategory | "All")[] = [
   "Machine Learning",
   "Data Analysis",
   "Publication",
+  "Game Development",
+  "Automation",
 ];
 
 /**
