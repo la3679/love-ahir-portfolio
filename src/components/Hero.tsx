@@ -8,16 +8,17 @@ import {
   type TechnologyId,
 } from "@/data/technologyCatalog";
 import { riseDelay } from "@/lib/motion";
-import SystemsLattice from "./lattice/SystemsLattice";
+import HeroSystemsVideo from "./HeroSystemsVideo";
 import { useLattice, useSceneSection } from "./lattice/latticeState";
 
 /**
- * Recruiter-first hero for the warm voxel observatory (§34).
+ * Recruiter-first hero for the warm systems observatory (§34).
  *
- * Copy owns the left plane and the spatial system is physically mounted inside
- * the right-hand stage. SVG first paint and the lazy WebGL enhancement now
- * share one clipped coordinate system. The global FX layer is mounted once by
- * Layout, outside this isolated hero stacking context.
+ * Copy owns the left plane and the motion plate is physically mounted inside
+ * the right-hand stage, sharing its clip, radius and tilt. The plate is now an
+ * authored clip rather than a WebGL scene, so the hero ships no renderer and
+ * no scene controls. The global FX layer is still mounted once by Layout,
+ * outside this isolated hero stacking context.
  */
 const Hero = () => {
   const { t } = useTranslation();
@@ -110,12 +111,12 @@ const Hero = () => {
               data-stage-rails-active={
                 activeSceneSection === "hero" ? "true" : "false"
               }
-              className="observatory-stage relative min-h-[22rem] overflow-hidden rounded-[var(--radius-stage)] border border-border-bright/70 sm:min-h-[28rem] lg:min-h-[34rem] xl:min-h-[38rem]"
+              className="observatory-stage hero-video-stage relative min-h-[22rem] overflow-hidden rounded-[var(--radius-stage)] border border-border-bright/70 sm:min-h-[28rem] lg:min-h-[34rem] xl:min-h-[38rem]"
             >
-              {/* The SVG/WebGL artwork remains decorative; the adjacent
-                  transform button is intentionally outside that aria-hidden
-                  subtree. */}
-              <SystemsLattice />
+              {/* Decorative throughout: the clip states nothing the heading
+                  and copy do not already say, so it carries no control, no
+                  caption and no accessible name. */}
+              <HeroSystemsVideo />
               <StageTechRail position="top" items={stageTechnologyRails.top} />
               <StageTechRail
                 position="bottom"

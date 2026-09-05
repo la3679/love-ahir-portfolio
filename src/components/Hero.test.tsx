@@ -87,16 +87,36 @@ describe("<Hero />", () => {
     expect(screen.queryByRole("figure")).not.toBeInTheDocument();
   });
 
-  it("mounts the spatial layer inside the observatory stage", () => {
+  it("mounts the motion plate inside the observatory stage", () => {
     const { container } = renderHero();
 
     const stage = container.querySelector(".observatory-stage");
-    const scene = stage?.querySelector(".systems-observatory");
+    const plane = stage?.querySelector(".hero-video-plane");
     expect(stage).toBeInTheDocument();
-    expect(scene).toBeInTheDocument();
-    expect(scene?.querySelector("svg")).toBeInTheDocument();
-    // The synchronous first-paint design is SVG; WebGL still upgrades lazily.
+    expect(stage).toHaveClass("hero-video-stage");
+    expect(plane).toBeInTheDocument();
+    expect(plane?.querySelector("video")).toBeInTheDocument();
+    // No renderer of any kind is mounted for the hero any more.
     expect(container.querySelector("canvas")).toBeNull();
+    expect(container.querySelector(".systems-observatory")).toBeNull();
+  });
+
+  it("drops the voxel transform control and its scene disclaimer", () => {
+    // The clip tells the identity → architecture → throughput story on its
+    // own, so the control that used to cycle those states has no job left.
+    const { container } = renderHero();
+
+    expect(container.querySelector("[data-voxel-control]")).toBeNull();
+    expect(container.querySelectorAll("button")).toHaveLength(0);
+    for (const key of [
+      "hero.transformScene",
+      "hero.sceneDisclaimer",
+      "hero.formation.identity",
+      "hero.formation.architecture",
+      "hero.formation.throughput",
+    ] as const) {
+      expect(container.textContent).not.toContain(i18n.t(key));
+    }
   });
 
   it("keeps two different verified technology rails inside the stage", () => {
