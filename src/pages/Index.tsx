@@ -20,10 +20,11 @@ import { LatticeProvider } from "@/components/lattice/LatticeProvider";
  * Experience deliberately precedes projects: a recruiter reads where the work
  * happened before what was built.
  *
- * `SystemsLattice` is mounted by Hero inside its real observatory stage. It
- * renders the authored SVG immediately and upgrades only after every
- * capability gate passes, so no section depends on WebGL for meaning, layout
- * or legibility.
+ * `HeroSystemsVideo` is mounted by Hero inside its real observatory stage. It
+ * paints its poster frame immediately and needs no capability gate, so no
+ * section depends on a renderer for meaning, layout or legibility. The
+ * provider stays: the sections below still register with it so the stage's
+ * technology rails settle when the reader scrolls past the hero.
  */
 const Index = () => {
   return (

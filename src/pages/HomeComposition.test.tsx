@@ -87,11 +87,17 @@ describe("first paint", () => {
     }
   });
 
-  it("ships no canvas at first paint — the spatial layer starts as SVG", () => {
+  it("ships no canvas at first paint — the stage's plate is a poster-backed video", () => {
     const { container } = renderHome();
     expect(container.querySelector("canvas")).toBeNull();
     const stage = container.querySelector(".observatory-stage");
-    expect(stage?.querySelector(".systems-observatory > svg")).toBeInTheDocument();
+    const video = stage?.querySelector<HTMLVideoElement>(
+      ".hero-video-plane > video",
+    );
+    expect(video).toBeInTheDocument();
+    // The poster is frame 0, so the stage paints its finished picture before a
+    // single byte of the clip has been decoded.
+    expect(video).toHaveAttribute("poster", "/media/hero-systems-loop-poster.jpg");
   });
 });
 

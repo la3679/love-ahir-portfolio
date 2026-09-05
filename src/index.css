@@ -542,6 +542,156 @@
     transition: opacity 420ms var(--ease-glide);
   }
 
+  /*
+    THE HERO MOTION PLATE
+    ---------------------
+    The stage is ~1.05:1 on wide screens and the clip is 16:9, so neither
+    `object-fit: contain` nor `object-fit: cover` is right on its own: contain
+    leaves the plate a floating rectangle, and cover would have to throw away
+    41% of the frame's width, taking the outer nodes of the architecture with
+    it. Measured on the source, the composition occupies 10%–85% of the width
+    and 10%–90% of the height, and the monogram sits in the middle 40%.
+
+    So the width is anchored, not the box:
+
+      width = clamp(6% bleed, exact cover, 18% bleed)
+
+    Read left to right: always fill the stage's width with a little to spare,
+    grow towards a full-bleed cover as the stage gets wider, and never bleed
+    past 18% — which is 7.6% off each edge, still inside the 10% margin the
+    architecture needs. `aspect-ratio` derives the height from that width, so
+    the clip is never stretched at any size. Below `sm` the ceiling lifts: a
+    phone stage is nearly square, and the brief there is the monogram and the
+    centre, which survive a deeper crop intact.
+
+    Container query units make this one continuous rule rather than a table of
+    breakpoint scales, and the plain `width: 100%` above it is the fallback for
+    engines without `container-type` (they letterbox, which is still correct).
+  */
+  .hero-video-plane {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    overflow: hidden;
+    border-radius: inherit;
+    container-type: size;
+    /*
+      Sampled from the clip's own edges: it is lit from the top right, so the
+      plate is darkest at the bottom left. Matching that means the letterboxed
+      bands read as the frame's own vignette continuing, in both themes — the
+      stage's ivory light-mode surface would otherwise frame a black rectangle.
+    */
+    --hero-video-ground: 197 20% 5%;
+    --hero-video-ground-top: 203 19% 8%;
+    --hero-video-ground-lit: 210 16% 18%;
+    background:
+      radial-gradient(
+        120% 88% at 100% 0%,
+        hsl(var(--hero-video-ground-lit)) 0%,
+        hsl(var(--hero-video-ground-lit) / 0) 62%
+      ),
+      linear-gradient(
+        180deg,
+        hsl(var(--hero-video-ground-top)) 0%,
+        hsl(var(--hero-video-ground)) 100%
+      );
+  }
+
+  .hero-video {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    translate: -50% -50%;
+    display: block;
+    width: 100%;
+    width: clamp(106cqw, 177.78cqh, 118cqw);
+    /* Preflight caps every `video` at `max-width: 100%`, which would silently
+       undo the bleed the clamp exists to produce. */
+    max-width: none;
+    height: auto;
+    aspect-ratio: 16 / 9;
+    /* A no-op for this 16:9 source; a guard if the clip is ever re-encoded. */
+    object-fit: cover;
+    object-position: center;
+    /*
+      The only edge treatment: a 5% feather top and bottom so the clip
+      dissolves into the ground instead of ending on a seam. The composition
+      starts 10% in, so nothing that matters is touched — and when the clip
+      overflows vertically the feathered strip is outside the stage entirely.
+    */
+    -webkit-mask-image: linear-gradient(
+      180deg,
+      transparent 0%,
+      #000 5%,
+      #000 95%,
+      transparent 100%
+    );
+    mask-image: linear-gradient(
+      180deg,
+      transparent 0%,
+      #000 5%,
+      #000 95%,
+      transparent 100%
+    );
+    transition: opacity 700ms var(--ease-out);
+  }
+
+  /* Fade out faster than back in: the dissolve should disappear, the return
+     should feel like the monogram settling. */
+  .hero-video[data-seam="true"] {
+    opacity: 0;
+    transition-duration: 380ms;
+  }
+
+  /* The far left and right columns carry faint encoder artefacts. The bleed
+     above already pushes them outside the clip; this is the 3% insurance. */
+  .hero-video-plane::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(
+      90deg,
+      hsl(var(--hero-video-ground)) 0%,
+      hsl(var(--hero-video-ground) / 0) 3.5%,
+      hsl(var(--hero-video-ground) / 0) 96.5%,
+      hsl(var(--hero-video-ground)) 100%
+    );
+  }
+
+  @media (max-width: 639px) {
+    .hero-video {
+      width: clamp(106cqw, 177.78cqh, 134cqw);
+    }
+  }
+
+  /*
+    The rails now sit on the clip's dark ground in both themes, so their
+    backing and text are pinned rather than derived from the theme — in light
+    mode `--background` would paint an ivory bar across the plate and
+    `--muted-foreground` would be unreadable on it. Everything else about the
+    rails — geometry, marquee, pause rules, logo tiles — is untouched.
+  */
+  .hero-video-stage .stage-tech-rail {
+    z-index: 24;
+    color: hsl(30 10% 70%);
+    background: linear-gradient(
+      90deg,
+      transparent,
+      hsl(203 19% 7% / 0.86) 8%,
+      hsl(203 19% 7% / 0.86) 92%,
+      transparent
+    );
+  }
+
+  .hero-video-stage .stage-tech-rail--top {
+    border-bottom-color: hsl(206 12% 26% / 0.55);
+  }
+
+  .hero-video-stage .stage-tech-rail--bottom {
+    border-top-color: hsl(206 12% 26% / 0.55);
+  }
+
   /* Transform, perspective and transition all come from `[data-tilt]`; this
      rule owns only the stage's own surface. */
   .observatory-stage {
