@@ -8,7 +8,7 @@
  *
  * The grouping is deliberately narrower than the legacy toolkit list. Every
  * entry below is traceable to a dated role in `portfolio.ts` + `en-US.ts`, or
- * to a named project/case study. Docker and Selenium stay out until comparable
+ * to a named project/case study. Selenium stays out until comparable
  * project-or-role evidence exists.
  */
 
@@ -32,17 +32,17 @@ export const technologies = {
   threejs: { name: "Three.js", icon: "/img/tech/threejs.svg" },
   glsl: { name: "GLSL" },
 
-  aws: {
-    name: "AWS (ECS/Fargate)",
-    icon: "/img/tech/aws.svg",
-    wide: true,
-  },
+  aws: { name: "AWS", icon: "/img/tech/aws.svg", wide: true },
   gcp: { name: "GCP", icon: "/img/tech/gcp.svg" },
-  grafana: { name: "Grafana", icon: "/img/tech/grafana.svg" },
+  docker: { name: "Docker", icon: "/img/tech/docker.svg" },
+  kubernetes: { name: "Kubernetes", icon: "/img/tech/kubernetes.svg" },
+  jenkins: { name: "Jenkins", icon: "/img/tech/jenkins.svg" },
+  bazel: { name: "Bazel", icon: "/img/tech/bazel.svg" },
   githubActions: {
     name: "GitHub Actions",
     icon: "/img/tech/github-actions.svg",
   },
+  datadog: { name: "Datadog", icon: "/img/tech/datadog.svg" },
 
   postgresql: { name: "PostgreSQL", icon: "/img/tech/postgresql.svg" },
   mysql: { name: "MySQL", icon: "/img/tech/mysql.svg" },
@@ -52,6 +52,10 @@ export const technologies = {
   redis: { name: "Redis", icon: "/img/tech/redis.svg" },
   firebase: { name: "Firebase", icon: "/img/tech/firebase.svg" },
 
+  spark: { name: "Apache Spark", icon: "/img/tech/apache-spark.svg" },
+  deltaLake: { name: "Delta Lake" },
+  agentFramework: { name: "Databricks Agent Framework" },
+  mlflow: { name: "MLflow Tracing" },
   langgraph: { name: "LangGraph", icon: "/img/tech/langgraph.svg" },
   scikitLearn: {
     name: "scikit-learn",
@@ -62,9 +66,11 @@ export const technologies = {
 
   appium: { name: "Appium", icon: "/img/tech/appium.svg" },
   pytest: { name: "pytest", icon: "/img/tech/pytest.svg" },
+  junit: { name: "JUnit", icon: "/img/tech/junit.svg" },
 
   kafka: { name: "Kafka", icon: "/img/tech/kafka.svg" },
   cicd: { name: "CI/CD" },
+  idempotency: { name: "Idempotency" },
   rag: { name: "RAG" },
   embeddings: { name: "Embeddings" },
 } as const satisfies Record<string, TechnologyDefinition>;
@@ -95,7 +101,16 @@ export const capabilityGroups = [
   },
   {
     id: "cloud",
-    technologies: ["aws", "gcp", "grafana", "githubActions"],
+    technologies: [
+      "aws",
+      "gcp",
+      "docker",
+      "kubernetes",
+      "jenkins",
+      "bazel",
+      "githubActions",
+      "datadog",
+    ],
   },
   {
     id: "databases",
@@ -111,15 +126,24 @@ export const capabilityGroups = [
   },
   {
     id: "ai",
-    technologies: ["langgraph", "scikitLearn", "xgboost", "gemini"],
+    technologies: [
+      "spark",
+      "deltaLake",
+      "agentFramework",
+      "mlflow",
+      "langgraph",
+      "scikitLearn",
+      "xgboost",
+      "gemini",
+    ],
   },
   {
     id: "testing",
-    technologies: ["appium", "pytest"],
+    technologies: ["pytest", "junit", "appium"],
   },
   {
     id: "practices",
-    technologies: ["kafka", "cicd", "rag", "embeddings"],
+    technologies: ["kafka", "cicd", "idempotency", "rag", "embeddings"],
   },
 ] as const satisfies ReadonlyArray<{
   readonly id: string;
@@ -131,5 +155,5 @@ export type CapabilityGroupId = (typeof capabilityGroups)[number]["id"];
 /** Exactly doubled by the renderer; the two source sets remain disjoint. */
 export const stageTechnologyRails = {
   top: ["java", "springBoot", "react", "postgresql", "aws"],
-  bottom: ["python", "fastapi", "mongodb", "appium", "threejs"],
+  bottom: ["python", "fastapi", "spark", "docker", "typescript"],
 } as const satisfies Record<"top" | "bottom", readonly TechnologyId[]>;

@@ -22,11 +22,17 @@ describe("recruiter-focused lower-home composition", () => {
     renderWithRouter(<ExperienceSection />);
 
     for (const role of homeExperiences) {
-      const heading = screen.getByRole("heading", {
-        level: 3,
-        name: new RegExp(role.company, "i"),
-      });
-      const row = heading.closest("li");
+      // Two previewed roles share a company (Neon IT Systems), so match on
+      // the official title and the company together.
+      const heading = screen
+        .getAllByRole("heading", { level: 3 })
+        .find(
+          (h) =>
+            h.textContent?.includes(role.company) &&
+            h.textContent?.startsWith(i18n.t(role.roleKey)),
+        );
+      expect(heading, role.id).toBeDefined();
+      const row = heading!.closest("li");
       expect(row).not.toBeNull();
       const scoped = within(row!);
 
@@ -65,8 +71,9 @@ describe("recruiter-focused lower-home composition", () => {
       expect(within(row!).getByText(i18n.t(`capabilities.${id}.body`))).toBeInTheDocument();
     }
 
-    expect(container.querySelectorAll(".technology-chip")).toHaveLength(33);
-    expect(container).not.toHaveTextContent("Docker");
+    expect(container.querySelectorAll(".technology-chip")).toHaveLength(43);
+    expect(container).toHaveTextContent("Docker");
+    expect(container).not.toHaveTextContent("Grafana");
     expect(container).not.toHaveTextContent("Selenium");
     expect(container.querySelector('[role="progressbar"]')).toBeNull();
   });

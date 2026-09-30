@@ -109,7 +109,7 @@ export const personJsonLd = {
   image: `${SITE_URL}/icon-512.png`,
   jobTitle: "Software Engineer",
   description:
-    "Software engineer with 4+ years building production backend, full-stack, and applied AI systems across financial services and enterprise platforms.",
+    "Software engineer with 3+ years building backend services, full-stack applications, distributed data pipelines, and agentic AI workflows for data platform and enterprise SaaS products.",
   // Only technologies with a documented work or project achievement behind
   // them. Skills-list-only tools stay out of the structured data.
   knowsAbout: [
@@ -123,12 +123,13 @@ export const personJsonLd = {
     "Spring Boot",
     "React",
     "PostgreSQL",
-    "Apache Kafka",
+    "Apache Spark",
+    "Delta Lake",
+    "Agentic AI",
+    "MLflow Tracing",
     "AWS",
-    "Google Cloud Platform",
+    "Docker",
     "CI/CD",
-    "Retrieval-Augmented Generation",
-    "Applied Machine Learning",
   ],
   alumniOf: [
     {
@@ -137,12 +138,12 @@ export const personJsonLd = {
     },
     {
       "@type": "CollegeOrUniversity",
-      name: "LJ Institute of Engineering and Technology",
+      name: "Gujarat Technological University",
     },
   ],
   sameAs: [
     "https://github.com/la3679",
-    "https://www.linkedin.com/in/love-jayesh-ahir-188356290/",
+    "https://www.linkedin.com/in/love-ahir/",
   ],
 };
 

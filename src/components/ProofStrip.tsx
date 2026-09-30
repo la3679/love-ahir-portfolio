@@ -11,16 +11,16 @@ interface ProofItem {
 
 /**
  * Four professional signals, no more — a metric wall reads as noise.
- * Values come from the Morgan Stanley and Sage Softtech roles documented in
- * the experience section each one links to; GPA and publication counts are
+ * Values come from the Databricks and Neon IT Systems roles documented in
+ * the experience section each one links to (and match the résumé); GPA and publication counts are
  * deliberately not here, they are supporting credentials rather than
  * engineering proof.
  */
 const items: ProofItem[] = [
-  { value: "4+", labelKey: "home.proof.yearsLabel", to: "/about#experience" },
-  { value: "99.97%", labelKey: "home.proof.uptimeLabel", to: "/about#experience" },
-  { value: "500K+", labelKey: "home.proof.transactionsLabel", to: "/about#experience" },
-  { value: "10M+", labelKey: "home.proof.documentsLabel", to: "/about#experience" },
+  { value: "3+", labelKey: "home.proof.yearsLabel", to: "/about#experience" },
+  { value: "10M+", labelKey: "home.proof.recordsLabel", to: "/about#experience" },
+  { value: "1,000+", labelKey: "home.proof.tracesLabel", to: "/about#experience" },
+  { value: "20+", labelKey: "home.proof.apisLabel", to: "/about#experience" },
 ];
 
 /**

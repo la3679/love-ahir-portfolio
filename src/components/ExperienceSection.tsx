@@ -14,7 +14,7 @@ const HOME_ACHIEVEMENTS = 1;
  * Home experience preview.
  *
  * Three curated engineering roles (`homeExperienceIds`), read from the same
- * canonical dataset as the /about timeline. All seven roles, with their exact
+ * canonical dataset as the /about timeline. All five roles, with their exact
  * dates, locations, titles, and verified claims, remain on
  * `/about#experience` — nothing here re-dates, re-labels, or explains away
  * the overlapping periods.

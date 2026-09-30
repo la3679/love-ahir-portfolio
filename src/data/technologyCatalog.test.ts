@@ -10,11 +10,12 @@ import {
 } from "./technologyCatalog";
 
 describe("evidence-backed technology catalog", () => {
-  it("contains exactly the 33 technologies supported by a project or dated role", () => {
+  it("contains exactly the 43 technologies supported by a project or dated role", () => {
     const names = Object.values(technologies).map(({ name }) => name);
 
-    expect(names).toHaveLength(33);
-    expect(names).not.toContain("Docker");
+    expect(names).toHaveLength(43);
+    expect(names).toContain("Docker");
+    expect(names).not.toContain("Grafana");
     expect(names).not.toContain("Selenium");
   });
 
@@ -29,8 +30,8 @@ describe("evidence-backed technology catalog", () => {
     ]);
 
     const grouped = capabilityGroups.flatMap(({ technologies: ids }) => ids);
-    expect(grouped).toHaveLength(33);
-    expect(new Set(grouped).size).toBe(33);
+    expect(grouped).toHaveLength(43);
+    expect(new Set(grouped).size).toBe(43);
     expect(new Set(grouped)).toEqual(
       new Set(Object.keys(technologies) as TechnologyId[]),
     );

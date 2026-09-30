@@ -18,7 +18,7 @@ const ja: Translation = {
   "hero.badge": "ソフトウェアエンジニア · フルスタック · バックエンド · 応用 AI",
   "hero.statement": "私は信頼できるフルスタック製品と応用 AI システムを作ります。",
   "hero.roles":
-    "金融サービスとエンタープライズ基盤で、本番のバックエンド、フルスタックの画面、データ基盤、応用 AI を4年以上構築してきたソフトウェアエンジニアです。",
+    "データプラットフォームとエンタープライズ SaaS 製品向けに、バックエンドサービス、フルスタックアプリケーション、分散データパイプライン、エージェント型 AI ワークフローを3年以上構築してきたソフトウェアエンジニアです。",
   "hero.seeWork": "実績を見る",
   "hero.resume": "履歴書",
   "hero.transformScene": "ボクセルシーンを変形",
@@ -40,9 +40,9 @@ const ja: Translation = {
 
   "home.proof.eyebrow": "実績",
   "home.proof.yearsLabel": "エンジニアとしての実務経験年数",
-  "home.proof.uptimeLabel": "本番稼働する8つの FastAPI サービスの稼働率",
-  "home.proof.transactionsLabel": "イベント駆動サービスが支える1日あたりの取引件数",
-  "home.proof.documentsLabel": "本番の検索パイプラインが扱う文書数",
+  "home.proof.recordsLabel": "Spark と Delta Lake のパイプラインで1回の実行ごとに処理するレコード数",
+  "home.proof.tracesLabel": "エンジニアリング作業の自動化前に評価したエージェントトレース数",
+  "home.proof.apisLabel": "マルチテナント SaaS モジュール向けに提供した REST API 数",
 
   "home.work.eyebrow": "選りすぐりの実績",
   "home.work.title": "作り、測り、リリースする",
@@ -56,9 +56,9 @@ const ja: Translation = {
   "home.work.repo": "リポジトリ",
 
   "home.experience.eyebrow": "経歴",
-  "home.experience.title": "4年以上の本番エンジニアリング",
+  "home.experience.title": "3年以上の本番エンジニアリング",
   "home.experience.description":
-    "金融サービスとエンタープライズ基盤における、バックエンドサービス、フルスタックの画面、データ基盤、応用 AI。ここでは3つの職務を掲載しています。全経歴は About ページにあります。",
+    "データプラットフォームとエンタープライズ SaaS 製品における、バックエンドサービス、フルスタックアプリケーション、データパイプライン、エージェント型 AI。ここでは3つの職務を掲載しています。全経歴は About ページにあります。",
   "home.experience.cta": "経歴と学歴の詳細",
 
   "home.research.eyebrow": "研究",
@@ -94,20 +94,17 @@ const ja: Translation = {
   "capabilities.languages.body":
     "JVM、Python、TypeScript、モバイル、3D Web の各スタックで本番サービスとインターフェースを構築しています。",
   "capabilities.cloud.title": "クラウドと DevOps",
-  "capabilities.cloud.body":
-    "AWS と GCP でのクラウドデリバリーと可観測性を、再現可能な自動化で支えています。",
+  "capabilities.cloud.body": "AWS と GCP 上でのコンテナ化されたデリバリーを、CI/CD パイプラインとオブザーバビリティで再現可能なリリースに仕上げます。",
   "capabilities.databases.title": "データベース",
   "capabilities.databases.body":
     "データの形に合わせて、リレーショナル、ドキュメント、グラフ、キャッシュ、メディア保存を選びます。",
   "capabilities.ai.title": "データと AI",
   "capabilities.ai.body":
-    "本番環境のエージェントワークフローと検索に、意味的マッチングと従来型機械学習を組み合わせます。",
+    "ツール呼び出しと MLflow Tracing を備えたガバナンス付きエージェントワークフロー、大規模な Spark パイプライン、応用機械学習。",
   "capabilities.testing.title": "テストと QA",
-  "capabilities.testing.body":
-    "UI とサービスの自動品質ゲートによって、再現可能なリリースを保ちます。",
+  "capabilities.testing.body": "開発から本番までのリリースを守る、ユニット・統合・UI テストの自動化。",
   "capabilities.practices.title": "実践",
-  "capabilities.practices.body":
-    "イベント駆動アーキテクチャ、検索パターン、埋め込み、本番で計測するデリバリーパイプライン。",
+  "capabilities.practices.body": "イベント駆動アーキテクチャ、冪等な処理、検索パターン、埋め込みを、システムが必要とする場面で活用します。",
   "capabilities.footnote":
     "上記の技術はいずれも、実際にそれを使ったプロジェクトまたは職務に由来します。",
 
@@ -116,82 +113,62 @@ const ja: Translation = {
   "about.description":
     "私はソフトウェアの華やかさのない中核部分に関心があります。洗練されたインターフェースが、思い通りに振る舞わないデータと出会う場所です。面白い問題はそこにこそ存在します。",
   "about.p1":
-    "私は金融サービスとエンタープライズ基盤で4年以上の本番経験を持つソフトウェアエンジニアです。仕事の大半はバックエンドにあります。イベント駆動の Python・Java サービス、リレーショナルなデータモデル、キャッシュ、認可、そしてそのすべてをリリース可能に保つデリバリーパイプラインです。",
+    "私はデータプラットフォームとエンタープライズ SaaS 製品で3年以上の本番経験を持つソフトウェアエンジニアです。仕事の大半はバックエンドにあります。Python・Java サービス、マルチテナントの REST API、PostgreSQL のパフォーマンスチューニング、1回の実行で1,000万件以上のレコードを処理する Spark パイプライン、そしてそのすべてをリリース可能に保つテストと CI/CD です。",
   "about.p2":
-    "もう半分は、人が実際に触れる部分です。リアルタイムデータの上に構築した React と TypeScript の画面、そして検索・エージェント・従来型 ML が装飾ではなくプロダクトの中で役割を果たす応用 AI 機能。スタックのどちら側でも測り方は同じです。レイテンシ、信頼性、そして数字が実際に動いたかどうか。",
+    "もう半分は、人が実際に触れる部分です。React と TypeScript の画面、再利用可能な UI コンポーネント、そしてデモではなく評価によって価値を証明するエージェント型 AI ワークフロー。スタックのどちら側でも、レイテンシ、信頼性、そして数字が動いたかどうかで仕事を測ります。",
   "about.p3":
     "厳密さは研究から来ています。RIT では 1,000 本の Android アプリを自動操作する Python ツールを作り、8,600万件以上のログを各アプリの公開プライバシーポリシーと突き合わせて分析しました。この成果は EASE 2026 Research Track に掲載されています。大規模な自動化、丁寧な検証、そして結果を正直に書くこと。これらはそのままエンジニアリングに持ち帰った習慣です。",
   "about.education": "学歴",
   "about.gpa": "GPA",
 
   "experience.eyebrow": "経歴",
-  "experience.title": "バックエンド・フルスタック・応用 AI にまたがる4年以上",
+  "experience.title": "バックエンド・データ・フルスタック・応用 AI にまたがる3年以上",
   "experience.description":
-    "金融サービスとエンタープライズ基盤での本番システム、そして RIT での大学院研究と教育。期間と勤務地はそのまま記載しています。",
+    "データプラットフォームとエンタープライズ SaaS 製品の本番システム、そして RIT での大学院研究と教育。期間と勤務地はそのまま記載しています。",
   "experience.current": "現職",
   "experience.group.industry": "産業でのエンジニアリング",
   "experience.group.research-teaching": "研究と教育",
 
-  "exp.morgan-stanley.role": "ソフトウェアエンジニア",
-  "exp.morgan-stanley.focus": "エージェント型 AI とフルスタックシステム",
-  "exp.morgan-stanley.summary":
-    "債券業務向けに、イベント駆動のバックエンドサービス、リアルタイム取引画面、文書検索ワークフロー、デリバリー基盤を構築しています。",
-  "exp.morgan-stanley.a1":
-    "AWS ECS/Fargate 上に Redis キャッシュ、OAuth2/JWT、非同期タスクキューを備えたイベント駆動の FastAPI サービスを8つ設計し、8サービス全体で99.97%の稼働率を達成しました。",
-  "exp.morgan-stanley.a2":
-    "D3.js と WebSocket フィードを用いた React 18・TypeScript のダッシュボードをリリースし、200名超の債券ユーザーのトレーダー意思決定レイテンシを45%削減しました。",
-  "exp.morgan-stanley.a3":
-    "ツール呼び出し、制御されたエージェントメモリ、AWS Bedrock を用いたマルチエージェント LangGraph ワークフローを設計して取引例外処理を自動化し、手作業を65%削減、年間の手作業処理コストを推定240万ドル削減しました。",
-  "exp.morgan-stanley.a4":
-    "LangChain、FAISS、OpenAI Embeddings、プロンプトエンジニアリングによる検索拡張生成パイプラインを1,000万件超の文書に対して実装し、アナリストの検索時間を8分から90秒未満に短縮しました。",
-  "exp.morgan-stanley.a5":
-    "エンティティ抽出と取引メモの異常検知のために spaCy とともに BERT をファインチューニングし、ルールベースのベースラインに対して適合率を38%改善しました。",
-  "exp.morgan-stanley.a6":
-    "GitHub Actions と AWS CodePipeline でデリバリーパイプラインを構築し、Datadog の LLM トレース、SonarQube、pytest の品質ゲートで支えることで、デプロイのサイクルタイムを50%短縮しました。",
+  "exp.databricks.role": "ソフトウェアエンジニア（AI Platform）",
+  "exp.databricks.focus": "エージェント型 AI とデータプラットフォームエンジニアリング",
+  "exp.databricks.summary":
+    "開発者向け・データ向けワークフローのために、ガバナンス付きエージェントワークフロー、バックエンドサービス、大規模 Spark パイプライン、フルスタックのプラットフォーム機能を構築しています。",
+  "exp.databricks.a1":
+    "Databricks Agent Framework、ツール呼び出し、MLflow Tracing を用いてガバナンス付きのエージェント型 AI ワークフローを統合し、1,000件以上のエージェントトレースを評価したうえで、スプリントごとに4つの定型エンジニアリング作業を自動化しました。",
+  "exp.databricks.a2":
+    "ワークスペース、ジョブ、メタデータ操作向けに Python バックエンドサービスと Java SDK 連携を開発し、キャッシュ、バリデーション、障害処理を加えることで、失敗するサービス呼び出しを18%削減しました。",
+  "exp.databricks.a3":
+    "Apache Spark と Delta Lake 上に PySpark と SQL のパイプラインを構築して1回の実行で1,000万件以上のレコードを処理し、インクリメンタルロードと Unity Catalog によるガバナンスで実行時間を2.5時間から40分に短縮しました。",
+  "exp.databricks.a4":
+    "Python、FastAPI、React、TypeScript を用いてフルスタックのプラットフォーム機能を開発し、10以上の開発者向け・データ向けワークフローにわたって REST API、非同期ワークフロー、再利用可能な UI コンポーネントを構築しました。",
+  "exp.databricks.a5":
+    "pytest、統合テスト、Git、Bazel、自動化された CI/CD パイプラインでサービスを本番化し、開発・ステージング・本番の各リリースにわたる150件以上の自動チェックを維持しました。",
+  "exp.databricks.a6":
+    "フロントエンド、プラットフォーム、データ、SRE のエンジニアと連携して API を設計し、分散システムの障害を解決し、オブザーバビリティとリリース準備を強化した8件以上の本番ワークフローを提供しました。",
 
-  "exp.sage-software-engineer-2.role": "ソフトウェアエンジニア 2",
-  "exp.sage-software-engineer-2.summary":
-    "大量トラフィックのエンタープライズ基盤について、バックエンド設計、フロントエンドの土台、データベース性能、機械学習の統合、オブザーバビリティを担当しました。",
-  "exp.sage-software-engineer-2.a1":
-    "1日50万件超の取引を扱う基盤向けに、Kafka のイベントストリーミングを備えた Java Spring Boot の REST マイクロサービスを設計し、コネクションプーリングにより API 応答時間を40%短縮しました。",
-  "exp.sage-software-engineer-2.a2":
-    "GCP CloudSQL 上で Flyway マイグレーションを用いて PostgreSQL のスキーマと複雑な結合を最適化し、レポート生成を14秒から2.1秒へ短縮しました（85%の改善）。",
-  "exp.sage-software-engineer-2.a3":
-    "Material UI と Jest を用いた再利用可能な React 17・Redux Toolkit のコンポーネントライブラリを構築し、4スプリントで10機能をリリース、QA のバグサイクルを45%短縮しました。",
-  "exp.sage-software-engineer-2.a4":
-    "GCP Cloud Run 上で Python の REST ラッパー越しに scikit-learn の異常検知サービスをデプロイし、1日100万件超のイベントを処理して不正検知の誤検出を30%削減しました。",
-  "exp.sage-software-engineer-2.a5":
-    "5名の Agile スクワッドのテクニカルリードを務め、3名のエンジニアを指導し、120件超のプルリクエストをレビューし、Grafana と Prometheus のオブザーバビリティを拡張して、インシデントの MTTR を32%短縮しました。",
+  "exp.neon-software-engineer-2.role": "ソフトウェアエンジニア II",
+  "exp.neon-software-engineer-2.summary":
+    "エンタープライズ SaaS プラットフォームのために、マルチテナント SaaS モジュールを設計し、PostgreSQL のパフォーマンスを改善し、リリースを堅牢化しました。",
+  "exp.neon-software-engineer-2.a1":
+    "Java、Spring Boot、Python、React でマルチテナント SaaS モジュールを設計し、テナント設定、アクセス制御、通知、顧客向け管理機能のための REST API を20以上提供しました。",
+  "exp.neon-software-engineer-2.a2":
+    "クエリチューニング、インデックス設計、コネクションプーリングにより PostgreSQL を最適化し、25万件以上のレコードと ML 予測データを扱うサービスで p95 レイテンシを2.1秒から480ミリ秒に短縮しました。",
+  "exp.neon-software-engineer-2.a3":
+    "定期処理と大量データロードのための Python バックグラウンドジョブを構築して長時間処理を顧客向けサービスから切り離し、API のタイムアウトエラーを24%削減しました。",
+  "exp.neon-software-engineer-2.a4":
+    "JUnit、pytest、Docker、Git、Jenkins、AWS のデプロイワークフローで本番リリースを堅牢化し、API とデータベースの不具合を解消しながら、SaaS 環境全体で12回のアプリケーションリリースを支えました。",
+  "exp.neon-software-engineer-2.a5":
+    "コードレビュー、デバッグセッション、API 設計の指導、テストの実践を通じて3名のジュニアエンジニアを指導し、技術タスクの調整と、再利用可能なバックエンド・データベース開発標準の徹底を担いました。",
 
-  "exp.axisray.role": "ソフトウェアエンジニア インターン",
-  "exp.axisray.summary":
-    "Java マイクロサービスを堅牢化し、信頼性を高めデリバリーを加速する ML ベースの機能をリリースしました。",
-  "exp.axisray.a1":
-    "Spring Boot マイクロサービスをリファクタリングし、信頼性を高めて機能提供までの時間を20%短縮しました。",
-  "exp.axisray.a2":
-    "Python と Java で ML モデルを構築・統合し、レコメンド精度を30%向上させました。",
-  "exp.axisray.a3":
-    "レガシーな JSP アプリケーションを Spring Boot へ刷新し、より豊かなデータ可視化を実現しました。",
-
-  "exp.moon-technolabs.role": "データサイエンス・AI/ML エンジニアリング インターン",
-  "exp.moon-technolabs.summary":
-    "SaaS のサプライチェーン強靭化プロジェクトを主導し、HRMS と CRM を横断するデータパイプラインと AI による最適化を構築しました。",
-  "exp.moon-technolabs.a1":
-    "サプライチェーン強靭化プロジェクトを推進し、業務効率を30%向上させました。",
-  "exp.moon-technolabs.a2":
-    "適応的な業務運用を支えるスケーラブルなデータパイプラインと AI ソリューションを設計しました。",
-  "exp.moon-technolabs.a3":
-    "リソース配分向けに ML モデルをチューニングし、運用コストを15%削減しました。",
-
-  "exp.sage-associate-developer.role": "アソシエイトデベロッパー",
-  "exp.sage-associate-developer.summary":
-    "顧客オンボーディング API を構築し、社内ポータルの性能を改善し、MySQL から PostgreSQL への移行を自動化しました。",
-  "exp.sage-associate-developer.a1":
-    "1日1万件超のレコードを処理する Java Spring Boot の API を構築し、40件超のバグを修正。ELK Stack をログ調査とトラブルシューティングに用い、エンドポイントの信頼性を22%改善しました。",
-  "exp.sage-associate-developer.a2":
-    "3モジュール構成の社内ポータルに React の関数コンポーネントと React Router を導入し、遅延読み込みとコード分割でページ読み込み時間を30%短縮、Lighthouse の監査で検証しました。",
-  "exp.sage-associate-developer.a3":
-    "Python スクリプトで MySQL から PostgreSQL への移行を自動化し、50万件超のレコードのスキーマ適合性を検証、インフラチームに採用されたランブックを作成しました。",
+  "exp.neon-associate-software-engineer.role": "アソシエイトソフトウェアエンジニア",
+  "exp.neon-associate-software-engineer.summary":
+    "ユーザー、承認、レポート、管理のワークフロー向けに、エンタープライズ SaaS の機能、REST API、Python による自動化を構築しました。",
+  "exp.neon-associate-software-engineer.a1":
+    "React.js、Java、Spring Boot、PostgreSQL でエンタープライズ SaaS のワークフロー機能を開発し、ユーザー、承認、レポート、管理ワークフロー向けのレスポンシブな画面と15以上の REST API を構築しました。Jenkins パイプラインでデプロイし、手作業を減らしてユーザーの効率を高めました。",
+  "exp.neon-associate-software-engineer.a2":
+    "10万件以上の業務レコードを扱う Python スクリプトでデータ検証、定期レポート、ファイル処理を自動化し、サポートチームの作業を週7時間削減しました。",
+  "exp.neon-associate-software-engineer.a3":
+    "シニアエンジニア、QA、プロダクトチームと協力して JUnit と pytest の統合テストを作成し、スプリントリリースを通じて18件以上の本番不具合を解決しました。",
 
   "exp.rit-research-assistant.role": "大学院研究アシスタント — プライバシーとセキュリティ",
   "exp.rit-research-assistant.summary":

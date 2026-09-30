@@ -36,9 +36,9 @@ describe("static document metadata", () => {
     );
   });
 
-  it("describes 4+ years of engineering rather than a research record", () => {
+  it("describes 3+ years of engineering rather than a research record", () => {
     const description = html.match(/name="description"\s+content="([^"]+)"/s)?.[1] ?? "";
-    expect(description).toContain("4+ years");
+    expect(description).toContain("3+ years");
     expect(description).toMatch(/backends/i);
     expect(description).not.toMatch(/privacy researcher|GPA|EASE/i);
   });

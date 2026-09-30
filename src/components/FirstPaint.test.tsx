@@ -73,7 +73,7 @@ describe("above-the-fold content is never opacity-gated", () => {
       </MemoryRouter>,
     );
 
-    for (const value of ["4+", "99.97%", "500K+", "10M+"]) {
+    for (const value of ["3+", "10M+", "1,000+", "20+"]) {
       expect(screen.getByText(value)).toBeVisible();
     }
     const hidden = [...container.querySelectorAll<HTMLElement>("*")].filter(

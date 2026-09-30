@@ -18,7 +18,7 @@ const fr: Translation = {
   "hero.badge": "Ingénieur logiciel · Full-stack · Backend · IA appliquée",
   "hero.statement": "Je construis des produits full-stack fiables et des systèmes d'IA appliquée.",
   "hero.roles":
-    "Ingénieur logiciel avec plus de 4 ans d'expérience à construire des backends en production, des interfaces full-stack, des systèmes de données et de l'IA appliquée dans les services financiers et les plateformes d'entreprise.",
+    "Ingénieur logiciel avec plus de 3 ans d'expérience à construire des services backend, des applications full-stack, des pipelines de données distribués et des workflows d'IA agentique pour des produits de plateformes de données et de SaaS d'entreprise.",
   "hero.seeWork": "Voir mon travail",
   "hero.resume": "CV",
   "hero.transformScene": "Transformer la scène de voxels",
@@ -42,10 +42,9 @@ const fr: Translation = {
 
   "home.proof.eyebrow": "Parcours",
   "home.proof.yearsLabel": "Années d'expérience professionnelle en ingénierie",
-  "home.proof.uptimeLabel": "Disponibilité sur huit services FastAPI en production",
-  "home.proof.transactionsLabel":
-    "Transactions quotidiennes prises en charge par des services orientés événements",
-  "home.proof.documentsLabel": "Documents dans un pipeline de recherche en production",
+  "home.proof.recordsLabel": "Enregistrements par exécution dans les pipelines Spark et Delta Lake",
+  "home.proof.tracesLabel": "Traces d'agents évaluées avant d'automatiser des tâches d'ingénierie",
+  "home.proof.apisLabel": "API REST livrées pour des modules SaaS multi-locataires",
 
   "home.work.eyebrow": "Travaux sélectionnés",
   "home.work.title": "Construit, mesuré, livré",
@@ -59,9 +58,9 @@ const fr: Translation = {
   "home.work.repo": "Dépôt",
 
   "home.experience.eyebrow": "Expérience",
-  "home.experience.title": "Plus de 4 ans d'ingénierie en production",
+  "home.experience.title": "Plus de 3 ans d'ingénierie en production",
   "home.experience.description":
-    "Services backend, interfaces full-stack, systèmes de données et IA appliquée dans les services financiers et les plateformes d'entreprise. Trois postes sont présentés ici ; le parcours complet est sur la page À propos.",
+    "Services backend, applications full-stack, pipelines de données et IA agentique pour des produits de plateformes de données et de SaaS d'entreprise. Trois postes sont présentés ici ; le parcours complet est sur la page À propos.",
   "home.experience.cta": "Expérience et formation complètes",
 
   "home.research.eyebrow": "Recherche",
@@ -98,19 +97,19 @@ const fr: Translation = {
     "Services et interfaces de production sur des stacks JVM, Python, TypeScript, mobiles et web 3D.",
   "capabilities.cloud.title": "Cloud et DevOps",
   "capabilities.cloud.body":
-    "Livraison cloud et observabilité sur AWS et GCP, soutenues par une automatisation reproductible.",
+    "Livraison conteneurisée sur AWS et GCP, avec des pipelines CI/CD et une observabilité qui rendent les mises en production reproductibles.",
   "capabilities.databases.title": "Bases de données",
   "capabilities.databases.body":
     "Systèmes relationnels, documentaires, graphes, caches et stockage média choisis selon la forme des données.",
   "capabilities.ai.title": "Données et IA",
   "capabilities.ai.body":
-    "Workflows d'agents et retrieval en production, appariement sémantique et apprentissage automatique classique.",
+    "Workflows d'agents encadrés avec appels d'outils et MLflow Tracing, pipelines Spark à grande échelle et apprentissage automatique appliqué.",
   "capabilities.testing.title": "Tests et QA",
   "capabilities.testing.body":
-    "Contrôles automatisés de qualité des interfaces et des services pour des livraisons reproductibles.",
+    "Automatisation des tests unitaires, d'intégration et d'interface qui valide chaque mise en production, du développement à la production.",
   "capabilities.practices.title": "Pratiques",
   "capabilities.practices.body":
-    "Architecture événementielle, patterns de retrieval, embeddings et pipelines de livraison mesurés en production.",
+    "Architecture orientée événements, traitement idempotent, patterns de recherche et embeddings, appliqués là où le système en a besoin.",
   "capabilities.footnote":
     "Chaque technologie citée ci-dessus apparaît dans un projet ou un poste qui l'a réellement utilisée.",
 
@@ -119,82 +118,62 @@ const fr: Translation = {
   "about.description":
     "Je m'intéresse au cœur peu glamour du logiciel — là où une interface soignée rencontre des données qui ne se comportent pas bien. C'est là que vivent les problèmes intéressants.",
   "about.p1":
-    "Je suis ingénieur logiciel avec plus de 4 ans d'expérience en production dans les services financiers et les plateformes d'entreprise. L'essentiel de mon travail se situe côté backend : services orientés événements en Python et Java, modèles de données relationnels, mise en cache, autorisation, et les pipelines de livraison qui gardent tout cela publiable.",
+    "Je suis ingénieur logiciel avec plus de 3 ans d'expérience en production sur des produits de plateformes de données et de SaaS d'entreprise. L'essentiel de mon travail se situe côté backend : services Python et Java, API REST multi-locataires, optimisation des performances PostgreSQL et pipelines Spark traitant plus de 10 M d'enregistrements par exécution, ainsi que les tests et la CI/CD qui gardent tout cela publiable.",
   "about.p2":
-    "L'autre moitié, c'est ce que les gens touchent vraiment : des interfaces React et TypeScript bâties sur des données en temps réel, et des fonctionnalités d'IA appliquée où la recherche documentaire, les agents ou le ML classique méritent leur place dans le produit au lieu de le décorer. Je mesure le travail de la même manière des deux côtés de la stack : latence, fiabilité, et si les chiffres ont bougé.",
+    "L'autre moitié, c'est ce que les gens touchent vraiment : des interfaces React et TypeScript, des composants d'interface réutilisables et des workflows d'IA agentique qui gagnent leur place par l'évaluation plutôt que par la démo. Je mesure le travail de la même façon des deux côtés de la stack : latence, fiabilité et évolution réelle des chiffres.",
   "about.p3":
     "La rigueur vient de la recherche. À RIT, j'ai construit un outillage Python qui pilotait 1 000 applications Android automatiquement et analysé plus de 86 millions d'entrées de journaux face à leurs politiques de confidentialité déclarées, publié dans l'EASE 2026 Research Track. L'automatisation à grande échelle, la validation soignée et la restitution honnête des résultats sont des habitudes que j'ai ramenées directement dans l'ingénierie.",
   "about.education": "Formation",
   "about.gpa": "Moyenne",
 
   "experience.eyebrow": "Expérience",
-  "experience.title": "Plus de quatre ans entre backend, full-stack et IA appliquée",
+  "experience.title": "Plus de trois ans entre backend, données, full-stack et IA appliquée",
   "experience.description":
-    "Des systèmes en production dans les services financiers et les plateformes d'entreprise, aux côtés de la recherche et de l'enseignement de master à RIT. Dates et lieux tels quels.",
+    "Des systèmes en production pour des produits de plateformes de données et de SaaS d'entreprise, aux côtés de la recherche et de l'enseignement de master à RIT. Dates et lieux tels quels.",
   "experience.current": "Actuel",
   "experience.group.industry": "Ingénierie en entreprise",
   "experience.group.research-teaching": "Recherche et enseignement",
 
-  "exp.morgan-stanley.role": "Ingénieur logiciel",
-  "exp.morgan-stanley.focus": "IA agentique et systèmes full-stack",
-  "exp.morgan-stanley.summary":
-    "Construit des services backend orientés événements, des interfaces de trading en temps réel, des flux de recherche documentaire et l'outillage de livraison pour les opérations de taux.",
-  "exp.morgan-stanley.a1":
-    "A conçu l'architecture de huit services FastAPI orientés événements sur AWS ECS/Fargate avec cache Redis, OAuth2/JWT et files de tâches asynchrones, atteignant 99,97 % de disponibilité sur les huit services.",
-  "exp.morgan-stanley.a2":
-    "A livré des tableaux de bord React 18 et TypeScript avec D3.js et flux WebSocket, réduisant la latence de décision des traders de 45 % pour plus de 200 utilisateurs sur les produits de taux.",
-  "exp.morgan-stanley.a3":
-    "A conçu des flux multi-agents LangGraph avec tool-calling, mémoire d'agent contrôlée et AWS Bedrock pour automatiser le traitement des exceptions de transactions, réduisant l'intervention manuelle de 65 % et supprimant environ 2,4 M$ estimés de coûts annuels de traitement manuel.",
-  "exp.morgan-stanley.a4":
-    "A implémenté un pipeline de génération augmentée par recherche avec LangChain, FAISS, OpenAI Embeddings et ingénierie de prompts sur plus de 10 M de documents, réduisant le temps de recherche des analystes de 8 minutes à moins de 90 secondes.",
-  "exp.morgan-stanley.a5":
-    "A affiné BERT avec spaCy pour l'extraction d'entités et la détection d'anomalies dans les notes de transaction, améliorant la précision de 38 % par rapport à la référence à base de règles.",
-  "exp.morgan-stanley.a6":
-    "A construit des pipelines de livraison avec GitHub Actions et AWS CodePipeline, appuyés par les traces LLM Datadog, SonarQube et des contrôles qualité pytest, réduisant le temps de cycle de déploiement de 50 %.",
+  "exp.databricks.role": "Ingénieur logiciel, AI Platform",
+  "exp.databricks.focus": "IA agentique et ingénierie de plateformes de données",
+  "exp.databricks.summary":
+    "Conçoit des workflows agentiques encadrés, des services backend, des pipelines Spark à grande échelle et des fonctionnalités full-stack de plateforme pour les workflows de développement et de données.",
+  "exp.databricks.a1":
+    "A intégré un workflow d'IA agentique encadré avec Databricks Agent Framework, les appels d'outils et MLflow Tracing, automatisant 4 tâches d'ingénierie récurrentes par sprint après l'évaluation de plus de 1 000 traces d'agents.",
+  "exp.databricks.a2":
+    "A développé des services backend Python et des intégrations du SDK Java pour les opérations sur les espaces de travail, les jobs et les métadonnées, en ajoutant cache, validation et gestion des pannes, ce qui a réduit de 18 % les appels de service en échec.",
+  "exp.databricks.a3":
+    "A construit des pipelines PySpark et SQL sur Apache Spark et Delta Lake traitant plus de 10 M d'enregistrements par exécution, en s'appuyant sur des chargements incrémentaux et la gouvernance Unity Catalog pour réduire la durée d'exécution de 2,5 heures à 40 minutes.",
+  "exp.databricks.a4":
+    "A conçu des fonctionnalités full-stack de plateforme avec Python, FastAPI, React et TypeScript (API REST, workflows asynchrones et composants d'interface réutilisables) sur plus de 10 workflows de développement et de données.",
+  "exp.databricks.a5":
+    "A mis des services en production avec pytest, des tests d'intégration, Git, Bazel et des pipelines CI/CD automatisés, en maintenant plus de 150 vérifications automatisées sur les mises en production de développement, de préproduction et de production.",
+  "exp.databricks.a6":
+    "A collaboré avec des ingénieurs frontend, plateforme, données et SRE pour concevoir des API, résoudre des défaillances de systèmes distribués et livrer plus de 8 workflows en production avec une meilleure observabilité et une meilleure préparation aux mises en production.",
 
-  "exp.sage-software-engineer-2.role": "Ingénieur logiciel 2",
-  "exp.sage-software-engineer-2.summary":
-    "Responsable de l'architecture backend, des fondations frontend, des performances de base de données, de l'intégration du machine learning et de l'observabilité d'une plateforme d'entreprise à fort volume.",
-  "exp.sage-software-engineer-2.a1":
-    "A conçu l'architecture de microservices REST Java Spring Boot avec streaming d'événements Kafka pour une plateforme traitant plus de 500K transactions quotidiennes, réduisant le temps de réponse des API de 40 % via le pooling de connexions.",
-  "exp.sage-software-engineer-2.a2":
-    "A optimisé des schémas et jointures complexes PostgreSQL avec des migrations Flyway sur GCP CloudSQL, réduisant la génération de rapports de 14 secondes à 2,1 secondes — une amélioration de 85 %.",
-  "exp.sage-software-engineer-2.a3":
-    "A construit une bibliothèque de composants réutilisables React 17 et Redux Toolkit avec Material UI et Jest, livrant 10 fonctionnalités sur quatre sprints et réduisant le cycle de bugs QA de 45 %.",
-  "exp.sage-software-engineer-2.a4":
-    "A déployé un service de détection d'anomalies scikit-learn derrière un wrapper REST Python sur GCP Cloud Run, traitant plus de 1 M d'événements par jour et réduisant les faux positifs de fraude de 30 %.",
-  "exp.sage-software-engineer-2.a5":
-    "A été référent technique d'une équipe Agile de cinq personnes, a encadré trois ingénieurs, relu plus de 120 pull requests et étendu l'observabilité Grafana et Prometheus, réduisant le MTTR des incidents de 32 %.",
+  "exp.neon-software-engineer-2.role": "Ingénieur logiciel II",
+  "exp.neon-software-engineer-2.summary":
+    "A conçu des modules SaaS multi-locataires, optimisé les performances PostgreSQL et fiabilisé les mises en production d'une plateforme SaaS d'entreprise.",
+  "exp.neon-software-engineer-2.a1":
+    "A conçu l'architecture de modules SaaS multi-locataires avec Java, Spring Boot, Python et React, livrant plus de 20 API REST pour la configuration des locataires, le contrôle d'accès, les notifications et l'administration côté client.",
+  "exp.neon-software-engineer-2.a2":
+    "A optimisé PostgreSQL par le réglage des requêtes, l'indexation et le pool de connexions, réduisant la latence p95 de 2,1 secondes à 480 ms sur des services traitant plus de 250 000 enregistrements et des données de prédiction ML.",
+  "exp.neon-software-engineer-2.a3":
+    "A découplé les opérations de longue durée des services destinés aux clients en créant des jobs Python en arrière-plan pour le traitement planifié et les chargements de données en masse, réduisant de 24 % les erreurs de timeout de l'API.",
+  "exp.neon-software-engineer-2.a4":
+    "A fiabilisé les mises en production avec JUnit, pytest, Docker, Git, Jenkins et des workflows de déploiement AWS, en corrigeant des défauts d'API et de base de données sur 12 mises en production d'applications dans des environnements SaaS.",
+  "exp.neon-software-engineer-2.a5":
+    "A encadré 3 ingénieurs juniors par des revues de code, des sessions de débogage, des conseils en conception d'API et des pratiques de test, tout en coordonnant les tâches techniques et en faisant appliquer des standards réutilisables de développement backend et base de données.",
 
-  "exp.axisray.role": "Stagiaire ingénieur logiciel",
-  "exp.axisray.summary":
-    "A consolidé des microservices Java et livré des fonctionnalités basées sur le ML qui ont amélioré la fiabilité et accéléré la livraison.",
-  "exp.axisray.a1":
-    "A refactorisé des microservices Spring Boot, améliorant la fiabilité et réduisant le délai de livraison des fonctionnalités de 20 %.",
-  "exp.axisray.a2":
-    "A construit et intégré des modèles de ML en Python et Java, augmentant la précision des recommandations de 30 %.",
-  "exp.axisray.a3":
-    "A modernisé des applications JSP héritées vers Spring Boot pour une visualisation de données plus riche.",
-
-  "exp.moon-technolabs.role": "Stagiaire science des données et ingénierie IA/ML",
-  "exp.moon-technolabs.summary":
-    "A piloté une initiative SaaS de résilience de la chaîne d'approvisionnement, construisant des pipelines de données et de l'optimisation par IA sur des systèmes HRMS et CRM.",
-  "exp.moon-technolabs.a1":
-    "A mené un projet de résilience de la chaîne d'approvisionnement qui a accru l'efficacité opérationnelle de 30 %.",
-  "exp.moon-technolabs.a2":
-    "A conçu des pipelines de données évolutifs et des solutions d'IA alimentant des opérations adaptatives.",
-  "exp.moon-technolabs.a3":
-    "A ajusté des modèles de ML pour l'allocation des ressources, réduisant le coût opérationnel de 15 %.",
-
-  "exp.sage-associate-developer.role": "Développeur associé",
-  "exp.sage-associate-developer.summary":
-    "A construit des API d'intégration client, amélioré les performances du portail interne et automatisé une migration de MySQL vers PostgreSQL.",
-  "exp.sage-associate-developer.a1":
-    "A construit des API Java Spring Boot traitant plus de 10K enregistrements par jour et corrigé plus de 40 bugs, en utilisant la stack ELK pour la journalisation et le diagnostic, améliorant la fiabilité des endpoints de 22 %.",
-  "exp.sage-associate-developer.a2":
-    "A implémenté des composants fonctionnels React et React Router sur un portail interne à trois modules, appliquant lazy loading et code splitting pour réduire le temps de chargement de 30 %, validé par des audits Lighthouse.",
-  "exp.sage-associate-developer.a3":
-    "A automatisé la migration de MySQL vers PostgreSQL avec des scripts Python, validant plus de 500K enregistrements pour la conformité de schéma et créant des runbooks adoptés par l'équipe infrastructure.",
+  "exp.neon-associate-software-engineer.role": "Ingénieur logiciel associé",
+  "exp.neon-associate-software-engineer.summary":
+    "A développé des fonctionnalités de workflows SaaS d'entreprise, des API REST et de l'automatisation Python pour les workflows d'utilisateurs, d'approbation, de reporting et d'administration.",
+  "exp.neon-associate-software-engineer.a1":
+    "A développé des fonctionnalités de workflows SaaS d'entreprise avec React.js, Java, Spring Boot et PostgreSQL, créant des interfaces responsives et plus de 15 API REST pour les workflows d'utilisateurs, d'approbation, de reporting et d'administration, déployées via des pipelines Jenkins pour réduire le traitement manuel et améliorer l'efficacité des utilisateurs.",
+  "exp.neon-associate-software-engineer.a2":
+    "A automatisé la validation des données, le reporting planifié et le traitement de fichiers avec des scripts Python traitant plus de 100 000 enregistrements métier, faisant gagner 7 heures par semaine à l'équipe support.",
+  "exp.neon-associate-software-engineer.a3":
+    "A collaboré avec des ingénieurs seniors, la QA et les équipes produit pour écrire des tests d'intégration JUnit et pytest et corriger plus de 18 défauts de production au fil des sprints.",
 
   "exp.rit-research-assistant.role": "Assistant de recherche de master — Confidentialité et sécurité",
   "exp.rit-research-assistant.summary":

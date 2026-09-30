@@ -100,10 +100,10 @@ describe("portfolio data integrity", () => {
   });
 
   it("previews exactly three curated engineering roles on the home page", () => {
-    // Love's Gate 3 cap. All seven roles still render on /about#experience.
+    // Love's Gate 3 cap. All five roles still render on /about#experience.
     expect(homeExperienceIds).toHaveLength(3);
     expect(homeExperiences).toHaveLength(3);
-    expect(experiences.length).toBe(7);
+    expect(experiences.length).toBe(5);
   });
 
   it("resolves every previewed role, newest first, without touching its dates", () => {
@@ -144,16 +144,16 @@ describe("profile positioning", () => {
     if (researchIndex !== -1) expect(researchIndex).toBeGreaterThanOrEqual(3);
   });
 
-  it("uses the approved umbrella headline and a 4+ years summary", () => {
+  it("uses the approved umbrella headline and a 3+ years summary", () => {
     expect(profile.headline).toBe(
       "I build reliable full-stack products and applied AI systems.",
     );
-    expect(profile.summary).toMatch(/^Software engineer with 4\+ years/);
+    expect(profile.summary).toMatch(/^Software engineer with 3\+ years/);
     expect(profile.summary).not.toMatch(/privacy researcher/i);
   });
 
-  it("reports Phoenix as the current location", () => {
-    expect(profile.location).toBe("Phoenix, AZ");
+  it("reports San Jose as the current location, matching the résumé", () => {
+    expect(profile.location).toBe("San Jose, CA");
     expect(profile.location).not.toContain("Rochester");
   });
 
@@ -171,47 +171,57 @@ describe("profile positioning", () => {
 describe("experience dataset", () => {
   const byId = (id: string) => experiences.find((e) => e.id === id);
 
-  it("adds the Morgan Stanley and both Sage Softtech roles", () => {
-    const morgan = byId("morgan-stanley");
-    expect(morgan?.company).toBe("Morgan Stanley");
-    expect(morgan?.period).toBe("Aug 2025 — Present");
-    expect(morgan?.location).toBe("Phoenix, AZ");
-    expect(morgan?.focusKey).toBe("exp.morgan-stanley.focus");
+  it("mirrors the résumé's Databricks and Neon IT Systems roles", () => {
+    const databricks = byId("databricks");
+    expect(databricks?.company).toBe("Databricks");
+    expect(databricks?.period).toBe("Aug 2025 — Present");
+    expect(databricks?.focusKey).toBe("exp.databricks.focus");
+    expect(enUS["exp.databricks.role"]).toBe("Software Engineer, AI Platform");
 
-    const sage2 = byId("sage-software-engineer-2");
-    expect(sage2?.company).toBe("Sage Softtech");
-    expect(sage2?.period).toBe("Oct 2021 — Jul 2023");
-    expect(sage2?.location).toBe("Ahmedabad, India");
+    const neon2 = byId("neon-software-engineer-2");
+    expect(neon2?.company).toBe("Neon IT Systems");
+    expect(neon2?.period).toBe("May 2022 — Jul 2023");
+    expect(enUS["exp.neon-software-engineer-2.role"]).toBe("Software Engineer II");
 
-    const sage1 = byId("sage-associate-developer");
-    expect(sage1?.company).toBe("Sage Softtech");
-    expect(sage1?.period).toBe("Feb 2021 — Sep 2021");
+    const neon1 = byId("neon-associate-software-engineer");
+    expect(neon1?.company).toBe("Neon IT Systems");
+    expect(neon1?.period).toBe("Feb 2021 — Apr 2022");
+    expect(enUS["exp.neon-associate-software-engineer.role"]).toBe(
+      "Associate Software Engineer",
+    );
   });
 
-  it("preserves every previously listed role", () => {
-    for (const id of [
-      "axisray",
-      "moon-technolabs",
-      "rit-research-assistant",
-      "rit-teaching-assistant",
-    ]) {
+  it("keeps the RIT research and teaching roles", () => {
+    for (const id of ["rit-research-assistant", "rit-teaching-assistant"]) {
       expect(byId(id), `preserved role ${id}`).toBeDefined();
     }
-    expect(experiences).toHaveLength(7);
+    expect(experiences).toHaveLength(5);
   });
 
-  it("marks only Morgan Stanley as current", () => {
+  it("drops every role that is not on the résumé", () => {
+    for (const id of [
+      "morgan-stanley",
+      "sage-software-engineer-2",
+      "sage-associate-developer",
+      "axisray",
+      "moon-technolabs",
+    ]) {
+      expect(byId(id), `retired role ${id}`).toBeUndefined();
+    }
+    const companies = experiences.map((e) => e.company).join(" ");
+    expect(companies).not.toMatch(/Morgan Stanley|Sage Softtech|Axisray|Moon Technolabs/);
+  });
+
+  it("marks only Databricks as current", () => {
     const current = experiences.filter((e) => e.current);
-    expect(current.map((e) => e.id)).toEqual(["morgan-stanley"]);
+    expect(current.map((e) => e.id)).toEqual(["databricks"]);
   });
 
   it("groups roles without changing the stated chronology", () => {
     expect(experiencesInGroup(experiences, "industry").map((e) => e.id)).toEqual([
-      "morgan-stanley",
-      "sage-software-engineer-2",
-      "axisray",
-      "moon-technolabs",
-      "sage-associate-developer",
+      "databricks",
+      "neon-software-engineer-2",
+      "neon-associate-software-engineer",
     ]);
     expect(
       experiencesInGroup(experiences, "research-teaching").map((e) => e.id),
@@ -248,67 +258,50 @@ describe("published claim set", () => {
     ])
     .join("\n");
 
-  it("publishes the authorized Morgan Stanley metrics", () => {
+  it("publishes the résumé's Databricks metrics", () => {
     for (const claim of [
-      "99.97% uptime",
-      "more than 200 fixed-income users",
-      "reducing manual intervention by 65%",
-      "an estimated $2.4M",
-      "10M+ documents",
-      "8 minutes to under 90 seconds",
-      "precision by 38%",
-      "deployment cycle time by 50%",
+      "4 recurring engineering tasks per sprint",
+      "1,000+ agent traces",
+      "failed service calls by 18%",
+      "10M+ records per run",
+      "2.5 hours to 40 minutes",
+      "10+ developer and data workflows",
+      "150+ automated checks",
+      "8+ production workflows",
     ]) {
       expect(englishExperienceCopy, `claim: ${claim}`).toContain(claim);
     }
   });
 
-  it("publishes the authorized Sage Softtech metrics", () => {
+  it("publishes the résumé's Neon IT Systems metrics", () => {
     for (const claim of [
-      "500K daily transactions",
-      "API response time by 40%",
-      "1M events per day",
-      "fraud false positives by 30%",
-      "10 features across four sprints",
-      "QA bug cycle by 45%",
-      "14 seconds to 2.1 seconds",
-      "85% improvement",
-      "five-member Agile squad",
-      "mentored three engineers",
-      "120 pull requests",
-      "MTTR by 32%",
-      "10K daily records",
-      "40 bugs",
-      "reliability by 22%",
-      "page-load time by 30%",
-      "500K records",
+      "20+ REST APIs",
+      "2.1 seconds to 480 ms",
+      "250K+ records",
+      "API timeout errors by 24%",
+      "12 application releases",
+      "Mentored 3 junior engineers",
+      "15+ REST APIs",
+      "100K+ business records",
+      "7 hours per week",
+      "18+ production defects",
     ]) {
       expect(englishExperienceCopy, `claim: ${claim}`).toContain(claim);
     }
   });
 
-  it("always qualifies the $2.4M figure as estimated", () => {
-    const occurrences = englishExperienceCopy.match(/\$2\.4M/g) ?? [];
-    expect(occurrences).toHaveLength(1);
-    expect(englishExperienceCopy).toContain("an estimated $2.4M");
-  });
-
-  it("carries no superseded metric from the earlier candidate documents", () => {
+  it("carries no metric from the retired, off-résumé roles", () => {
     const everyEnglishString = Object.values(enUS).join("\n");
     for (const superseded of [
-      "3+ years",
-      "60% fewer",
-      "40% shorter reconciliation",
-      "55% faster",
-      "99.95%",
-      "six FastAPI",
-      "35%",
-      "28% fewer",
-      "eight features across three sprints",
-      "42% fewer",
-      "12 seconds to 1.8 seconds",
-      "four-person squad",
-      "100+ PR",
+      "4+ years",
+      "four-plus",
+      "99.97%",
+      "fixed-income",
+      "$2.4M",
+      "500K daily transactions",
+      "Morgan Stanley",
+      "Sage Softtech",
+      "financial services",
     ]) {
       expect(everyEnglishString.toLowerCase()).not.toContain(superseded.toLowerCase());
     }

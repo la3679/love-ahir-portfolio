@@ -31,7 +31,7 @@ const Index = () => {
     <LatticeProvider>
       <Seo
         title="Love Ahir — Software Engineer | Full-Stack, Backend & Applied AI"
-        description="Software engineer with 4+ years building reliable backends, full-stack products, cloud systems, and applied AI across financial services and enterprise platforms."
+        description="Software engineer with 3+ years building reliable backends, full-stack applications, distributed data pipelines, and agentic AI for data platform and enterprise SaaS products."
         path="/"
       />
       <Hero />

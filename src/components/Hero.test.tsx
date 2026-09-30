@@ -143,10 +143,10 @@ describe("<Hero />", () => {
     expect(top).toHaveTextContent("AWS");
     expect(bottom).toHaveTextContent("Python");
     expect(bottom).toHaveTextContent("FastAPI");
-    expect(bottom).toHaveTextContent("MongoDB");
-    expect(bottom).toHaveTextContent("Appium");
-    expect(bottom).toHaveTextContent("Three.js");
-    expect(bottom).not.toHaveTextContent("Docker");
+    expect(bottom).toHaveTextContent("Apache Spark");
+    expect(bottom).toHaveTextContent("Docker");
+    expect(bottom).toHaveTextContent("TypeScript");
+    expect(bottom).not.toHaveTextContent("MongoDB");
 
     const logos = Array.from(
       stage?.querySelectorAll<HTMLImageElement>(".stage-tech-rail__logo img") ??

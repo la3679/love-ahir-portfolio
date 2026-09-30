@@ -150,10 +150,10 @@ describe("route smoke tests", () => {
     expect(
       screen.getByRole("heading", { name: i18n.t("home.experience.title") }),
     ).toBeInTheDocument();
-    expect(screen.getAllByText("Morgan Stanley", { exact: false }).length).toBeGreaterThan(
+    expect(screen.getAllByText("Databricks", { exact: false }).length).toBeGreaterThan(
       0,
     );
-    expect(screen.getAllByText("Sage Softtech", { exact: false }).length).toBeGreaterThan(
+    expect(screen.getAllByText("Neon IT Systems", { exact: false }).length).toBeGreaterThan(
       0,
     );
   });

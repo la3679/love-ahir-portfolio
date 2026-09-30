@@ -12,8 +12,8 @@
  * - The AZ-900 entry is exam *preparation*. It must never be presented as a
  *   Microsoft or Azure certification; `noteKey` carries that disclaimer and
  *   `credentials.test.ts` asserts it stays attached.
- * - `datePrecision` keeps rendering honest. Four LinkedIn Learning
- *   certificates were recorded as the first of the month, which is month
+ * - `datePrecision` keeps rendering honest. Entries whose certificate register
+ *   gives only a month are recorded as the first of that month, which is month
  *   precision written in ISO form, so they render as "June 2025" rather than
  *   inventing a day. Only Python Essential Training has a verified day, and
  *   the CDAC certificate is year-only.
@@ -54,6 +54,115 @@ export interface Credential {
 
 export const credentials: Credential[] = [
   {
+    id: "anthropic-mcp-advanced-topics",
+    title: "Model Context Protocol: Advanced Topics",
+    type: "course-completion",
+    provider: "Anthropic",
+    issued: "2026-08-01",
+    datePrecision: "month",
+    url: "https://verify.skilljar.com/c/aj8uuzaqu3u5",
+  },
+  {
+    id: "anthropic-intro-mcp",
+    title: "Introduction to Model Context Protocol",
+    type: "course-completion",
+    provider: "Anthropic",
+    issued: "2026-08-01",
+    datePrecision: "month",
+    url: "https://verify.skilljar.com/c/bxbpx8vxtw7t",
+  },
+  {
+    id: "anthropic-intro-claude-cowork",
+    title: "Introduction to Claude Cowork",
+    type: "course-completion",
+    provider: "Anthropic",
+    issued: "2026-08-01",
+    datePrecision: "month",
+    url: "https://verify.skilljar.com/c/gcbnd5c7dc4o",
+  },
+  {
+    id: "anthropic-claude-platform-101",
+    title: "Claude Platform 101",
+    type: "course-completion",
+    provider: "Anthropic",
+    issued: "2026-08-01",
+    datePrecision: "month",
+    url: "https://verify.skilljar.com/c/kdymtyobnxy6",
+  },
+  {
+    id: "anthropic-claude-code-101",
+    title: "Claude Code 101",
+    type: "course-completion",
+    provider: "Anthropic",
+    issued: "2026-08-01",
+    datePrecision: "month",
+    url: "https://verify.skilljar.com/c/a3zjnprjyrkt",
+  },
+  {
+    id: "anthropic-claude-code-in-action",
+    title: "Claude Code in Action",
+    type: "course-completion",
+    provider: "Anthropic",
+    issued: "2026-08-01",
+    datePrecision: "month",
+    url: "https://verify.skilljar.com/c/c7xxexgvupid",
+  },
+  {
+    id: "anthropic-building-with-claude-api",
+    title: "Building with the Claude API",
+    type: "course-completion",
+    provider: "Anthropic",
+    issued: "2026-08-01",
+    datePrecision: "month",
+    url: "https://verify.skilljar.com/c/qw9ncfwp74k7",
+  },
+  {
+    id: "anthropic-ai-fluency-framework",
+    title: "AI Fluency: Framework & Foundations",
+    type: "course-completion",
+    provider: "Anthropic",
+    issued: "2026-08-01",
+    datePrecision: "month",
+    url: "https://verify.skilljar.com/c/7tz4cdqo8uqj",
+  },
+  {
+    id: "anthropic-ai-fluency-students",
+    title: "AI Fluency for Students",
+    type: "course-completion",
+    provider: "Anthropic",
+    issued: "2026-08-01",
+    datePrecision: "month",
+    url: "https://verify.skilljar.com/c/rn4fkiqz72pd",
+  },
+  {
+    id: "anthropic-ai-fluency-educators",
+    title: "AI Fluency for Educators",
+    type: "course-completion",
+    provider: "Anthropic",
+    issued: "2026-08-01",
+    datePrecision: "month",
+    url: "https://verify.skilljar.com/c/6nkdnu5z4r4r",
+  },
+  {
+    id: "anthropic-claude-101",
+    title: "Claude 101",
+    type: "course-completion",
+    provider: "Anthropic",
+    issued: "2026-08-01",
+    datePrecision: "month",
+    url: "https://verify.skilljar.com/c/dbz3ce4gxjq5",
+  },
+  {
+    id: "forage-jpmorganchase-software-engineering",
+    title: "Software Engineering Job Simulation",
+    type: "course-completion",
+    provider: "Forage",
+    attribution: "JPMorganChase",
+    issued: "2026-05-01",
+    datePrecision: "month",
+    url: "https://www.theforage.com/completion-certificates/Sj7temL583QAYpHXD/E6McHJDKsQYh79moz_Sj7temL583QAYpHXD_6a0a18c4bf9fe929381fef96_1779050339694_completion_certificate.pdf",
+  },
+  {
     id: "az-900-cert-prep",
     title: "Microsoft Azure Fundamentals (AZ-900) Cert Prep by Microsoft Press",
     type: "course-completion",
@@ -92,7 +201,7 @@ export const credentials: Credential[] = [
     attribution: "Robin Hunt",
     issued: "2025-06-01",
     datePrecision: "month",
-    url: "https://www.linkedin.com/learning/certificates/b3e66a7d7344afa613aea09e7dba21533b25eb62d2d6506917ca3e6f1f6ca3f3",
+    url: "https://www.linkedin.com/learning/certificates/16b440727ecaddf60b4ccdf38a9d88085e41e468136c951772ab9a1e74f09e47",
   },
   {
     id: "learning-data-analytics-part-2",
@@ -103,6 +212,24 @@ export const credentials: Credential[] = [
     issued: "2025-06-01",
     datePrecision: "month",
     url: "https://www.linkedin.com/learning/certificates/83056fccabeba7e7f5127c74177147622ced93f8e9d1cdc5f202a62bb7b046f1",
+  },
+  {
+    id: "intro-career-skills-data-analytics",
+    title: "Introduction to Career Skills in Data Analytics",
+    type: "course-completion",
+    provider: "LinkedIn Learning",
+    issued: "2025-06-01",
+    datePrecision: "month",
+    url: "https://www.linkedin.com/learning/certificates/a6b15365103a23ac6ac545c9d987b73904128f9d31e1f3cffc0e0a327a37f24a",
+  },
+  {
+    id: "data-engineering-foundations",
+    title: "Data Engineering Foundations",
+    type: "course-completion",
+    provider: "LinkedIn Learning",
+    issued: "2025-04-01",
+    datePrecision: "month",
+    url: "https://www.linkedin.com/learning/certificates/456c1c69c23de948aeeed25a7e4108d2ab39e320fd2502ce4989eb7321431c58",
   },
   {
     // Held back deliberately (§26.4): the link is a Drive file rather than an
@@ -127,13 +254,14 @@ export const publishedCredentials: Credential[] = credentials.filter(
 /**
  * The homepage preview set — explicit curation, not a slice, so reordering
  * the full list never silently changes what a recruiter sees first. Chosen
- * for role relevance: cloud fundamentals, Python, then the data-analysis path.
+ * for role relevance: building on LLM APIs, agent tooling, AI-assisted
+ * engineering, then a software-engineering job simulation.
  */
 export const homeCredentialIds = [
-  "az-900-cert-prep",
-  "python-essential-training",
-  "career-essentials-data-analysis",
-  "learning-data-analytics-foundations",
+  "anthropic-building-with-claude-api",
+  "anthropic-mcp-advanced-topics",
+  "anthropic-claude-code-in-action",
+  "forage-jpmorganchase-software-engineering",
 ] as const;
 
 export const homeCredentials: Credential[] = homeCredentialIds.flatMap((id) =>

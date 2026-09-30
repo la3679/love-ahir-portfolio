@@ -30,7 +30,7 @@ const About = () => {
     <>
       <Seo
         title={t("about.title")}
-        description="Love Ahir — software engineer with 4+ years across backend services, full-stack products, cloud delivery, and applied AI at Morgan Stanley and Sage Softtech. M.S. in Computer Software Engineering, RIT."
+        description="Love Ahir — software engineer with 3+ years across backend services, full-stack applications, data pipelines, and agentic AI at Databricks and Neon IT Systems. M.S. in Computer Software Engineering, RIT."
         path="/about"
       />
       <div className="container pt-32">

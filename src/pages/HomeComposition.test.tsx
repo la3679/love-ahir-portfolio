@@ -246,8 +246,8 @@ describe("TradeOps lead project", () => {
 });
 
 describe("preserved content", () => {
-  it("keeps all seven roles in the dataset while previewing three", () => {
-    expect(experiences).toHaveLength(7);
+  it("keeps all five roles in the dataset while previewing three", () => {
+    expect(experiences).toHaveLength(5);
   });
 
   it("renders both education entries on the home page", () => {
@@ -257,7 +257,7 @@ describe("preserved content", () => {
     }
     expect(education).toHaveLength(2);
     expect(education.map((e) => e.institution).join(" ")).toMatch(/Rochester/);
-    expect(education.map((e) => e.institution).join(" ")).toMatch(/LJ Institute/);
+    expect(education.map((e) => e.institution).join(" ")).toMatch(/Gujarat Technological University/);
   });
 
   it("keeps research present but subordinate — after work, experience and credentials", () => {

@@ -1,8 +1,8 @@
 # Love Ahir — Portfolio
 
-The personal portfolio of **Love Jayesh Ahir** — a software engineer with 4+
-years building production backend services, full-stack products, cloud
-delivery, and applied AI across financial services and enterprise platforms.
+The personal portfolio of **Love Jayesh Ahir** — a software engineer with 3+
+years building production backend services, full-stack applications, distributed
+data pipelines, and agentic AI for data platform and enterprise SaaS products.
 It is built around one idea: *every claim links to an artifact* — a case study,
 a repository, a metric, or a paper.
 
