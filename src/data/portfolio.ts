@@ -158,7 +158,7 @@ export const experiences: Experience[] = [
     group: "industry",
     company: "Databricks",
     location: "San Jose, CA",
-    period: "Aug 2025 — Present",
+    period: "Dec 2025 — Present",
     current: true,
     roleKey: "exp.databricks.role",
     focusKey: "exp.databricks.focus",
